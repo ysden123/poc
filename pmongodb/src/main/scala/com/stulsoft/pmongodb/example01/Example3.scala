@@ -24,8 +24,8 @@ object Example3 extends App with LazyLogging {
   private lazy val codecRegistry = fromRegistries(fromProviders(classOf[Person]), DEFAULT_CODEC_REGISTRY)
 
   // To directly connect to the default server localhost on port 27017
-  val mongoClient: MongoClient = MongoClient()
-  val database: MongoDatabase = mongoClient.getDatabase("testDb").withCodecRegistry(codecRegistry)
+  val client: MongoClient = MongoClient()
+  val database: MongoDatabase = client.getDatabase("testDb").withCodecRegistry(codecRegistry)
   val collection: MongoCollection[Person] = database.getCollection("testCollection3")
   collection.drop().results()
 
