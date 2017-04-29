@@ -1,0 +1,14 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "Test project to demonstrate mocha-jenkins",
+  "main": "index.js",
+  "scripts": {
+    "test": "node project_test"
+  },
+  "author": "Yuriy Stul",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": ""
+  }
+}

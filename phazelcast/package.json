@@ -1,0 +1,32 @@
+{
+  "name": "phazelcast",
+  "version": "1.0.0",
+  "description": "Playing with Hazelcast",
+  "main": "./lib",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysden123/phazelcast.git"
+  },
+  "keywords": [
+    "hazelcast",
+    "playing",
+    "getting",
+    "started"
+  ],
+
+  "author": "Yuriy Stul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ysden123/phazelcast/issues"
+  },
+  "homepage": "https://github.com/ysden123/phazelcast#readme",
+  "devDependencies": {
+    "chai": "^3.5.0"
+  },
+  "dependencies": {
+    "hazelcast-client": "^0.3.0"
+  }
+}

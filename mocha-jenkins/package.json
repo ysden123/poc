@@ -1,0 +1,35 @@
+{
+  "name": "mocha-jenkins",
+  "version": "0.0.1",
+  "description": "Using unit test package mocha with Jenkins",
+  "main": "./lib",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysden123/mocha-jenkins.git"
+  },
+  "keywords": [
+    "mocha",
+    "unit",
+    "test",
+    "jenkins",
+    "continous",
+    "intergration"
+  ],
+  "author": "Yuriy Stul",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ysden123/mocha-jenkins/issues"
+  },
+  "homepage": "https://github.com/ysden123/mocha-jenkins#readme",
+  "dependencies": {
+    "mocha": "",
+    "xunit-file": "",
+    "simple-node-logger": ""
+  },
+  "devDependencies": {
+    "chai": ""
+  }
+}

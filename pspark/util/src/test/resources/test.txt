@@ -1,0 +1,48 @@
+fjsdhfjsdfjksdh >> 1111111111111111111111
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh << 1111111111111111111111
+cvn,mbnc,mbnc,m >> 22222222222222
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m << 22222222222222
+5769846798bnc,vbn,m >> 33333333333333
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m << 33333333333333
+fjsdhfjsdfjksdh >> 44444444444444444
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh << 44444444444444444
+cvn,mbnc,mbnc,m >> 555555555555555555
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m
+fjsdhfjsdfjksdh
+cvn,mbnc,mbnc,m
+5769846798bnc,vbn,m << 555555555555555555
