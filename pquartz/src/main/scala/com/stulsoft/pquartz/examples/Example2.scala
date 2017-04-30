@@ -16,7 +16,7 @@ class MyJob2 extends Job {
 }
 
 /**
-  * Simple schedule
+  * Simple schedule - start now and one time only
   *
   * @author Yuriy Stul
   */
