@@ -11,30 +11,29 @@ import org.quartz.TriggerBuilder._
 import org.quartz._
 import org.quartz.impl.StdSchedulerFactory
 
-class MyJob1 extends Job {
-  override def execute(context: JobExecutionContext): Unit = println("Hello World!  MyJob1 is executing.")
+class MyJob2 extends Job {
+  override def execute(context: JobExecutionContext): Unit = println("Hello World!  MyJob2 is executing.")
 }
 
 /**
   * Simple schedule
+  *
   * @author Yuriy Stul
   */
-object Example1 extends App with LazyLogging {
+object Example2 extends App with LazyLogging {
 
   // Grab the Scheduler instance from the Factory
 
   val scheduler = StdSchedulerFactory.getDefaultScheduler
 
   // define the job and tie it to our MyJob class
-  val job = newJob(classOf[MyJob1]).withIdentity("job1", "group1").build
+  val job = newJob(classOf[MyJob2]).withIdentity("job1", "group1").build
 
-  // Trigger the job to run now, and then repeat every 40 seconds
+  // Trigger the job to run now
   val trigger = newTrigger()
     .withIdentity("trigger1", "group1")
     .startNow()
-    .withSchedule(simpleSchedule()
-      .withIntervalInSeconds(40)
-      .repeatForever())
+    .withSchedule(simpleSchedule())
     .build()
 
   // Tell quartz to schedule the job using our trigger
