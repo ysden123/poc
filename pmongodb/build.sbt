@@ -5,6 +5,8 @@ lazy val scalaLoggingVersion = "3.5.0"
 lazy val logbackVersion = "1.1.2"
 lazy val typeSafeConfVersion = "1.3.1"
 lazy val mongoDbDriver = "2.0.0"
+lazy val epollVersion = "4.1.9.Final"
+lazy val nettyHandlerVersion = "4.0.20.Final"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
@@ -21,8 +23,9 @@ lazy val commonSettings = Seq(
     "ch.qos.logback" % "logback-classic" % logbackVersion,
     "com.typesafe.scala-logging" %% "scala-logging" % scalaLoggingVersion,
     "com.typesafe" % "config" % typeSafeConfVersion,
-    "com.typesafe" % "config" % typeSafeConfVersion,
     "org.mongodb.scala" %% "mongo-scala-driver" % mongoDbDriver,
+    "io.netty" % "netty-transport-native-epoll" % epollVersion,
+    "io.netty" % "netty-handler" % nettyHandlerVersion,
     "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
   )
 )

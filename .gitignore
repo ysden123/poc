@@ -17,3 +17,5 @@ project/plugins/project/
 .worksheet
 pmongodb/.idea/
 pquartz/.idea/
+**/node_modules
+**/.idea

@@ -1,0 +1,23 @@
+{
+  "name": "pkafka-node",
+  "version": "1.0.0",
+  "description": "Playing with Kafka on NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysden123/poc.git"
+  },
+  "keywords": [
+    "kafka",
+    "nodejs",
+    "playing"
+  ],
+  "author": "Yuriy Stul",
+  "license": "ISC",
+  "dependencies": {
+    "kafka-node": "^1.6.0"
+  }
+}
