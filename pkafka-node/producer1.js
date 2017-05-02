@@ -3,10 +3,11 @@
  */
 
 'use strict';
-const kafka = require('kafka-node'),
-    Producer = kafka.Producer,
-    client = new kafka.Client(),
-    producer = new Producer(client),
+const kafka = require('kafka-node');
+const Producer = kafka.Producer;
+const client = new kafka.Client();
+const producer = new Producer(client);
+const
     payloads = [
         {topic: 'topic1', messages: 'hi', partition: 0}
     ];
