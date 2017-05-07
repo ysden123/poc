@@ -1,0 +1,24 @@
+{
+  "name": "pnj-xml",
+  "version": "1.0.0",
+  "description": "Playing with XML on NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysden123/poc.git"
+  },
+  "keywords": [
+    "nodejs",
+    "xml",
+    "playing"
+  ],
+  "author": "Yuriy Stul",
+  "license": "ISC",
+  "dependencies": {
+    "sax": "^1.2.2",
+    "xml2js": "^0.4.17"
+  }
+}
