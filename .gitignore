@@ -19,3 +19,4 @@ pmongodb/.idea/
 pquartz/.idea/
 **/node_modules
 **/.idea
+/pquartz/.idea
