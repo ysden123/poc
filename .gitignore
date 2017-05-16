@@ -20,3 +20,4 @@ pquartz/.idea/
 **/node_modules
 **/.idea
 /pquartz/.idea
+pjunit5/.gradle/
