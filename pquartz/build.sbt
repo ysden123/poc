@@ -4,7 +4,7 @@ lazy val scalaTestVersion = "3.0.1"
 lazy val scalaLoggingVersion = "3.5.0"
 lazy val logbackVersion = "1.1.2"
 lazy val typeSafeConfVersion = "1.3.1"
-lazy val quartzVersion = "2.2.1"
+lazy val quartzVersion = "2.2.3"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
