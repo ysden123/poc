@@ -46,7 +46,7 @@ describe('claimListParser', () => {
                 .catch(err => done(err))
         });
 
-        it('should parse long input',function(done){
+        it('should parse long input', function (done) {
             this.timeout(10000);
             let userCount = 0;
 
@@ -57,7 +57,7 @@ describe('claimListParser', () => {
             console.log({memory_usage_1: process.memoryUsage()});
             let amountOfCampaigns = 300;
             let amountOfUsers = 5000;
-            let input = generateLongClaimList(amountOfCampaigns,amountOfUsers);
+            let input = generateLongClaimList(amountOfCampaigns, amountOfUsers);
             console.log(`input length is ${input.length}`);
             claimListParser.parse(input, handler)
                 .then(() => {
@@ -66,6 +66,56 @@ describe('claimListParser', () => {
                     done()
                 })
                 .catch(err => done(err))
+        });
+
+        it('should fail parse wrong input 1', function (done) {
+            let input = 'test';
+            claimListParser.parse(input)
+                .then(() => {
+                    userCount.should.equal(amountOfCampaigns * amountOfUsers);
+                    done('Non-catched error')
+                })
+                .catch(err => done());
+        });
+
+        it('should fail parse wrong input 2', function (done) {
+            let input = '{test}';
+            claimListParser.parse(input)
+                .then(() => {
+                    userCount.should.equal(amountOfCampaigns * amountOfUsers);
+                    done('Non-catched error')
+                })
+                .catch(err => done());
+        });
+
+        it('should fail parse wrong input 3', function (done) {
+            let input = '{"test"}';
+            claimListParser.parse(input)
+                .then(() => {
+                    userCount.should.equal(amountOfCampaigns * amountOfUsers);
+                    done('Non-catched error')
+                })
+                .catch(err => done());
+        });
+
+        it('should fail parse wrong input 4', function (done) {
+            let input = '{"test":[}';
+            claimListParser.parse(input)
+                .then(() => {
+                    userCount.should.equal(amountOfCampaigns * amountOfUsers);
+                    done('Non-catched error')
+                })
+                .catch(err => done());
+        });
+
+        it('should fail parse wrong input 5', function (done) {
+            let input = '{"test":["a"}';
+            claimListParser.parse(input)
+                .then(() => {
+                    userCount.should.equal(amountOfCampaigns * amountOfUsers);
+                    done('Non-catched error')
+                })
+                .catch(err => done());
         })
     })
 });

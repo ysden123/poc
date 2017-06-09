@@ -7,6 +7,13 @@ const logger = manager.createLogger('[claimListParser]');
 logger.setLevel('debug');
 
 const Readable = require('stream').Readable;
+
+/**
+ * Parses a JSon input with format: {"campaign1":["user1","user2"]}
+ * @param input input JSon string
+ * @param handler callback function; will be called with (campaign,user) for each user
+ * @returns {Promise} resolve();reject(err)
+ */
 function parse(input, handler) {
     logger.info('Parse Started parsing');
     return new Promise((resolve, reject) => {
@@ -46,15 +53,27 @@ function parse(input, handler) {
             }
         });
 
-        source.on('end',()=>{
-           resolve();
+        source.on('end', () => {
+            resolve();
             logger.info('parse completed parsing');
+        });
+
+        source.on('error', (err) => {
+            let msg = 'Parsing error: ' + err.message;
+            logger.error(msg);
+            reject(new Error(msg));
         });
 
         let stringStream = new Readable;
         stringStream.push(input);
         stringStream.push(null);
-        stringStream.pipe(source.input);
+
+        stringStream.pipe(source.input)
+            .on('error', (err) => {
+                let msg = 'Parsing error: ' + err.message;
+                logger.error(msg);
+                reject(new Error(msg));
+            })
     })
 }
 
