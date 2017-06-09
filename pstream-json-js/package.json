@@ -1,0 +1,30 @@
+{
+  "name": "pstream-json",
+  "version": "1.0.0",
+  "description": "Playing with stream JSon on NodeJS",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysden123/poc.git"
+  },
+  "keywords": [
+    "json",
+    "nodejs",
+    "javascript",
+    "stream",
+    "large",
+    "long"
+  ],
+  "author": "Yuriy Stul",
+  "license": "ISC",
+  "dependencies": {
+    "stream-json": "^0.4.2"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "simple-node-logger": "^0.93.27"
+  }
+}
