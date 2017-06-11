@@ -4,6 +4,8 @@
 'use strict';
 const claimListParser = require('..').claimListParser;
 const should = require('chai').should();
+const path = require('path');
+const fs = require('fs');
 
 function generateLongClaimList(amountOfCampaigns, amountOfUsers) {
     let json = '{';
@@ -18,6 +20,23 @@ function generateLongClaimList(amountOfCampaigns, amountOfUsers) {
     }
     json += '}';
     return json;
+}
+
+function writeLongClaimList(fileName, amountOfCampaigns, amountOfUsers) {
+    let writer = fs.createWriteStream(fileName);
+    writer.write('{');
+    for (let campaignN = 1; campaignN <= amountOfCampaigns; ++campaignN) {
+        if (campaignN > 1) writer.write(',');
+        writer.write(`"campaign ${campaignN}":[`);
+        for (let userN = 1; userN <= amountOfUsers; ++userN) {
+            if (userN > 1) writer.write(',');
+            writer.write(`"user${userN}"`)
+        }
+        writer.write(']');
+    }
+    // writer.write('}');
+    // writer.end();
+    writer.end('}');
 }
 
 describe('claimListParser', () => {
@@ -117,5 +136,101 @@ describe('claimListParser', () => {
                 })
                 .catch(err => done());
         })
+    });
+
+    describe('#parseFile',()=>{
+        it('should parse correct json', function (done) {
+            let fileName = path.resolve(__dirname, 'test1.json');
+            claimListParser.parseFile(fileName)
+                .then(() => done())
+                .catch(err => done(err))
+        });
+
+        it('should parse call handler', function (done) {
+            let userCount = 0;
+
+            function handler(campaign, user) {
+                console.log(`campaign: ${campaign}, user: ${user}`);
+                ++userCount;
+            }
+
+            let fileName = path.resolve(__dirname, 'test1.json');
+            claimListParser.parseFile(fileName, handler)
+                .then(() => {
+                    userCount.should.equal(4);
+                    done()
+                })
+                .catch(err => done(err))
+        });
+
+        it('should parse long input', function (done) {
+            this.timeout(20000);
+            let userCount = 0;
+
+            function handler(campaign, user) {
+                ++userCount;
+            }
+
+            console.log({memory_usage_1: process.memoryUsage()});
+            let amountOfCampaigns = 30;
+            let amountOfUsers = 500;
+            let fileName = path.resolve(__dirname, 'temp.json');
+            writeLongClaimList(fileName, amountOfCampaigns, amountOfUsers);
+            claimListParser.parseFile(fileName, handler)
+                .then(() => {
+                    console.log({memory_usage_2: process.memoryUsage()});
+                    userCount.should.equal(amountOfCampaigns * amountOfUsers);
+                    done()
+                })
+                .catch(err => done(err))
+        });
+    });
+
+    describe.only('#parseFile',()=>{
+        it.only('should parse correct json', function (done) {
+            let fileName = path.resolve(__dirname, 'test1.json');
+            claimListParser.parseFileAsStream(fileName)
+                .then(() => done())
+                .catch(err => done(err))
+        });
+
+        it('should parse call handler', function (done) {
+            let userCount = 0;
+
+            function handler(campaign, user) {
+                console.log(`campaign: ${campaign}, user: ${user}`);
+                ++userCount;
+            }
+
+            let fileName = path.resolve(__dirname, 'test1.json');
+            claimListParser.parseFileAsStream(fileName, handler)
+                .then(() => {
+                    userCount.should.equal(4);
+                    done()
+                })
+                .catch(err => done(err))
+        });
+
+        it('should parse long input', function (done) {
+            this.timeout(20000);
+            let userCount = 0;
+
+            function handler(campaign, user) {
+                ++userCount;
+            }
+
+            console.log({memory_usage_1: process.memoryUsage()});
+            let amountOfCampaigns = 30;
+            let amountOfUsers = 500;
+            let fileName = path.resolve(__dirname, 'temp.json');
+            writeLongClaimList(fileName, amountOfCampaigns, amountOfUsers);
+            claimListParser.parseFileAsStream(fileName, handler)
+                .then(() => {
+                    console.log({memory_usage_2: process.memoryUsage()});
+                    userCount.should.equal(amountOfCampaigns * amountOfUsers);
+                    done()
+                })
+                .catch(err => done(err))
+        });
     })
 });
