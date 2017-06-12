@@ -8,6 +8,7 @@ logger.setLevel('debug');
 
 const Readable = require('stream').Readable;
 const fs = require('fs');
+const util = require('util');
 
 /**
  * Parses a JSon input (text) with format: {"campaign1":["user1","user2"]}
@@ -154,51 +155,83 @@ function parseFileAsStream(fileName, handler) {
         let user = null;
 
         let Parser = require('stream-json/Parser');
+        // let parser = new Parser();
         let Streamer = require('stream-json/Streamer');
+        // let streamer = new Streamer();
+        // logger.debug(`parser: ${parser}, streamer: ${streamer}`);
 
 
-        let fileStream = fs.createReadStream(fileName);
-        let source = fileStream.pipe(new Parser()).pipe(new Streamer());
+        // let fileStream = fs.createReadStream(fileName);
+        // let source = fileStream.pipe(parser).pipe(streamer);
+        let pipeline = fs.createReadStream(fileName).pipe(new Parser()).pipe(new Streamer());
 
-        source.on('startKey', () => {
-            campaignStarted = true
+        // logger.debug('parser: ' + util.inspect(parser, {showHidden: true, depth: true}));
+        // logger.debug('streamer: ' + util.inspect(streamer, {showHidden: true, depth: true}));
+        // logger.debug('source: ' + util.inspect(source, {showHidden: true, depth: true}));
+        logger.debug('pipeline: ' + util.inspect(pipeline, {showHidden: true, depth: true}));
+
+        pipeline.on('data',(chunk)=>{
+            logger.debug('chunk: ' + util.inspect(chunk, {showHidden: true, depth: true}));
         });
-        source.on('endKey', () => {
-            campaignStarted = false
-        });
-
-        source.on('startString', () => {
-            userStarted = true
-        });
-        source.on('endString', () => {
-            userStarted = false
-        });
-
-        source.on('stringChunk', (value) => {
-            if (campaignStarted) {
-                campaign = value;
-            } else if (userStarted) {
-                user = value;
-                if (handler) {
-                    handler(campaign, user)
-                }
-            } else {
-                let msg = 'Invalid state';
-                logger.error(msg);
-                reject(new Error(msg));
-            }
-        });
-
-        source.on('end', () => {
+        pipeline.on('end', () => {
             resolve();
-            logger.info('parse completed parsing');
-        });
+            logger.info('(pipeline) parse completed parsing');
+        })
 
-        source.on('error', (err) => {
-            let msg = 'Parsing error: ' + err.message;
-            logger.error(msg);
-            reject(new Error(msg));
-        });
+        // streamer.on('startKey', () => {
+        //     campaignStarted = true
+        // });
+        // streamer.on('endKey', () => {
+        //     campaignStarted = false
+        // });
+        //
+        // streamer.on('startString', () => {
+        //     userStarted = true
+        // });
+        // streamer.on('endString', () => {
+        //     userStarted = false
+        // });
+        //
+        // streamer.on('stringChunk', (value) => {
+        //     if (campaignStarted) {
+        //         campaign = value;
+        //     } else if (userStarted) {
+        //         user = value;
+        //         if (handler) {
+        //             handler(campaign, user)
+        //         }
+        //     } else {
+        //         let msg = 'Invalid state';
+        //         logger.error(msg);
+        //         reject(new Error(msg));
+        //     }
+        // });
+        //
+        // parser.on('end', () => {
+        //     resolve();
+        //     logger.info('parse completed parsing');
+        // });
+        //
+        // parser.on('error', (err) => {
+        //     let msg = 'Parsing error: ' + err.message;
+        //     logger.error(msg);
+        //     reject(new Error(msg));
+        // });
+        //
+        // parser.on('data', (data)=>{
+        //     logger.debug('parser on data: ' + util.inspect(data, {showHidden: true, depth: true}));
+        // })
+
+        //////////////////////////////
+        // streamer.on('end',()=>{
+        //     resolve();
+        //     logger.info('(streamer) parse completed parsing');
+        // });
+        // parser.on('end',()=>{
+        //     resolve();
+        //     logger.info('(parser) parse completed parsing');
+        // })
+        //////////////////////////////
     })
 }
 

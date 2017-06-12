@@ -186,15 +186,19 @@ describe('claimListParser', () => {
         });
     });
 
-    describe.only('#parseFile',()=>{
-        it.only('should parse correct json', function (done) {
+    describe('#parseFile',()=>{
+        it('should parse correct json', function (done) {
+            this.timeout(20000);
             let fileName = path.resolve(__dirname, 'test1.json');
             claimListParser.parseFileAsStream(fileName)
-                .then(() => done())
+                .then(() => {
+                done()
+            })
                 .catch(err => done(err))
         });
 
-        it('should parse call handler', function (done) {
+        it.only('should parse call handler', function (done) {
+            this.timeout(20000);
             let userCount = 0;
 
             function handler(campaign, user) {
