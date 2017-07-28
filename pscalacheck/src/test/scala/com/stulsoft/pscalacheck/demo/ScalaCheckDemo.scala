@@ -12,7 +12,7 @@ import org.scalacheck.Properties
   * @see [[https://github.com/rickynils/scalacheck/blob/master/examples/simple-sbt/src/test/scala/Demo.scala original code]]
   * @author Yuriy Stul
   */
-object ScalaCheckDemo extends Properties("Demo") {
+object ScalaCheckDemo extends Properties("ScalaCheckDemo") {
 
   property("myprop") = forAll { l: List[Int] =>
     l.reverse.reverse == l
