@@ -13,5 +13,8 @@ case class Converter1(name: String) {
     *
     * @return the name length
     */
-  def toInt(): Int = name.length
+  def toInt: Int = {
+//    println(s"name is $name")
+    name.length
+  }
 }
