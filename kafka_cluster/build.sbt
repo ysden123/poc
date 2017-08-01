@@ -35,3 +35,9 @@ lazy val clusterProducer = (project in file("clusterProducer"))
   .settings(
     name := "clusterProducer"
   )
+
+lazy val clusterProducerOneConnection = (project in file("clusterProducerOneConnection"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "clusterProducerOneConnection"
+  )
