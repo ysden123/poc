@@ -12,9 +12,6 @@ lazy val commonSettings = Seq(
   organization := "com.stulsoft",
   version := "0.0.1-SNAPSHOT",
   scalaVersion := "2.12.3",
-//  ivyScala := ivyScala.value map {
-//    _.copy(overrideScalaVersion = true)
-//  },
   scalacOptions ++= Seq(
     "-feature",
     "-language:implicitConversions",
