@@ -37,6 +37,8 @@ object Example3 extends App with LazyLogging {
   collection.find(equal("firstName", "Ada")).first().printHeadResult()
   collection.find(equal("lastName", "Lovelace")).first().printHeadResult()
 
+  client.close()
+
   case class Person(_id: ObjectId, firstName: String, lastName: String)
 
   object Person {

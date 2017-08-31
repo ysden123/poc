@@ -4,22 +4,18 @@
 
 package com.stulsoft.pmongodb.example01
 
+import com.mongodb.MongoCredential
+import com.mongodb.MongoCredential._
 import com.stulsoft.pmongodb.example01.Helpers._
 import com.typesafe.scalalogging.LazyLogging
 import org.bson.codecs.configuration.CodecRegistries.{fromProviders, fromRegistries}
 import org.mongodb.scala.bson.ObjectId
 import org.mongodb.scala.bson.codecs.DEFAULT_CODEC_REGISTRY
 import org.mongodb.scala.bson.codecs.Macros._
+import org.mongodb.scala.connection.{ClusterSettings, NettyStreamFactoryFactory, SslSettings}
 import org.mongodb.scala.model.Filters._
-import org.mongodb.scala.{MongoClient, MongoCollection, MongoDatabase}
+import org.mongodb.scala.{MongoClient, MongoClientSettings, MongoCollection, MongoDatabase, ServerAddress}
 
-import com.mongodb.MongoCredential
-import org.mongodb.scala.bson.collection.mutable.Document
-import org.mongodb.scala.{Completed, FindObservable, MongoClient, MongoClientSettings, MongoCollection, MongoDatabase, Observable,Observer, ReadPreference, ServerAddress}
-import org.mongodb.scala.connection.ClusterSettings
-import com.mongodb.MongoCredential._
-import java.util.logging.{Level, Logger}
-import org.mongodb.scala.connection.{NettyStreamFactoryFactory,SslSettings}
 import scala.collection.JavaConverters._
 
 
