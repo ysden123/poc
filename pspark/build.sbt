@@ -1,12 +1,13 @@
 import sbt.Keys.libraryDependencies
 
-lazy val sparkVersion = "2.0.2"
+lazy val sparkVersion = "2.2.0"
 lazy val scalaLoggingVersion = "3.5.0"
 lazy val commonIoVersion = "1.3.2"
+lazy val scalaTestVersion = "3.0.1"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft.pspark",
-  version := "1.1.1",
+  version := "1.1.2",
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq(
     "-feature",
@@ -38,7 +39,8 @@ lazy val util = (project in file("util"))
   .settings(
     libraryDependencies ++= Seq(
       // https://mvnrepository.com/artifact/org.apache.commons/commons-io
-      "org.apache.commons" % "commons-io" % commonIoVersion
+      "org.apache.commons" % "commons-io" % commonIoVersion,
+      "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
     )
   )
 
