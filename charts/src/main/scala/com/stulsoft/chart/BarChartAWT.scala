@@ -9,24 +9,11 @@ import org.jfree.ui.{ApplicationFrame, RefineryUtilities}
 import scala.io.Source
 
 /**
+  * @see [[https://www.tutorialspoint.com/jfreechart/jfreechart_quick_guide.htm AWT Based Application]]
   * @author Yuriy Stul.
   */
 object BarChartAWT extends App {
 
-  /*
-    test()
-
-    def test(): Unit = {
-      val src = Source.fromFile(Utils.getResourceFilePath("carsales.csv"))
-      val data = src.getLines().toList.map(line => line.split(","))
-      val headers = data.head
-      val dataSet = data.tail
-
-      println(headers.mkString("|"))
-      dataSet.foreach(l => println(l.mkString("^")))
-      src.close()
-    }
-  */
   val chart: BarChart_AWT = new BarChart_AWT("Car Usage Statistics", "Wich car do you like?")
 
   class BarChart_AWT(applicationName: String, chartTitle: String) extends ApplicationFrame(applicationName) {
