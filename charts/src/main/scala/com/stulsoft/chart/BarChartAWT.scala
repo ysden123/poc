@@ -1,8 +1,8 @@
 package com.stulsoft.chart
 
 import com.stulsoft.chart.util.Utils
-import org.jfree.chart.{ChartFactory, ChartPanel, JFreeChart}
 import org.jfree.chart.plot.PlotOrientation
+import org.jfree.chart.{ChartFactory, ChartPanel, JFreeChart}
 import org.jfree.data.category.{CategoryDataset, DefaultCategoryDataset}
 import org.jfree.ui.{ApplicationFrame, RefineryUtilities}
 
@@ -50,12 +50,7 @@ object BarChartAWT extends App {
       val information = data.tail
       val dataSet: DefaultCategoryDataset = new DefaultCategoryDataset()
 
-      information.foreach(i => {
-        dataSet.addValue(i(1).toDouble, i(0), headers(0))
-        dataSet.addValue(i(2).toDouble, i(0), headers(1))
-        dataSet.addValue(i(3).toDouble, i(0), headers(2))
-        dataSet.addValue(i(4).toDouble, i(0), headers(3))
-      })
+      information.foreach(i => (1 to 4).foreach(column => dataSet.addValue(i(column).toDouble, i(0), headers(column - 1))))
 
       dataSet
     }
