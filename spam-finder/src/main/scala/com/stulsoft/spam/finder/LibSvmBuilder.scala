@@ -4,56 +4,54 @@
 
 package com.stulsoft.spam.finder
 
+import java.io.{File, PrintWriter}
+
+import org.apache.spark.sql.{DataFrame, SparkSession}
+
 import scala.io.Source
 
 /**
   * @author Yuriy Stul
   */
 object LibSvmBuilder {
-  def build(path: String): Seq[String] = {
+  def build(spark: SparkSession, path: String): DataFrame = {
     val dictionary = buildDictionary(path)
 
     val src = Source.fromFile(Utils.getResourceFilePath(path))
     val lines = src.getLines().toList
     src.close()
 
-    /*
-        val data = lines.map(line => {
-          line.split("\\s+")
-            .map(_.toLowerCase)
-            .map(_.replaceAll(",", "")).map(word =>
-            dictionary.find(e => e._1 == word) match {
-              case Some((_, index)) => s"$index:1"
-              case None => ""
-            })
-            .mkString(" ")
-        }).map(_ => "1 " + _).toSeq
-        println(data)
-    */
-    lines.map(line => {
+    val rows = lines.map(line => {
       line.split("\\s+")
         .map(_.toLowerCase)
         .map(_.replaceAll(",", ""))
         .map(word => {
           dictionary.find(e => e._1 == word) match {
-            case Some((_, index)) => s"$index:1"
-            case None => ""
+            case Some((_, index)) => index + 1
+            case None => 0
           }
         })
+        .sorted
+        .map(index => s"$index:1")
         .mkString(" ")
     })
       .map(s => s"1 $s")
+    val pw = new PrintWriter(new File("temp.txt"))
+    rows.foreach(pw.println)
+    pw.close()
+
+    spark.read.format("libsvm").load("temp.txt")
   }
 
-  def buildDictionary(path: String): Set[(String, Int)] = {
+  private def buildDictionary(path: String): Set[(String, Int)] = {
     val src = Source.fromFile(Utils.getResourceFilePath(path))
-    val lines = src.getLines()
+    val lines = src.getLines().toList
+    src.close()
 
     val dictionary = lines.flatMap(line => line.split("\\s+")
       .map(_.toLowerCase))
       .map(_.replaceAll(",", ""))
       .toSet[String].zipWithIndex
-    src.close()
     dictionary
   }
 }
@@ -62,32 +60,19 @@ object LibSvmBuilderTest extends App {
   test()
 
   def test(): Unit = {
-    //    val data = LibSvmBuilder.build("training.txt")
-    //
-    //    data.find(e => e._1 == "viagra") match {
-    //      case Some((word, index)) => println(s"Found word $word with index $index")
-    //      case None => println("No word found")
-    //    }
-    //
-    //    data.find(e => e._2 == 6) match {
-    //      case Some((word, index)) => println(s"Found word $word with index $index")
-    //      case None => println("No word found")
-    //    }
-    //
-    //    data.find(e => e._2 == 0) match {
-    //      case Some((word, index)) => println(s"Found word $word with index $index")
-    //      case None => println("No word found")
-    //    }
-    //
-    //    data.find(e => e._2 == 10) match {
-    //      case Some((word, index)) => println(s"Found word $word with index $index")
-    //      case None => println("No word found")
-    //    }
-    //    println(s"data: $data")
     println("==>test")
-    //    val data = LibSvmBuilder.buildDictionary("training.txt")
-    val data = LibSvmBuilder.build("training.txt")
+
+    val spark: SparkSession = SparkSession.builder.
+      master("local")
+      .appName("Test")
+      .getOrCreate()
+
+    val data = LibSvmBuilder.build(spark, "training.txt")
     println(data)
+
+    data.show()
+
+    spark.stop()
     println("<==test")
   }
 }
