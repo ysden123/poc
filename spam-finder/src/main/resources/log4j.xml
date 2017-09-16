@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration debug="false">
+    <appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="logs/spam-finder.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="-5p %c %x - %m%n"/>
+        </layout>
+    </appender>
+
+    <root>
+        <priority value="error"/>
+        <appender-ref ref="fileAppender"/>
+    </root>
+</configuration>
