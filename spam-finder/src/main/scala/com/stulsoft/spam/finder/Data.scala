@@ -15,22 +15,22 @@ import scala.io.Source
   * @author Yuriy Stul
   */
 sealed case class Data(spark: SparkSession, path: String) {
-  private var dataFrame: DataFrame = _
-  private var dictionary: Set[(String, Int)] = _
+  private var dataFrameValues: DataFrame = _
+  private var dictionaryValues: Set[(String, Int)] = _
 
   /**
-    * Returna a data frame
+    * Returns a data frame
     *
     * @return the data frame
     */
-  def getDataFrame(): DataFrame = dataFrame
+  def dataFrame: DataFrame = dataFrameValues
 
   /**
     * Returns a dictionary
     *
     * @return the dictionary (word, index)
     */
-  def getDictionary(): Set[(String, Int)] = dictionary
+  def wordDictionary: Set[(String, Int)] = dictionaryValues
 
   /**
     * Returns word for specified index
@@ -39,7 +39,7 @@ sealed case class Data(spark: SparkSession, path: String) {
     * @return the word for specified index
     */
   def getWordByIndex(index: Int): Option[String] = {
-    dictionary.find(e => e._2 == index) match {
+    dictionaryValues.find(e => e._2 == index) match {
       case Some(e) => Some(e._1)
       case None => None
     }
@@ -52,15 +52,15 @@ sealed case class Data(spark: SparkSession, path: String) {
     * @return the index (1, ...) for specified word
     */
   def getIndexByWord(word: String): Option[Int] = {
-    dictionary.find(e => e._1 == word.toLowerCase) match {
+    dictionaryValues.find(e => e._1 == word.toLowerCase) match {
       case Some(e) => Some(e._2)
       case None => None
     }
   }
 
   private def init(): Unit = {
-    dictionary = buildDictionary()
-    dataFrame = buildDataFrame()
+    dictionaryValues = buildDictionary()
+    dataFrameValues = buildDataFrame()
   }
 
   private def buildDictionary(): Set[(String, Int)] = {
@@ -85,7 +85,7 @@ sealed case class Data(spark: SparkSession, path: String) {
         .map(_.toLowerCase)
         .map(_.replaceAll(",", ""))
         .map(word => {
-          dictionary.find(e => e._1 == word) match {
+          dictionaryValues.find(e => e._1 == word) match {
             case Some((_, index)) => index
             case None => 0
           }
@@ -95,11 +95,13 @@ sealed case class Data(spark: SparkSession, path: String) {
         .mkString(" ")
     })
       .map(s => s"1 $s")
-    val pw = new PrintWriter(new File("temp.txt"))
+    val tempFile = File.createTempFile("dataFrame", ".txt")
+    val pw = new PrintWriter(tempFile)
     rows.foreach(pw.println)
     pw.close()
 
-    spark.read.format("libsvm").load("temp.txt")
+    val data = spark.read.format("libsvm").load(tempFile.getAbsolutePath)
+    data
   }
 
   init()
@@ -118,10 +120,10 @@ object DataTest extends App {
     val data = Data(spark, "training.txt")
 
     println("DataFrame:")
-    data.getDataFrame().show()
+    data.dataFrame.show()
 
     println("Dictionary:")
-    println(data.getDictionary())
+    println(data.wordDictionary)
 
     data.getIndexByWord("cheap") match {
       case Some(index) => println(s"cheap has index $index")
