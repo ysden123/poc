@@ -14,7 +14,7 @@ import scala.io.Source
   *
   * @author Yuriy Stul
   */
-sealed case class Data(spark: SparkSession, path: String) {
+sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: String) {
   private var dataFrameValues: DataFrame = _
   private var dictionaryValues: Set[(String, Int)] = _
 
@@ -64,9 +64,15 @@ sealed case class Data(spark: SparkSession, path: String) {
   }
 
   private def buildDictionary(): Set[(String, Int)] = {
-    val src = Source.fromFile(Utils.getResourceFilePath(path))
-    val lines = src.getLines().toList
-    src.close()
+    val spamSrc = Source.fromFile(Utils.getResourceFilePath(spamPath))
+    val spamLines = spamSrc.getLines().toList
+    spamSrc.close()
+
+    val notSpamSrc = Source.fromFile(Utils.getResourceFilePath(notSpamPath))
+    val notSpamLines = notSpamSrc.getLines().toList
+    notSpamSrc.close()
+
+    val lines = spamLines ++ notSpamLines
 
     lines.flatMap(line => line.split("\\s+")
       .map(_.toLowerCase))
@@ -76,11 +82,15 @@ sealed case class Data(spark: SparkSession, path: String) {
   }
 
   private def buildDataFrame(): DataFrame = {
-    val src = Source.fromFile(Utils.getResourceFilePath(path))
-    val lines = src.getLines().toList
-    src.close()
+    val spamSrc = Source.fromFile(Utils.getResourceFilePath(spamPath))
+    val spamLines = spamSrc.getLines().toList
+    spamSrc.close()
 
-    val rows = lines.map(line => {
+    val notSpamSrc = Source.fromFile(Utils.getResourceFilePath(notSpamPath))
+    val notSpamLines = notSpamSrc.getLines().toList
+    notSpamSrc.close()
+
+    val rows = spamLines.map(line => {
       line.split("\\s+")
         .map(_.toLowerCase)
         .map(_.replaceAll(",", ""))
@@ -94,7 +104,21 @@ sealed case class Data(spark: SparkSession, path: String) {
         .map(index => s"$index:1")
         .mkString(" ")
     })
-      .map(s => s"1 $s")
+      .map(s => s"1 $s") ++ notSpamLines.map(line => {
+      line.split("\\s+")
+        .map(_.toLowerCase)
+        .map(_.replaceAll(",", ""))
+        .map(word => {
+          dictionaryValues.find(e => e._1 == word) match {
+            case Some((_, index)) => index
+            case None => 0
+          }
+        })
+        .sorted
+        .map(index => s"$index:1")
+        .mkString(" ")
+    })
+      .map(s => s"0 $s")
     val tempFile = File.createTempFile("dataFrame", ".txt")
     val pw = new PrintWriter(tempFile)
     rows.foreach(pw.println)
@@ -117,7 +141,7 @@ object DataTest extends App {
       .appName("Test")
       .getOrCreate()
 
-    val data = Data(spark, "training.txt")
+    val data = Data(spark, "spam.txt", "not-spam.txt")
 
     println("DataFrame:")
     data.dataFrame.show()
