@@ -6,6 +6,8 @@ package com.stulsoft.spam.finder
 
 import java.io.{File, PrintWriter}
 
+import org.apache.spark.ml.Transformer
+import org.apache.spark.ml.classification.LogisticRegression
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 import scala.io.Source
@@ -17,6 +19,7 @@ import scala.io.Source
 sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: String) {
   private var dataFrameValues: DataFrame = _
   private var dictionaryValues: Set[(String, Int)] = _
+  private var model: Transformer = _
 
   /**
     * Returns a data frame
@@ -61,6 +64,16 @@ sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: Strin
   private def init(): Unit = {
     dictionaryValues = buildDictionary()
     dataFrameValues = buildDataFrame()
+
+    val lr = new LogisticRegression()
+      .setMaxIter(10)
+      .setRegParam(0.3)
+      .setElasticNetParam(0.8)
+    // Fit the model
+    model = lr.fit(dataFrameValues)
+
+    // Print the coefficients and intercept for logistic regression
+    //    println(s"Coefficients: ${model.coefficients} Intercept: ${model.intercept}")
   }
 
   private def buildDictionary(): Set[(String, Int)] = {
@@ -158,6 +171,7 @@ object DataTest extends App {
       case Some(word) => println(s"Index 7 refer to $word")
       case None => println(s"Index 7 doesn't refer to any word")
     }
+
 
     spark.stop()
     println("<==test")
