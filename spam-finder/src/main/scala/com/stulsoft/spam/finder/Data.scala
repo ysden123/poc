@@ -68,7 +68,8 @@ sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: Strin
     val lines = testSrc.getLines().toList
     testSrc.close()
 
-    val rows = linesToRows(Seq((1, lines)))
+    //    val rows = linesToRows(Seq((1, lines)))
+    val rows = linesToRows(Seq((0, lines)))
     val tempFile = File.createTempFile("dataFrame", ".txt")
     val pw = new PrintWriter(tempFile)
     rows.foreach(pw.println)
@@ -77,10 +78,6 @@ sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: Strin
     val data = spark.read.format("libsvm").load(tempFile.getAbsolutePath)
     data
   }
-
-  private def clearWords(words: Seq[String]): Seq[String] = words.map(_.toLowerCase)
-    .map(_.replaceAll(",", ""))
-    .map(_.replaceAll("\\.", ""))
 
   private def init(): Unit = {
     dictionaryValues = buildDictionary()
@@ -197,6 +194,14 @@ object DataTest extends App {
     val resultForSpam = data.gtModel().transform(testDataWithSpam)
     println("resultForSpam:")
     resultForSpam.show()
+
+    val testDataWithoutSpam = data.testData("testWithoutSpam.txt")
+    println("testWithoutSpam:")
+    testDataWithoutSpam.show()
+
+    val resultForNotSpam = data.gtModel().transform(testDataWithoutSpam)
+    println("resultForNotSpam:")
+    resultForNotSpam.show()
 
     spark.stop()
     println("<==test")
