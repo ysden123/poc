@@ -61,6 +61,12 @@ sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: Strin
     }
   }
 
+  def gtModel(): Transformer = model
+
+  private def clearWords(words: Seq[String]): Seq[String] = words.map(_.toLowerCase)
+    .map(_.replaceAll(",", ""))
+    .map(_.replaceAll("\\.", ""))
+
   private def init(): Unit = {
     dictionaryValues = buildDictionary()
     dataFrameValues = buildDataFrame()
@@ -87,10 +93,9 @@ sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: Strin
 
     val lines = spamLines ++ notSpamLines
 
-    lines.flatMap(line => line.split("\\s+")
-      .map(_.toLowerCase))
-      .map(_.replaceAll(",", ""))
-      .toSet[String].zipWithIndex
+    lines.flatMap(line => lineToWords(line))
+      .toSet[String]
+      .zipWithIndex
       .map(e => (e._1, e._2 + 1))
   }
 
@@ -103,35 +108,7 @@ sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: Strin
     val notSpamLines = notSpamSrc.getLines().toList
     notSpamSrc.close()
 
-    val rows = spamLines.map(line => {
-      line.split("\\s+")
-        .map(_.toLowerCase)
-        .map(_.replaceAll(",", ""))
-        .map(word => {
-          dictionaryValues.find(e => e._1 == word) match {
-            case Some((_, index)) => index
-            case None => 0
-          }
-        })
-        .sorted
-        .map(index => s"$index:1")
-        .mkString(" ")
-    })
-      .map(s => s"1 $s") ++ notSpamLines.map(line => {
-      line.split("\\s+")
-        .map(_.toLowerCase)
-        .map(_.replaceAll(",", ""))
-        .map(word => {
-          dictionaryValues.find(e => e._1 == word) match {
-            case Some((_, index)) => index
-            case None => 0
-          }
-        })
-        .sorted
-        .map(index => s"$index:1")
-        .mkString(" ")
-    })
-      .map(s => s"0 $s")
+    val rows = linesToRows(Seq((1, spamLines), (0, notSpamLines)))
     val tempFile = File.createTempFile("dataFrame", ".txt")
     val pw = new PrintWriter(tempFile)
     rows.foreach(pw.println)
@@ -139,6 +116,49 @@ sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: Strin
 
     val data = spark.read.format("libsvm").load(tempFile.getAbsolutePath)
     data
+  }
+
+  private def linesToRows(input: Seq[(Int, Seq[String])]): Seq[String] = {
+    input.flatMap(in => {
+      in._2
+        .map(line => lineToWords(line)
+          .map(word => {
+            dictionaryValues.find(e => e._1 == word) match {
+              case Some((_, index)) => index
+              case None => 0
+            }
+          })
+          .sorted
+          .map(index => s"$index:1")
+          .mkString(" ")
+        )
+        .map(s => s"${in._1} $s")
+    })
+  }
+
+  private def lineToWords(line: String): Seq[String] = {
+    line.split("\\s+")
+      .map(_.toLowerCase)
+      .map(_.replaceAll(",", ""))
+      .map(_.replaceAll("\\.", ""))
+  }
+
+  private def linesToRows2(lines: Seq[String]): Seq[String] = {
+    lines.map(line => lineToWords(line)
+      .map(word => {
+        dictionaryValues.find(e => e._1 == word) match {
+          case Some((_, index)) => index
+          case None => 0
+        }
+      })
+      .sorted
+      .map(index => s"$index:1")
+      .mkString(" ")
+    )
+      .sorted
+      .map(index => s"$index:1")
+      .mkString(" ")
+      .map(s => s"1 $s")
   }
 
   init()
@@ -171,6 +191,17 @@ object DataTest extends App {
       case Some(word) => println(s"Index 7 refer to $word")
       case None => println(s"Index 7 doesn't refer to any word")
     }
+    /*
+
+        // 9:1 10:1 - I need buy drugs
+        val testDataWithSpam:DataFrame = spark.read.format("libsvm").load(Utils.getResourceFilePath("testWithSpam.txt"))
+        println("testDataWithSpam:")
+        testDataWithSpam.show()
+
+        val resultForSpam = data.gtModel().transform(testDataWithSpam)
+        println("resultForSpam:")
+        resultForSpam.show()
+    */
 
 
     spark.stop()
