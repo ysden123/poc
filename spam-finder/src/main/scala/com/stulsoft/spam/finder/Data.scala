@@ -63,6 +63,21 @@ sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: Strin
 
   def gtModel(): Transformer = model
 
+  def testData(path: String): DataFrame = {
+    val testSrc = Source.fromFile(Utils.getResourceFilePath(path))
+    val lines = testSrc.getLines().toList
+    testSrc.close()
+
+    val rows = linesToRows(Seq((1, lines)))
+    val tempFile = File.createTempFile("dataFrame", ".txt")
+    val pw = new PrintWriter(tempFile)
+    rows.foreach(pw.println)
+    pw.close()
+
+    val data = spark.read.format("libsvm").load(tempFile.getAbsolutePath)
+    data
+  }
+
   private def clearWords(words: Seq[String]): Seq[String] = words.map(_.toLowerCase)
     .map(_.replaceAll(",", ""))
     .map(_.replaceAll("\\.", ""))
@@ -128,6 +143,7 @@ sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: Strin
               case None => 0
             }
           })
+          .filter(index => index > 0)
           .sorted
           .map(index => s"$index:1")
           .mkString(" ")
@@ -141,24 +157,6 @@ sealed case class Data(spark: SparkSession, spamPath: String, notSpamPath: Strin
       .map(_.toLowerCase)
       .map(_.replaceAll(",", ""))
       .map(_.replaceAll("\\.", ""))
-  }
-
-  private def linesToRows2(lines: Seq[String]): Seq[String] = {
-    lines.map(line => lineToWords(line)
-      .map(word => {
-        dictionaryValues.find(e => e._1 == word) match {
-          case Some((_, index)) => index
-          case None => 0
-        }
-      })
-      .sorted
-      .map(index => s"$index:1")
-      .mkString(" ")
-    )
-      .sorted
-      .map(index => s"$index:1")
-      .mkString(" ")
-      .map(s => s"1 $s")
   }
 
   init()
@@ -191,18 +189,14 @@ object DataTest extends App {
       case Some(word) => println(s"Index 7 refer to $word")
       case None => println(s"Index 7 doesn't refer to any word")
     }
-    /*
 
-        // 9:1 10:1 - I need buy drugs
-        val testDataWithSpam:DataFrame = spark.read.format("libsvm").load(Utils.getResourceFilePath("testWithSpam.txt"))
-        println("testDataWithSpam:")
-        testDataWithSpam.show()
+    val testDataWithSpam = data.testData("testWithSpam.txt")
+    println("testDataWithSpam:")
+    testDataWithSpam.show()
 
-        val resultForSpam = data.gtModel().transform(testDataWithSpam)
-        println("resultForSpam:")
-        resultForSpam.show()
-    */
-
+    val resultForSpam = data.gtModel().transform(testDataWithSpam)
+    println("resultForSpam:")
+    resultForSpam.show()
 
     spark.stop()
     println("<==test")
