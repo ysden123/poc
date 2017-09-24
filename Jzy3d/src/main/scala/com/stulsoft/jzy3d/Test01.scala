@@ -14,15 +14,14 @@ import org.jzy3d.plot3d.rendering.canvas.Quality
 
 
 /**
+  * @see [[http://jzy3d.org/]]
   * @author Yuriy Stul
   */
 object Test01 extends App {
   test()
 
   def test(): Unit = {
-    val mapper: Mapper = new Mapper() {
-      override def f(x: Double, y: Double): Double = 10 * Math.sin(x / 10) * Math.cos(y / 20)
-    }
+    val mapper: Mapper = (x: Double, y: Double) => 10 * Math.sin(x / 10) * Math.cos(y / 20)
 
     // Define range and precision for the function to plot// Define range and precision for the function to plot
     val range: org.jzy3d.maths.Range = new org.jzy3d.maths.Range(-150, 150)
