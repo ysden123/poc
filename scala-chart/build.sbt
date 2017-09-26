@@ -1,8 +1,8 @@
 import sbt.Keys.libraryDependencies
 
 lazy val scalaChartVersion = "0.5.1"
-lazy val itextpdfVersion = "5.5.6"
-lazy val jfreesvgVersion = "3.0"
+lazy val itextpdfVersion = "5.5.10"
+lazy val jfreesvgVersion = "3.2"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
