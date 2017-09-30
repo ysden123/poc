@@ -10,10 +10,10 @@ import com.datastax.driver.core._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
-//import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
 /**
+  * @see [[http://eax.me/scala-cassandra/]]
   * @author Yuriy Stul
   */
 object SimpleApp extends App {

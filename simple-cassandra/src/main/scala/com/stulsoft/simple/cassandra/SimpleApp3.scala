@@ -8,14 +8,16 @@ import java.util.concurrent.TimeUnit
 
 import com.datastax.driver.core.Cluster
 
-import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
-/** Insert one by one
+/**
+  * Insert all concurrently
+  *
   * @author Yuriy Stul
   */
-object SimpleApp2 extends App {
+object SimpleApp3 extends App {
   test()
 
   def test(): Unit = {
@@ -35,10 +37,12 @@ object SimpleApp2 extends App {
     Await.ready(f1, Duration(10, TimeUnit.SECONDS))
 
     println("Inserting items")
-    (1 to 3).foreach(i => {
+
+    val f2s = for {i <- 1 to 15} yield {
       val todo = TodoDTO(i, s"The item # $i")
-      Await.ready(todoDao.insert(todo), Duration(10, TimeUnit.SECONDS))
-    })
+      todoDao.insert(todo)
+    }
+    Await.ready(Future.sequence(f2s), Duration(10, TimeUnit.SECONDS))
 
     println("Items:")
     Await.result(todoDao.select, Duration(10, TimeUnit.SECONDS))
@@ -53,4 +57,5 @@ object SimpleApp2 extends App {
 
     println("<==test")
   }
+
 }
