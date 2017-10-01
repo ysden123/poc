@@ -24,45 +24,49 @@ object SimpleApp extends App {
       .build()
   }
 
-  val session = cluster.connect("test1")
-  val todoDao = TodoDAO(session)
+  try {
+    val session = cluster.connect("test1")
+    val todoDao = TodoDAO(session)
 
-  val f = {
-    for {
-      _ <- {
-        println("Creating table")
-        todoDao.createTable
-      }
-      _ = println("Inserting items")
-      _ <- {
-        fTraverse(1 to 3) { n =>
-          val item = TodoDTO(n, s"Todo item $n")
-          todoDao.insert(item)
+    lazy val f = {
+      for {
+        _ <- {
+          println("Creating table")
+          todoDao.createTable
         }
-      }
-      items <- todoDao.select
-      _ = println(s"Items: $items")
-      _ = println("Deleting item 2")
-      _ <- todoDao.delete(2)
-      newItems <- todoDao.select
-      _ = println(s"New items: $newItems")
-      _ <- todoDao.dropTable
-    } yield {}
+        _ = println("Inserting items")
+        _ <- {
+          fTraverse(1 to 3) { n =>
+            val item = TodoDTO(n, s"Todo item $n")
+            todoDao.insert(item)
+          }
+        }
+        items <- todoDao.select
+        _ = println(s"Items: $items")
+        _ = println("Deleting item 2")
+        _ <- todoDao.delete(2)
+        newItems <- todoDao.select
+        _ = println(s"New items: $newItems")
+        _ <- todoDao.dropTable
+      } yield {}
+    }
+
+    f onComplete {
+      case Success(r) => println(s"Success $r")
+      case Failure(e) => println(s"ERROR: $e")
+    }
+
+    def fTraverse[A, B](xs: Seq[A])(f: A => Future[B]): Future[Seq[B]] = {
+      if (xs.isEmpty) Future successful Seq.empty[B]
+      else f(xs.head) flatMap { fh => fTraverse(xs.tail)(f) map (r => fh +: r) }
+    }
+
+    Await.ready(f, scala.concurrent.duration.Duration(30, TimeUnit.SECONDS))
+    session.close()
+    cluster.close()
+    println("Done!")
   }
-
-  f onComplete {
-    case Success(r) => println(s"Success $r")
-    case Failure(e) => println(s"ERROR: $e")
+  catch{
+    case e:Exception => println(s"Failure: ${e.getMessage}")
   }
-
-  def fTraverse[A, B](xs: Seq[A])(f: A => Future[B]): Future[Seq[B]] = {
-    if (xs.isEmpty) Future successful Seq.empty[B]
-    else f(xs.head) flatMap { fh => fTraverse(xs.tail)(f) map (r => fh +: r) }
-  }
-
-  Await.ready(f, scala.concurrent.duration.Duration(30, TimeUnit.SECONDS))
-  session.close()
-  cluster.close()
-  println("Done!")
-
 }
