@@ -5,10 +5,11 @@ lazy val scalaLoggingVersion = "3.5.0"
 lazy val loggingVersion = "2.7"
 lazy val awsLambdaJavaVersion = "1.1.0"
 lazy val jacksonModuleScalaVersion = "2.9.1"
+lazy val scalatestVersion = "3.0.4"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
-  version := "0.0.1",
+  version := "0.0.2",
   scalaVersion := "2.12.3",
   scalacOptions ++= Seq(
     "-feature",
@@ -37,7 +38,8 @@ lazy val test2 = (project in file("test2"))
   .settings(commonSettings: _*)
   .settings(
     libraryDependencies ++= Seq(
-      "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonModuleScalaVersion
+      "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonModuleScalaVersion,
+      "org.scalatest" % "scalatest_2.12" % scalatestVersion % "test"
     )
   )
   .settings(
