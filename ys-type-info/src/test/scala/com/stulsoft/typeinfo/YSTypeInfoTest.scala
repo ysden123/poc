@@ -47,4 +47,42 @@ class YSTypeInfoTest extends FlatSpec with Matchers {
     fields.exists(f => f.getName == "fieldThree") shouldBe true
   }
 
+  "declaredMethods" should "return declared methods" in {
+    class C1(val fieldOne: String, val fieldTwo: Int) extends YSTypeInfo {
+      def multiple(multiplier: Int): Int = {
+        fieldTwo * multiplier
+      }
+    }
+
+    val methods = new C1("field one", 123).declaredMethods
+    methods.length shouldBe 1
+    methods.exists(f => f.getName == "multiple") shouldBe true
+  }
+
+  it should "work with inheritance 1" in {
+    class C1(val fieldOne: String)
+    class C2(fieldOne: String, val fieldTwo: Int) extends C1(fieldOne) with YSTypeInfo {
+      def multiple(multiplier: Int): Int = {
+        fieldTwo * multiplier
+      }
+    }
+    val methods = new C2("field one", 123).declaredMethods
+    methods.length shouldBe 1
+    methods.exists(f => f.getName == "multiple") shouldBe true
+  }
+
+  it should "work with inheritance 2" in {
+    class C1(val fieldOne: String) {
+      def lengthCalculator: Int = fieldOne.length
+    }
+    class C2(fieldOne: String, val fieldTwo: Int) extends C1(fieldOne) with YSTypeInfo {
+      def multiple(multiplier: Int): Int = {
+        fieldTwo * multiplier
+      }
+    }
+    val methods = new C2("field one", 123).declaredMethods
+    methods.length shouldBe 1
+    methods.exists(f => f.getName == "multiple") shouldBe true
+  }
+
 }
