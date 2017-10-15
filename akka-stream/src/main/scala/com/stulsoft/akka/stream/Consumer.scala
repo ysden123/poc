@@ -16,12 +16,12 @@ object Consumer {
 
 class Consumer(uiActor: ActorRef) extends Actor {
 
-  val processingNode = context.parent
+  private val processingNode = context.parent
 
   var questions = List.empty[String]
   val maxBoundedQuestions = 10
 
-  def receive = {
+  def receive:Actor.Receive = {
     case Load =>
       println("Loading questions")
       processingNode ! StartProducingQuestions(None)

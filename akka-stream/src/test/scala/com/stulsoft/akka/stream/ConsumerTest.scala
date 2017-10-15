@@ -12,7 +12,7 @@ import com.stulsoft.akka.stream.Producer.EndOfFileStream
 class ConsumerTest extends MultiThreadedActorContext {
 
   val parentActor = TestProbe()
-  val consumer = parentActor.childActorOf(Consumer.props(testActor))
+  private val consumer = parentActor.childActorOf(Consumer.props(testActor))
 
   "Consumer" must {
     "send StartProducingQuestions to parent actor" in {

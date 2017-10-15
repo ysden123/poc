@@ -21,17 +21,17 @@ object ProcessingNode {
   case class GetConsumer()
 
   def props(uiActor: ActorRef) = Props(new ProcessingNode(uiActor))
-  def isQuestion(trimmed: String) = trimmed.endsWith("?") || trimmed.endsWith("?\"")
+  def isQuestion(trimmed: String):Boolean = trimmed.endsWith("?") || trimmed.endsWith("?\"")
 }
 
 class ProcessingNode(uiActor: ActorRef) extends Actor {
 
   var shouldProduce = false
 
-  val consumer = context.actorOf(Consumer.props(uiActor))
-  val producer = context.actorOf(Producer.props(self))
+  private val consumer = context.actorOf(Consumer.props(uiActor))
+  private val producer = context.actorOf(Producer.props(self))
 
-  def receive = {
+  def receive:Actor.Receive = {
     case StartProducingQuestions(testProducer) =>
       shouldProduce = true
       testProducer.getOrElse(producer) ! Produce

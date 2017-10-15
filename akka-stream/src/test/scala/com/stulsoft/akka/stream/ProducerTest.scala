@@ -12,7 +12,7 @@ import com.stulsoft.akka.stream.Producer.{Line, Produce}
 
 class ProducerTest extends MultiThreadedActorContext {
 
-  val producer = system.actorOf(Producer.props(testActor))
+  private val producer = system.actorOf(Producer.props(testActor))
   val targetString = "THE COMPLETE SHERLOCK HOLMES"
 
   "Producer" must {

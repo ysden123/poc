@@ -16,7 +16,7 @@ import scala.concurrent.duration.DurationInt
 object ConsoleQuestionApp extends App {
   val system = ActorSystem("question-app")
   val ui = system.actorOf(Props[ConsoleClient])
-  implicit val timeout = Timeout(100 second)
+  implicit val timeout:Timeout = Timeout(100 second)
   val processingNode = system.actorOf(ProcessingNode.props(ui))
   val consumerFuture = processingNode.ask(GetConsumer()).mapTo[ActorRef]
 

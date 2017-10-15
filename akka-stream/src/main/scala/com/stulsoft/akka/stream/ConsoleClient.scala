@@ -7,7 +7,7 @@ package com.stulsoft.akka.stream
 import akka.actor.Actor
 
 class ConsoleClient extends Actor {
-  def receive = {
+  def receive:Actor.Receive = {
     case (x::xs) => println("Received data:")
       println((x::xs).mkString("\n"))
   }
