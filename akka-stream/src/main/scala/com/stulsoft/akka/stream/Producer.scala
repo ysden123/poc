@@ -21,6 +21,7 @@ object Producer {
 
 class Producer(processingNode: ActorRef) extends Actor {
 
+  println(Utils.getResourceFilePath("cano.txt"))
   private val lineStream = Source.fromFile(Utils.getResourceFilePath("cano.txt")).getLines
 
   def receive:Actor.Receive = {
