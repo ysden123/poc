@@ -1,28 +1,28 @@
 package com.stulsoft.file
 
-import java.io.FileNotFoundException
-
 import scala.io.Source
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Try}
 
 /**
   * @author Yuriy Stul.
   */
 object Utils {
+  /**
+    * Returns a Source from specified file name.
+    *
+    * @param name specifies the file; it may be a file in resources and in JAR as well, or it may be any file
+    * @return the Source from specified file name.
+    */
   def source(name: String): Try[Source] = {
     try {
-      val s = Source.fromResource(name)
-      Success(s)
-//      Try(Source.fromResource(name)).recover(throw new FileNotFoundException(name))
+      if (getClass.getClassLoader.getResourceAsStream(name) != null) {
+        Try(Source.fromResource(name))
+      } else {
+        Try(Source.fromFile(name))
+      }
     }
     catch {
-      case e: Exception =>
-        try {
-          Try(Source.fromFile(name))
-        }
-        catch {
-          case e: Exception => Failure(e)
-        }
+      case e: Exception => Failure(e)
     }
   }
 }
