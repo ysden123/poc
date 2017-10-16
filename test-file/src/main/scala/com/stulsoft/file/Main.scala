@@ -6,10 +6,13 @@ import scala.util.{Failure, Success}
   * @author Yuriy Stul.
   */
 object Main extends App {
-  test()
+  testRunner("resourceMain.txt")
+  testRunner("nonResource.txt")
+  testRunner("ERRORResource.txt")
 
-  def test(): Unit = {
-    val fn = "resourceMain.txt"
+  def testRunner(fn:String): Unit ={
+    println("==>testRunner")
+    println(s"Use file $fn")
     Utils.source(fn) match {
       case Success(source) =>
         println("got source")
@@ -18,5 +21,6 @@ object Main extends App {
       case Failure(e) =>
         println(s"Failed getting source: ${e.getMessage}")
     }
+    println("<==testRunner")
   }
 }

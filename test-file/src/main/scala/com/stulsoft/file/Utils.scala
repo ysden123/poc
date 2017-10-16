@@ -1,5 +1,7 @@
 package com.stulsoft.file
 
+import java.io.FileNotFoundException
+
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
@@ -9,10 +11,18 @@ import scala.util.{Failure, Success, Try}
 object Utils {
   def source(name: String): Try[Source] = {
     try {
-      Success(Source.fromResource(name, getClass.getClassLoader))
+      val s = Source.fromResource(name)
+      Success(s)
+//      Try(Source.fromResource(name)).recover(throw new FileNotFoundException(name))
     }
     catch {
-      case e: Exception => Failure(e)
+      case e: Exception =>
+        try {
+          Try(Source.fromFile(name))
+        }
+        catch {
+          case e: Exception => Failure(e)
+        }
     }
   }
 }
