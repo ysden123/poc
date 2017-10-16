@@ -5,9 +5,7 @@
 package com.stulsoft.akka.stream
 
 import akka.testkit.TestProbe
-import com.stulsoft.akka.stream.Consumer.Load
-import com.stulsoft.akka.stream.ProcessingNode.{StartProducingQuestions, StopProducingQuestions}
-import com.stulsoft.akka.stream.Producer.EndOfFileStream
+import com.stulsoft.akka.stream.Messages.{EndOfFileStream, Load, StartProducingQuestions, StopProducingQuestions}
 
 class ConsumerTest extends MultiThreadedActorContext {
 
@@ -28,7 +26,7 @@ class ConsumerTest extends MultiThreadedActorContext {
 
     "receive string 10 times, and send StopProducingQuestions then " +
       "wait for 2 sec and send StartProducingQuestions again" in {
-      for(i <- 0 until 10) {
+      for (i <- 0 until 10) {
         consumer ! "hi?"
       }
       consumer ! "hi?"

@@ -4,34 +4,28 @@
 
 package com.stulsoft.akka.stream
 
-import com.stulsoft.akka.stream.ProcessingNode._
 import akka.actor.{Actor, ActorRef, Props}
-import com.stulsoft.akka.stream.ProcessingNode.{GetConsumer, ShouldProduce, StartProducingQuestions, StopProducingQuestions}
-import com.stulsoft.akka.stream.Producer.{EndOfFileStream, Line, Produce}
+import akka.pattern.pipe
+import com.stulsoft.akka.stream.Messages._
+import com.stulsoft.akka.stream.ProcessingNode._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import akka.pattern.pipe
 
 object ProcessingNode {
 
-  case class ShouldProduce(out: ActorRef)
-  case class StartProducingQuestions(producer: Option[ActorRef])
-  case object StopProducingQuestions
-  case class GetConsumer()
-
   def props(uiActor: ActorRef) = Props(new ProcessingNode(uiActor))
-  def isQuestion(trimmed: String):Boolean = trimmed.endsWith("?") || trimmed.endsWith("?\"")
+
+  def isQuestion(trimmed: String): Boolean = trimmed.endsWith("?") || trimmed.endsWith("?\"")
 }
 
 class ProcessingNode(uiActor: ActorRef) extends Actor {
 
-  var shouldProduce = false
-
   private val consumer = context.actorOf(Consumer.props(uiActor))
   private val producer = context.actorOf(Producer.props(self))
+  var shouldProduce = false
 
-  def receive:Actor.Receive = {
+  def receive: Actor.Receive = {
     case StartProducingQuestions(testProducer) =>
       shouldProduce = true
       testProducer.getOrElse(producer) ! Produce

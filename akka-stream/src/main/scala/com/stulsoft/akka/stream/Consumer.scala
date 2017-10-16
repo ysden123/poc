@@ -5,27 +5,23 @@
 package com.stulsoft.akka.stream
 
 import akka.actor.{Actor, ActorRef, Props}
-import com.stulsoft.akka.stream.Consumer.Load
-import com.stulsoft.akka.stream.ProcessingNode.{StartProducingQuestions, StopProducingQuestions}
-import com.stulsoft.akka.stream.Producer.EndOfFileStream
+import com.stulsoft.akka.stream.Messages.{EndOfFileStream, Load, StartProducingQuestions, StopProducingQuestions}
 
 object Consumer {
   def props(uiActor: ActorRef) = Props(new Consumer(uiActor))
-  case object Load
 }
 
 class Consumer(uiActor: ActorRef) extends Actor {
 
-  private val processingNode = context.parent
-
-  var questions = List.empty[String]
   val maxBoundedQuestions = 10
+  private val processingNode = context.parent
+  var questions = List.empty[String]
 
-  def receive:Actor.Receive = {
+  def receive: Actor.Receive = {
     case Load =>
       println("Loading questions")
       processingNode ! StartProducingQuestions(None)
-    case s: String => questions = s::questions
+    case s: String => questions = s :: questions
       if (questions.length < maxBoundedQuestions) {
 
       } else {

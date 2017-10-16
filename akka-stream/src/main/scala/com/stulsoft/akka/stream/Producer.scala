@@ -5,7 +5,7 @@
 package com.stulsoft.akka.stream
 
 import akka.actor.{Actor, ActorRef, Props}
-import com.stulsoft.akka.stream.Producer.{EndOfFileStream, Line, Produce}
+import com.stulsoft.akka.stream.Messages.{EndOfFileStream, Line, Produce}
 
 import scala.util.{Failure, Success}
 
@@ -16,11 +16,6 @@ object Producer {
 
   def props(processingNode: ActorRef) = Props(new Producer(processingNode))
 
-  case class Line(text: String, producer: Option[ActorRef])
-
-  case object Produce
-
-  case object EndOfFileStream
 }
 
 class Producer(processingNode: ActorRef) extends Actor {
