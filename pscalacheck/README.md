@@ -1,0 +1,3 @@
+# pscalacheck
+
+Playing with Scalacheck
