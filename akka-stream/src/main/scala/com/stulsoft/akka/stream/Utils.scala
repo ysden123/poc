@@ -4,18 +4,29 @@
 
 package com.stulsoft.akka.stream
 
-import java.io.File
+import scala.io.Source
+import scala.util.{Failure, Try}
 
 /**
   * @author Yuriy Stul.
   */
 object Utils {
   /**
-    * Returns an absolute path to file
+    * Returns a Source from specified file name.
     *
-    * @param name specifies resource file; may include subdirectory
-    * @return the absolute path to file
+    * @param name specifies the file; it may be a file in resources and in JAR as well, or it may be any file
+    * @return the Source from specified file name.
     */
-  def getResourceFilePath(name: String): String = new File(getClass.getClassLoader.getResource(name).toURI)
-    .getAbsolutePath
+  def source(name: String): Try[Source] = {
+    try {
+      if (getClass.getClassLoader.getResourceAsStream(name) != null) {
+        Try(Source.fromResource(name))
+      } else {
+        Try(Source.fromFile(name))
+      }
+    }
+    catch {
+      case e: Exception => Failure(e)
+    }
+  }
 }

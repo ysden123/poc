@@ -3,28 +3,37 @@
  */
 
 package com.stulsoft.akka.stream
+
 import akka.actor.{Actor, ActorRef, Props}
 import com.stulsoft.akka.stream.Producer.{EndOfFileStream, Line, Produce}
 
-import scala.io.Source
+import scala.util.{Failure, Success}
 
 /**
   * @author Yuriy Stul
   */
 object Producer {
-  case object Produce
-  case class Line(text: String, producer: Option[ActorRef])
-  case object EndOfFileStream
 
   def props(processingNode: ActorRef) = Props(new Producer(processingNode))
+
+  case class Line(text: String, producer: Option[ActorRef])
+
+  case object Produce
+
+  case object EndOfFileStream
 }
 
 class Producer(processingNode: ActorRef) extends Actor {
 
-  println(Utils.getResourceFilePath("cano.txt"))
-  private val lineStream = Source.fromFile(Utils.getResourceFilePath("cano.txt")).getLines
+  var lineStream: Iterator[String] = _
+  Utils.source("cano.txt") match {
+    case Success(source) => lineStream = source.getLines()
+    case Failure(e) =>
+      println(e.getMessage)
+      System.exit(1)
+  }
 
-  def receive:Actor.Receive = {
+  def receive: Actor.Receive = {
     case Produce =>
       val iterator = lineStream
       if (iterator.hasNext) {
