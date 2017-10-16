@@ -1,15 +1,18 @@
 package com.stulsoft.file
 
-import java.io.File
-import java.net.URI
-
 import scala.io.Source
+import scala.util.{Failure, Success, Try}
 
 /**
   * @author Yuriy Stul.
   */
 object Utils {
-  def source(name:String):Source={
-    Source.fromResource(name, getClass.getClassLoader)
+  def source(name: String): Try[Source] = {
+    try {
+      Success(Source.fromResource(name, getClass.getClassLoader))
+    }
+    catch {
+      case e: Exception => Failure(e)
+    }
   }
 }
