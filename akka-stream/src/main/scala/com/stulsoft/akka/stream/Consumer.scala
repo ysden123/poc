@@ -34,7 +34,7 @@ class Consumer(uiActor: ActorRef) extends Actor {
       }
     case EndOfFileStream =>
       println("FINISH: No data anymore")
-      processingNode ! StopProducingQuestions
+      context.system.terminate()
   }
 
 }
