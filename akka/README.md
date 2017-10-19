@@ -1,4 +1,4 @@
-#akka
+# akka
 POC projects, playing with Akka
 
 Contains following independent projects:
