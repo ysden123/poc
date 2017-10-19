@@ -4,7 +4,7 @@ POC projects
 POC project contains prove of concept projects, simple tests of new (for me!) technologies.
 
 POC project includes following independent projects:
-  - [akka-stream](akka-stream/README.md)
+  - [akka](akka/README.md)
   - [aws](aws/README.md)
   - [charts](charts/README.md)
   - [Jzy3d](Jzy3d/README.md)
@@ -13,7 +13,6 @@ POC project includes following independent projects:
   - [kafka2](kafka2/README.md)
   - [mailgun4s](mailgun4s/README.md)
   - [mocha-jenkins](mocha-jenkins/README.md)
-  - [pakka](pakka/README.md)
   - [pconfig](pconfig/README.md)
   - [phazelcast](phazelcast/README.md)
   - [pjunit5](pjunit5/README.md)
