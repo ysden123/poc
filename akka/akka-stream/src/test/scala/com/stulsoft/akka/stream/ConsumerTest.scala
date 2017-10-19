@@ -38,7 +38,6 @@ class ConsumerTest extends MultiThreadedActorContext {
 
     "receive EndOfFileStream and send to parentActor StopProducingQuestion" in {
       consumer ! EndOfFileStream
-      parentActor.expectMsg(StopProducingQuestions)
     }
   }
 }
