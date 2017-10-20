@@ -6,6 +6,10 @@ package com.stulsoft.akka.tdd
 
 import akka.actor.{Actor, ActorLogging}
 
+object LifeCycleHooks {
+  var lastMessage: String = _
+}
+
 class LifeCycleHooks extends Actor
   with ActorLogging {
   System.out.println("Constructor")
@@ -20,11 +24,17 @@ class LifeCycleHooks extends Actor
 
   override def preRestart(reason: Throwable, message: Option[Any]): Unit = {
     println("preRestart")
+    message.foreach(
+      m => {
+        LifeCycleHooks.lastMessage = m.toString
+        println(s"preRestart, lastMessage is ${LifeCycleHooks.lastMessage}")
+      }
+    )
     super.preRestart(reason, message)
   }
 
   override def postRestart(reason: Throwable): Unit = {
-    println("postRestart")
+    println(s"postRestart, lastMessage was ${LifeCycleHooks.lastMessage}")
     super.postRestart(reason)
   }
 

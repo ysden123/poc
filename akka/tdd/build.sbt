@@ -18,13 +18,10 @@ lazy val commonSettings = Seq(
   )
 )
 
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-resolvers += "Repo at github.com/ankurdave/maven-repo" at "https://github.com/ankurdave/maven-repo/raw/master"
-
 lazy val tdd = (project in file("."))
   .settings(commonSettings: _*)
   .settings(
     name := "tdd"
   )
 
-parallelExecution in Test := false
+parallelExecution in Test := true
