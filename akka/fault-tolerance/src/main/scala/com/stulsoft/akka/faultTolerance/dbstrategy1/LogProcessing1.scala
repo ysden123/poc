@@ -18,6 +18,7 @@ object LogProcessingApp extends App {
 
   val databaseUrl = "http://mydatabase1"
 
+  println("Started")
   system.actorOf(
     LogProcessingSupervisor.props(sources, databaseUrl),
     LogProcessingSupervisor.name
@@ -36,10 +37,10 @@ class LogProcessingSupervisor(
                                databaseUrl: String
                              ) extends Actor with ActorLogging {
 
-  var fileWatchers: Seq[ActorRef] = sources.zipWithIndex. map { e =>
+  var fileWatchers: Seq[ActorRef] = sources.zipWithIndex.map { case (source, index) =>
     val dbWriter = context.actorOf(
       DbWriter.props(databaseUrl),
-      DbWriter.name(databaseUrl + e._2)
+      DbWriter.name(databaseUrl + index)
     )
 
     val logProcessor = context.actorOf(
@@ -48,7 +49,7 @@ class LogProcessingSupervisor(
     )
 
     val fileWatcher = context.actorOf(
-      FileWatcher.props(e._1, logProcessor),
+      FileWatcher.props(source, logProcessor),
       FileWatcher.name
     )
     context.watch(fileWatcher)
