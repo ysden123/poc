@@ -92,33 +92,3 @@ class Child extends Actor {
       println(s"CHILD $toString GOT: $something")
   }
 }
-
-object TestingAkka extends App {
-
-  val system = ActorSystem("mySystem")
-  println("starting supervisor")
-  val supervisor = system.actorOf(Props[Supervisor])
-  println("starting parent and it's children")
-  supervisor ! "start"
-  println("just waiting for everything to start\n\n")
-  Thread.sleep(2000)
-
-  println("sending children a message")
-  supervisor ! "forward"
-  println("waiting for message to be received")
-  Thread.sleep(2000)
-
-  println("making parent throw an exception")
-  supervisor ! "throw" // parent throws an exception now, should get restarted
-  println("waiting for actors to restart\n\n")
-  Thread.sleep(2000)
-
-  println("sending children a message")
-  supervisor ! "forward"
-  println("waiting for message to be received")
-  Thread.sleep(2000)
-
-  println("shutting down the system")
-  system.terminate()
-
-}
