@@ -32,6 +32,12 @@ object TestEventGenerator extends LazyLogging {
     logger.info(s"Writing test data into $dir/$fn")
     DataGenerator.generateTextFile(dir,fn,100)
 
+    Thread.sleep(500)
+    dir = Settings.sources(1)
+    fn = "test22.txt"
+    logger.info(s"Writing test data into $dir/$fn")
+    DataGenerator.generateTextFile(dir, fn, 100)
+
     logger.info("Stopped test events generating.")
   }
 }
