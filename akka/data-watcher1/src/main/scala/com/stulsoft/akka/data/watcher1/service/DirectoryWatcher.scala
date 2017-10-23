@@ -50,8 +50,3 @@ object DirectoryWatcher extends LazyLogging {
     }
   }
 }
-
-object TTT extends App {
-  import DirectoryWatcher._
-  Await.ready(watch(Paths.get("d:/work")), Duration.Inf)
-}
