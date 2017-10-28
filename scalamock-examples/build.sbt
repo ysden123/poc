@@ -8,7 +8,7 @@ lazy val scalaMockTestSupportVersion = "3.5.0"
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
   version := "0.0.1",
-  scalaVersion := "2.12.1",
+  scalaVersion := "2.12.4",
   scalacOptions ++= Seq(
     "-feature",
     "-language:implicitConversions",
