@@ -6,6 +6,8 @@ package com.stulsoft.akka.data.watcher1.service
 
 import java.nio.file.{FileSystems, Path, StandardWatchEventKinds}
 
+import akka.actor.ActorRef
+import com.stulsoft.akka.data.watcher1.NewFile
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.Future
@@ -18,9 +20,10 @@ class DirectoryWatcherService(val path: Path) extends DirectoryWatcher with Lazy
   /**
     * Starts directory watch service
     *
+    * @param listener listener actor
     * @return Future
     */
-  override def watch(): Future[Unit] = {
+  override def watch(listener: ActorRef): Future[Unit] = {
     logger.debug(s"watch(): entering, path=$path")
     val watchService = FileSystems.getDefault.newWatchService
 
@@ -39,6 +42,7 @@ class DirectoryWatcherService(val path: Path) extends DirectoryWatcher with Lazy
             key.pollEvents.asScala foreach {
               event =>
                 logger.info("New file {}", event.context())
+                listener ! NewFile(path.toAbsolutePath.toString, event.context().toString)
             }
             if (!key.reset) {
               logger.warn("watch(): reset unsuccessful, exiting the loop")
