@@ -27,5 +27,21 @@ class DataWatcherActorTest extends TestKit(ActorSystem("testsystem"))
       system.actorOf(directoryWatcherActorProps, "data-watcher-1")
       expectNoMsg()
     }
+
+    "preStart executes watcher.watch" in {
+      val fakedDirectoryWatcherService = mock[DirectoryWatcher]
+      (fakedDirectoryWatcherService.watch _).expects(*).once()
+      val directoryWatcherActorProps = DataWatcherActor.props(fakedDirectoryWatcherService)
+      system.actorOf(directoryWatcherActorProps, "data-watcher-2")
+      expectNoMsg()
+    }
+
+    "preStart executes watcher.watch with right parameter" in {
+      val fakedDirectoryWatcherService = mock[DirectoryWatcher]
+      val directoryWatcherActorProps = DataWatcherActor.props(fakedDirectoryWatcherService)
+      val directoryWatcherActor = system.actorOf(directoryWatcherActorProps, "data-watcher-3")
+      (fakedDirectoryWatcherService.watch _).expects(directoryWatcherActor).once()
+      expectNoMsg()
+    }
   }
 }

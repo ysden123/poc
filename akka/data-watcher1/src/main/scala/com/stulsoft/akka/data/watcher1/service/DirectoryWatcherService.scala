@@ -7,7 +7,7 @@ package com.stulsoft.akka.data.watcher1.service
 import java.nio.file.{FileSystems, Path, StandardWatchEventKinds}
 
 import akka.actor.ActorRef
-import com.stulsoft.akka.data.watcher1.NewFile
+import com.stulsoft.akka.data.watcher1.Messages.NewFile
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.Future
@@ -33,6 +33,7 @@ class DirectoryWatcherService(val path: Path) extends DirectoryWatcher with Lazy
     )
 
     import scala.concurrent.ExecutionContext.Implicits.global
+
     Future {
       import collection.JavaConverters._
       var loop = true

@@ -4,6 +4,7 @@
 
 package com.stulsoft.akka.data.watcher1
 
+import com.stulsoft.akka.data.watcher1.Exceptions._
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
