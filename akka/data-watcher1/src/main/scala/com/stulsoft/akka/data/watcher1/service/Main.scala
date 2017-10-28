@@ -12,9 +12,6 @@ import scala.concurrent.duration.Duration
   * @author Yuriy Stul.
   */
 object Main extends App with LazyLogging {
-
-  import DirectoryWatcher._
-
   logger.info("Creating source directories.")
   DataGenerator.createSourceDirectories(Settings.sources)
 
@@ -22,7 +19,7 @@ object Main extends App with LazyLogging {
 
   val watchers = Settings.sources.map(source => {
     logger.info(s"Starting watching $source")
-    watch(Paths.get(source))
+    new DirectoryWatcherService(Paths.get(source)).watch()
   })
 
   TestEventGenerator.generate()
