@@ -3,7 +3,7 @@ import sbt.Keys.libraryDependencies
 lazy val scalaTestVersion = "3.0.1"
 lazy val scalaLoggingVersion = "3.5.0"
 lazy val logbackVersion = "1.1.2"
-lazy val scalaMockTestSupportVersion = "3.5.0"
+lazy val scalaMockTestSupportVersion = "3.6.0"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
