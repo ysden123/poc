@@ -7,7 +7,7 @@ package com.stulsoft.akka.data.watcher1.service
 import java.nio.file.{FileSystems, Path, StandardWatchEventKinds}
 
 import akka.actor.ActorRef
-import com.stulsoft.akka.data.watcher1.Messages.NewFile
+import com.stulsoft.akka.data.watcher1.actor.DataWatcherActor.NewFile
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.Future

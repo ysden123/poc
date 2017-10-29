@@ -26,4 +26,9 @@ class DataWatcherActor(watcher: DirectoryWatcher) extends Actor with ActorLoggin
 
 object DataWatcherActor {
   def props(watcher: DirectoryWatcher) = Props(new DataWatcherActor(watcher))
+
+  //
+  // Messages
+  //
+  case class NewFile(path: String, name: String)
 }
