@@ -22,7 +22,8 @@ class DataWatcherActorTest extends TestKit(ActorSystem("testsystem"))
   with StopSystemAfterAll {
   "DataWatcherActor" must {
     "create new instance" in {
-      val fakedDirectoryWatcherService = stub[DirectoryWatcher]
+      val fakedDirectoryWatcherService = mock[DirectoryWatcher]
+      (fakedDirectoryWatcherService.watch _).expects(*)
       val directoryWatcherActorProps = DataWatcherActor.props(fakedDirectoryWatcherService)
       system.actorOf(directoryWatcherActorProps, "data-watcher-1")
       expectNoMsg()
