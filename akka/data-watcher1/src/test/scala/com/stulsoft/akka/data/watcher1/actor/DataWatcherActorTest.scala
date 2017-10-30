@@ -7,6 +7,7 @@ package com.stulsoft.akka.data.watcher1.actor
 import akka.actor.ActorSystem
 import akka.testkit.TestKit
 import com.stulsoft.akka.data.watcher1.StopSystemAfterAll
+import com.stulsoft.akka.data.watcher1.actor.DataWatcherActor.NewFile
 import com.stulsoft.akka.data.watcher1.service.DirectoryWatcher
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{MustMatchers, WordSpecLike}
@@ -21,9 +22,9 @@ class DataWatcherActorTest extends TestKit(ActorSystem("testsystem"))
   with MustMatchers
   with StopSystemAfterAll {
   "DataWatcherActor" must {
+/*
     "create new instance" in {
-      val fakedDirectoryWatcherService = mock[DirectoryWatcher]
-      (fakedDirectoryWatcherService.watch _).expects(*)
+      val fakedDirectoryWatcherService = stub[DirectoryWatcher]
       val directoryWatcherActorProps = DataWatcherActor.props(fakedDirectoryWatcherService)
       system.actorOf(directoryWatcherActorProps, "data-watcher-1")
       expectNoMsg()
@@ -43,6 +44,15 @@ class DataWatcherActorTest extends TestKit(ActorSystem("testsystem"))
       val directoryWatcherActor = system.actorOf(directoryWatcherActorProps, "data-watcher-3")
       (fakedDirectoryWatcherService.watch _).expects(directoryWatcherActor).once()
       expectNoMsg()
+    }
+*/
+
+    "receive should handle message NewFile" in {
+      val fakedDirectoryWatcherService = stub[DirectoryWatcher]
+      val directoryWatcherActorProps = DataWatcherActor.props(fakedDirectoryWatcherService)
+      val directoryWatcherActor = system.actorOf(directoryWatcherActorProps, "data-watcher-3")
+      val msg = NewFile("test path", "test file name")
+      directoryWatcherActor ! msg
     }
   }
 }

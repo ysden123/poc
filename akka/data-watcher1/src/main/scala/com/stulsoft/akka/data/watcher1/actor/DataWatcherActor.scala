@@ -5,6 +5,7 @@
 package com.stulsoft.akka.data.watcher1.actor
 
 import akka.actor.{Actor, ActorLogging, Props}
+import com.stulsoft.akka.data.watcher1.actor.DataWatcherActor.NewFile
 import com.stulsoft.akka.data.watcher1.service.DirectoryWatcher
 
 /**
@@ -20,7 +21,8 @@ class DataWatcherActor(watcher: DirectoryWatcher) extends Actor with ActorLoggin
   }
 
   override def receive: Receive = {
-    case _ =>
+    case NewFile(path, name) =>
+      log.info(s"Created $name file in $path")
   }
 }
 
@@ -31,4 +33,5 @@ object DataWatcherActor {
   // Messages
   //
   case class NewFile(path: String, name: String)
+
 }

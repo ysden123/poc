@@ -20,4 +20,12 @@ trait DirectoryWatcher {
     * @return Future
     */
   def watch(listener: ActorRef): Future[Unit]
+
+  /**
+    * Sends a message to a listener Actor
+    *
+    * @param listener the listener Actor
+    * @param message  the  message
+    */
+  def sendMessage(listener: ActorRef, message: Any): Unit
 }

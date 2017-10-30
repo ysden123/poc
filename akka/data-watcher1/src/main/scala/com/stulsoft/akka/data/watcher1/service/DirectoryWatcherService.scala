@@ -43,7 +43,7 @@ class DirectoryWatcherService(val path: Path) extends DirectoryWatcher with Lazy
             key.pollEvents.asScala foreach {
               event =>
                 logger.info("New file {}", event.context())
-                listener ! NewFile(path.toAbsolutePath.toString, event.context().toString)
+                sendMessage(listener, NewFile(path.toAbsolutePath.toString, event.context().toString))
             }
             if (!key.reset) {
               logger.warn("watch(): reset unsuccessful, exiting the loop")
@@ -54,5 +54,15 @@ class DirectoryWatcherService(val path: Path) extends DirectoryWatcher with Lazy
       }
       logger.debug("end")
     }
+  }
+
+  /**
+    * Sends a message to a listener Actor
+    *
+    * @param listener the listener Actor
+    * @param message  the  message
+    */
+  override def sendMessage(listener: ActorRef, message: Any): Unit = {
+    listener ! message
   }
 }
