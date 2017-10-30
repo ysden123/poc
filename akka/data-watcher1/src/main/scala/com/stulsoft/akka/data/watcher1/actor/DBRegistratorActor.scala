@@ -11,5 +11,17 @@ import akka.actor.{Actor, ActorLogging}
   * @author Yuriy Stul
   */
 class DBRegistratorActor extends Actor with ActorLogging {
+
+  override def preStart(): Unit ={
+    log.info("Started DBRegistratorActor")
+    super.preStart()
+  }
+
+
+  override def postRestart(reason: Throwable): Unit ={
+    log.info(s"Restarted after ${reason.getMessage}")
+    super.postRestart(reason)
+  }
+
   override def receive: Receive = ???
 }
