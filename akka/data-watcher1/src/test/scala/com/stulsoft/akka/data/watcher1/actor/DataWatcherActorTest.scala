@@ -65,7 +65,7 @@ object DataWatcherActorTest {
   val testSystem: ActorSystem = {
     val config = ConfigFactory.parseString(
       """
-         akka.loggers = [akka.testkit.TestEventListener]
+         akka.loggers = [akka.testkit.TestEventListener,akka.event.slf4j.Slf4jLogger]
       """)
     ActorSystem("testSystem", config)
   }

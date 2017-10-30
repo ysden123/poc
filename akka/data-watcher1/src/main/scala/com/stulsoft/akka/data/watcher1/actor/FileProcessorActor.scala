@@ -7,6 +7,7 @@ package com.stulsoft.akka.data.watcher1.actor
 import akka.actor.SupervisorStrategy.Restart
 import akka.actor.{Actor, ActorLogging, OneForOneStrategy, SupervisorStrategy}
 import com.stulsoft.akka.data.watcher1.Exceptions.DBConnectionException
+import com.stulsoft.akka.data.watcher1.actor.DataWatcherActor.NewFile
 
 /** File processor actor
   *
@@ -23,5 +24,8 @@ class FileProcessorActor extends Actor with ActorLogging {
     case _: DBConnectionException => Restart
   }
 
-  override def receive: Receive = ???
+  override def receive: Receive = {
+    case NewFile(path, name) =>
+      log.info(s"Processing $name file in the $path directory")
+  }
 }
