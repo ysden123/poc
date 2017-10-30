@@ -14,8 +14,10 @@ import com.stulsoft.akka.data.watcher1.service.DirectoryWatcher
   * @author Yuriy Stul
   */
 class DataWatcherActor(watcher: DirectoryWatcher) extends Actor with ActorLogging {
+  log.info("Created DataWatcherActor")
 
   override def preStart(): Unit = {
+    log.info("Started DataWatcherActor")
     super.preStart()
     watcher.watch(self)
   }

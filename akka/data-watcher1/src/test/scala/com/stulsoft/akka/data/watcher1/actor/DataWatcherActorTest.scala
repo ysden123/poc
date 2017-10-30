@@ -53,6 +53,7 @@ class DataWatcherActorTest extends TestKit(ActorSystem("testsystem"))
       val directoryWatcherActor = system.actorOf(directoryWatcherActorProps, "data-watcher-3")
       val msg = NewFile("test path", "test file name")
       directoryWatcherActor ! msg
+      expectMsg(msg)
     }
   }
 }

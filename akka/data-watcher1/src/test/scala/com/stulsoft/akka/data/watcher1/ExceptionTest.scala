@@ -10,7 +10,7 @@ import org.scalatest.{FlatSpec, Matchers}
 /**
   * @author Yuriy Stul
   */
-class ExceptionTest extends FlatSpec with Matchers {
+class ExceptionTest extends FlatSpec with Matchers{
   behavior of "DiskErrorException"
   "throw DiskErrorException" should "produce exception with message without cause" in {
     val message = "the message"
