@@ -4,7 +4,9 @@
 
 package com.stulsoft.akka.data.watcher1.actor
 
-import akka.actor.{Actor, ActorLogging, Props}
+import akka.actor.SupervisorStrategy.Resume
+import akka.actor.{Actor, ActorLogging, OneForOneStrategy, Props, SupervisorStrategy}
+import com.stulsoft.akka.data.watcher1.Exceptions.FileCorruptException
 import com.stulsoft.akka.data.watcher1.actor.DataWatcherActor.NewFile
 import com.stulsoft.akka.data.watcher1.service.DirectoryWatcher
 
@@ -15,6 +17,10 @@ import com.stulsoft.akka.data.watcher1.service.DirectoryWatcher
   */
 class DataWatcherActor(watcher: DirectoryWatcher) extends Actor with ActorLogging {
   log.info("Created DataWatcherActor")
+
+  override def supervisorStrategy: SupervisorStrategy = OneForOneStrategy() {
+    case _: FileCorruptException => Resume
+  }
 
   override def preStart(): Unit = {
     log.info("Started DataWatcherActor")
