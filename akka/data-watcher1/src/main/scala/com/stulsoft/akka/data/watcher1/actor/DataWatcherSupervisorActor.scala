@@ -30,6 +30,7 @@ class DataWatcherSupervisorActor extends Actor with ActorLogging {
 
   override def receive: Receive = {
     case StartDataWatcher(path) =>
+      log.info(s"Started data watcher for $path")
       val dataWatcher = new DirectoryWatcherService(Paths.get(path))
       context.actorOf(DataWatcherActor.props(dataWatcher))
   }
