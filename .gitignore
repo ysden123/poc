@@ -25,3 +25,5 @@ pjunit5/build/test-results/junit-platform/TEST-junit-jupiter.xml
 pjunit5/pjunit5.iml
 pstream-json-js/test/temp.json
 spam-finder/temp.txt
+akka/data-watcher1/source1/
+akka/data-watcher1/source2/
