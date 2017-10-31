@@ -1,5 +1,5 @@
-# data-watcher1
-Playing with Actor supervisor strategy.
+# broadcast
+Playing with Actor broadcasting
 
 Example project.
-Watch directory updates, parses new files and register new data.
+Primitive forwarding messages to children.
