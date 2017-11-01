@@ -5,7 +5,7 @@ import akka.actor.{Actor, ActorLogging, Props}
 /**
   * @author Yuriy Stul.
   */
-class Actor2 extends Actor with ActorLogging {
+class Actor2 extends Actor with ActorLogging with ForwardActor {
   override def preStart(): Unit = {
     super.preStart()
     log.info("Starting Actor2")
@@ -15,6 +15,6 @@ class Actor2 extends Actor with ActorLogging {
   override def receive: Receive = {
     case x =>
       log.info(s"Actor2: received $x")
-      context.actorSelection("*") ! x // forward message
+      forward(x) // forward message
   }
 }
