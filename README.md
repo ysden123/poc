@@ -21,6 +21,7 @@ POC project includes following independent projects:
   - [pscalacheck](pscalacheck/README.md)
   - [pscalafx](pscalafx/README.md)
   - [pscalatest](pscalatest/README.md)
+  - [pserialization](pserialization/README.md)
   - [pslick](pslick/README.md)
   - [pspark](pspark/README.md)
   - [scala-chart](scala-chart/README.md)
