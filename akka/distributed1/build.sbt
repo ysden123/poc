@@ -49,7 +49,7 @@ lazy val frontEnd = project.in(file("front-end"))
 lazy val backEnd = project.in(file("back-end"))
   .settings(commonSettings)
   .settings(
-    name := "end"
+    name := "back-end"
   )
 
 assemblyMergeStrategy in assembly := {
