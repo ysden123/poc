@@ -19,6 +19,7 @@ object Backend extends LazyLogging {
   import scala.concurrent.ExecutionContext.Implicits.global
 
   def start(): Future[Unit] = Future {
+    logger.info("Starting backend")
     if (backendActorSystem == null) {
       val config = ConfigFactory.load("back-end.conf")
 
@@ -31,9 +32,11 @@ object Backend extends LazyLogging {
 
       backendActorSystem.actorOf(Props[BackendActor], "backendActor")
     }
+    logger.info("Started backend")
   }
 
   def stop(): Unit = {
+    logger.info("Stopping backend")
     if (backendActorSystem != null) {
       backendActorSystem.terminate()
       backendActorSystem = null

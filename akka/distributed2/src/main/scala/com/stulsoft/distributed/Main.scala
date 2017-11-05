@@ -15,9 +15,9 @@ import scala.io.StdIn
   */
 object Main extends App with LazyLogging {
 
-  val backend: Future[Unit] = Backend.start()
-  //  Thread.sleep(500)
-  val frontend: Future[Unit] = Frontend.start()
+  Backend.start()
+  Thread.sleep(500)
+  Frontend.start()
 
   println("Enter a line to exit")
   StdIn.readLine()
