@@ -7,6 +7,7 @@ POC project includes following independent projects:
   - [akka](akka/README.md)
   - [aws](aws/README.md)
   - [charts](charts/README.md)
+  - [deploy1](deploy1/README.md)
   - [Jzy3d](Jzy3d/README.md)
   - [kafka](kafka/README.md)
   - [kafka_cluster](kafka_cluster/README.md)
