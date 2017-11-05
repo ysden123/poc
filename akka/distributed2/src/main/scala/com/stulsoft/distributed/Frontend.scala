@@ -5,6 +5,7 @@
 package com.stulsoft.distributed
 
 import akka.actor.ActorSystem
+import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.Future
@@ -19,9 +20,14 @@ object Frontend extends LazyLogging {
 
   def start(): Future[Unit] = Future {
     if (frontendActorSystem == null) {
-      val config = Utils.readConfig("front-end.conf")
+      val config = ConfigFactory.load("front-end.conf")
 
-      frontendActorSystem = ActorSystem("frontend", config)
+      try{
+        frontendActorSystem = ActorSystem("frontend", config)
+      }
+      catch{
+        case x: Throwable=>logger.error(x.getMessage)
+      }
       val path = "akka.tcp://backend@0.0.0.0:2552/user/backendActor"
       val backendActor = frontendActorSystem.actorSelection(path)
 

@@ -20,9 +20,14 @@ object Backend extends LazyLogging {
 
   def start(): Future[Unit] = Future {
     if (backendActorSystem == null) {
-      val config = Utils.readConfig("back-end.conf")
+      val config = ConfigFactory.load("back-end.conf")
 
-      backendActorSystem = ActorSystem("backend", config)
+      try {
+        backendActorSystem = ActorSystem("backend", config)
+      }
+      catch {
+        case x: Throwable => logger.error(x.getMessage)
+      }
 
       backendActorSystem.actorOf(Props[BackendActor], "backendActor")
     }
