@@ -9,7 +9,7 @@ lazy val logbackClassicVersion = "1.2.3"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
-  version := "0.0.1",
+  version := "0.0.2",
   scalaVersion := "2.12.4",
   scalacOptions ++= Seq(
     "-feature",
@@ -31,7 +31,13 @@ lazy val commonSettings = Seq(
 lazy val poolRouter = project.in(file("pool-router"))
   .settings(commonSettings)
   .settings(
-    name := ""
+    name := "pool-router"
+  )
+
+lazy val groupRouter = project.in(file("group-router"))
+  .settings(commonSettings)
+  .settings(
+    name := "group-router"
   )
 
 parallelExecution in Test := true
