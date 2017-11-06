@@ -7,5 +7,6 @@ Contains following independent projects:
   - [data-watcher1](data-watcher1/README.md)
   - [fault-tolerance](faultTolerance/README.md)
   - [pakka](pakka/README.md)
+  - [publish-subscribe](publish-subscribe/README.md)
   - [routing](routing/README.md)
   - [tdd](tdd/README.md)
