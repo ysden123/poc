@@ -6,7 +6,7 @@ import akka.routing.FromConfig
 import com.typesafe.config.ConfigFactory
 
 import scala.concurrent.{Await, Future}
-import scala.io.StdIn
+
 /**
   * @see [[https://gist.github.com/johanandren/d2b874e59320e07f84a4 Simple sample with clustered round robin pool]]
   * @author Yuriy Stul.
@@ -43,21 +43,20 @@ object ClusteredRoundRobinPool extends App {
       |}
     """.stripMargin)
 
-  implicit val system1 = ActorSystem("cluster", ConfigFactory.parseString(
+  implicit val system1: ActorSystem = ActorSystem("cluster", ConfigFactory.parseString(
     """
       |akka.remote.netty.tcp.port = 2551
     """.stripMargin).withFallback(commonConfig))
 
-  implicit val system2 = ActorSystem("cluster", ConfigFactory.parseString(
+  implicit val system2: ActorSystem = ActorSystem("cluster", ConfigFactory.parseString(
     """
       |akka.remote.netty.tcp.port = 2552
     """.stripMargin).withFallback(commonConfig))
 
-  implicit val system3 = ActorSystem("cluster", ConfigFactory.parseString(
+  implicit val system3: ActorSystem = ActorSystem("cluster", ConfigFactory.parseString(
     """
       |akka.remote.netty.tcp.port = 2553
     """.stripMargin).withFallback(commonConfig))
-
 
 
   while (Cluster(system1).state.members.size != 3) {
@@ -66,6 +65,7 @@ object ClusteredRoundRobinPool extends App {
 
   class EchoActor extends Actor with ActorLogging {
     log.info("Starting")
+
     override def receive: Receive = {
       case "ping" =>
         log.info("ping-pong")
@@ -78,12 +78,13 @@ object ClusteredRoundRobinPool extends App {
 
   import scala.concurrent.ExecutionContext.Implicits.global
   import scala.concurrent.duration._
+
   system1.scheduler.schedule(1.second, 1.second, pool, "ping")
 
-/*
-  println("Enter to quit")
-  StdIn.readLine()
-*/
+  /*
+    println("Enter to quit")
+    StdIn.readLine()
+  */
 
   Thread.sleep(1000 * 5)
 
