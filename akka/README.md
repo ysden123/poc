@@ -9,6 +9,7 @@ Contains following independent projects:
   - [distributed1](distributed1/README.md)
   - [distributed2](distributed2/README.md)
   - [fault-tolerance](faultTolerance/README.md)
+  - [fsm](fsm/README.md)
   - [pakka](pakka/README.md)
   - [publish-subscribe](publish-subscribe/README.md)
   - [routing](routing/README.md)
