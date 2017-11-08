@@ -33,4 +33,10 @@ lazy val fsm1 = project.in(file("fsm1"))
     name := "fsm1"
   )
 
+lazy val fsm2 = project.in(file("fsm2"))
+  .settings(commonSettings)
+  .settings(
+    name := "fsm2"
+  )
+
 parallelExecution in Test := true

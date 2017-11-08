@@ -1,6 +1,7 @@
-package com.stulsoft.fsm1
+package com.stulsoft.fsm2
 
 import akka.actor.{Actor, ActorLogging, ActorRef, FSM}
+import scala.concurrent.duration._
 
 /**
   * @author Yuriy Stul.
@@ -41,11 +42,13 @@ class Inventory(publisher: ActorRef) extends Actor with FSM[State, StateData] wi
   }
 
   // Transition declaration of the state WaitForPublisher
-  when(WaitForPublisher) {
+  when(WaitForPublisher, stateTimeout = 5 seconds) { // Sets state timeout
     case Event(supply: BookSupply, data: StateData) =>
       goto(ProcessRequest) using data.copy(nrBooksInStore = supply.nrBooks)
     case Event(BookSupplySoldOut, _) =>
       goto(ProcessSoldOut)
+    case Event(StateTimeout, _) =>
+      goto(WaitForRequests) // Defines timeout transition
   }
 
   // Transition declaration of the state ProcessRequest

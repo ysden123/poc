@@ -6,11 +6,11 @@ import akka.actor.ActorRef
   *
   * Based on book "Akka in Action".
   *
-  * Variant without timer.
+  * With timer
   *
   * @author Yuriy Stul.
   */
-package object fsm1 {
+package object fsm2 {
 
   // Events
   case class BookRequest(context: AnyRef, target: ActorRef)
