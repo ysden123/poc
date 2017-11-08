@@ -13,4 +13,5 @@ Contains following independent projects:
   - [pakka](pakka/README.md)
   - [publish-subscribe](publish-subscribe/README.md)
   - [routing](routing/README.md)
+  - [stream](stream/README.md)
   - [tdd](tdd/README.md)
