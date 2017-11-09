@@ -1,11 +1,11 @@
 import sbt.Keys.libraryDependencies
 
-lazy val typeSafeConfVersion = "1.3.1"
+lazy val typeSafeConfVersion = "1.4.0"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
   version := "0.0.1",
-  scalaVersion := "2.12.1",
+  scalaVersion := "2.12.4",
   scalacOptions ++= Seq(
     "-feature",
     "-language:implicitConversions",
