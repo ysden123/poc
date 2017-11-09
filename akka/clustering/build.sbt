@@ -18,7 +18,7 @@ lazy val commonSettings = Seq(
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
     "com.typesafe.akka" %% "akka-remote" % akkaVersion,
-	"com.typesafe.akka" %% "akka-cluster" % akkaVersion,
+    "com.typesafe.akka" %% "akka-cluster" % akkaVersion,
     "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
     "com.typesafe.scala-logging" %% "scala-logging" % scalaLoggingVersion,
     "ch.qos.logback" % "logback-classic" % logbackClassicVersion,
@@ -36,7 +36,7 @@ lazy val cluster1 = project.in(file("cluster1"))
     name := "cluster1"
   )
 
-lazy val cluster1 = project.in(file("cluster2"))
+lazy val cluster2 = project.in(file("cluster2"))
   .settings(commonSettings)
   .settings(
     name := "cluster2"
