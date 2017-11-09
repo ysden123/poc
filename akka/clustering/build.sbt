@@ -29,10 +29,17 @@ lazy val commonSettings = Seq(
     "org.scalamock" %% "scalamock-scalatest-support" % scalaMockTestSupportVersion % "test"
   )
 )
+
 lazy val cluster1 = project.in(file("cluster1"))
   .settings(commonSettings)
   .settings(
     name := "cluster1"
+  )
+
+lazy val cluster1 = project.in(file("cluster2"))
+  .settings(commonSettings)
+  .settings(
+    name := "cluster2"
   )
 
 parallelExecution in Test := true
