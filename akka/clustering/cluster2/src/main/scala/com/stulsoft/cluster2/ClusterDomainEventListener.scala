@@ -16,6 +16,7 @@ class ClusterDomainEventListener extends Actor with ActorLogging {
   // Subscribes to the cluster domain events on actor creation
   Cluster(context.system).subscribe(self, classOf[ClusterDomainEvent])
 
+  // Listens for cluster domain events
   override def receive: Receive = {
     case MemberUp(member) => log.info(s"$member UP.")
     case MemberExited(member) => log.info(s"$member EXITED.")

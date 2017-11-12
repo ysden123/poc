@@ -1,6 +1,6 @@
 import sbt.Keys.libraryDependencies
 
-lazy val typeSafeConfVersion = "1.4.0"
+lazy val typeSafeConfVersion = "1.3.2"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
