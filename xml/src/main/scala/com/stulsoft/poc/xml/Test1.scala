@@ -10,6 +10,7 @@ package com.stulsoft.poc.xml
   */
 object Test1 extends App {
   test1()
+  test2()
 
   def test1(): Unit = {
     println("==>test1")
@@ -29,5 +30,16 @@ object Test1 extends App {
     println(s"titlesWithId2: $titlesWithId2")
 
     println("<==test1")
+  }
+
+  def test2(): Unit = {
+    println("==>test2")
+    val books = <books>
+      <book id="b1615">Don Quixote</book>
+      <book id="b1867">War and Peace</book>
+    </books>
+    val ids = (books \ "book").map(book => book \@ "err").filter(x => x.nonEmpty)
+    println(s"ids: $ids")
+    println("<==test2")
   }
 }
