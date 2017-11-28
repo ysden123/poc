@@ -52,6 +52,29 @@ public class FS {
         throw new RuntimeException("handle case when no one node was found");
     }
 
+    private void executeCommand(String command){
+        String args[] = command.split(",");
+        switch (args[0]) {
+            case COMMAND_ADD_DIR:
+                AddDir(args[1], args[2], Long.parseLong(args[3]), Long.parseLong(args[4]));
+                break;
+            case COMMAND_DELETE_DIR:
+                DeleteDir(Long.parseLong(args[1]));
+                break;
+            case COMMAND_ADD_FILE:
+                AddFile(args[1], Long.parseLong(args[2]), args[3], Long.parseLong(args[4]));
+                break;
+            case COMMAND_DELETE_FILE:
+                DeleteFile(Long.parseLong(args[1]));
+                break;
+            case COMMAND_SHOW_DIRSAND_FILE:
+                ShowDirsandFile();
+                break;
+            default:
+                throw new RuntimeException("unsupported command");
+        }
+    }
+
 
     /**
      * Command: command, id,color,parent_id
@@ -59,25 +82,12 @@ public class FS {
      * @param args
      */
     public static void main(String[] args) {
-//        System.out.println(args[0]);
         FS fs = new FS();
-/*
-        switch (args[0]) {
-            case COMMAND_ADD_DIR:
-                fs.AddDir(args[1], args[2], Long.parseLong(args[3]), Long.parseLong(args[4]));
-                break;
-            case COMMAND_DELETE_DIR:
-                fs.DeleteDir(Long.parseLong(args[1]));
-                break;
-            case COMMAND_ADD_FILE:
-                fs.AddFile(args[1], Long.parseLong(args[2]), args[3], Long.parseLong(args[4]));
-                break;
-            case COMMAND_DELETE_FILE:
-                fs.DeleteFile(Long.parseLong(args[1]));
-                break;
-            case COMMAND_SHOW_DIRSAND_FILE:
-                fs.ShowDirsandFile();
-        }
-*/
+        fs.executeCommand("addDir,test1,red,1,0");
+        fs.executeCommand("addFile,file11,2, blue,0");
+        fs.executeCommand("show");
+        System.out.println("After delete file");
+        fs.executeCommand("deleteFile,2");
+        fs.executeCommand("show");
     }
 }
