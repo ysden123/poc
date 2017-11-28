@@ -7,25 +7,25 @@ public class FS {
 
     private Node tree = new Node("root", 0L, null, 0);
 
-    private void AddDir(String name, String color, long id, long parent_id) {
+    void AddDir(String name, String color, long id, long parent_id) {
         Node newDir = new Node(name, id, color, parent_id);
         tree.addNode(newDir);
     }
 
-    private void DeleteDir(long id) {
+    void DeleteDir(long id) {
         tree.deleteNode(id);
     }
 
-    private void AddFile(String name, long id, String color, long parent_id) {
+    void AddFile(String name, long id, String color, long parent_id) {
         Node newFile = new Node(name, id, color, parent_id);
         tree.addNode(newFile);
     }
 
-    private void DeleteFile(long id) {
+    void DeleteFile(long id) {
         tree.deleteNode(id);
     }
 
-    private void ShowDirsandFile() {
+    void ShowDirsandFile() {
         Node nodes[] = tree.getAllNodes();
         for (int i = 0; i < nodes.length; ++i) {
             if (nodes[i] == null)
@@ -60,8 +60,5 @@ public class FS {
                 fs.ShowDirsandFile();
         }
 */
-        fs.AddDir("test1", "red", 1, 0);
-        fs.AddFile("file1", 2, "blue", 1);
-        fs.ShowDirsandFile();
     }
 }

@@ -12,34 +12,40 @@ public class Node {
         this.name = name;
         this.id = id;
         this.color = color;
-        this.parent_id=parent_id;
+        this.parent_id = parent_id;
         children = new Node[255];
         childSize = 0;
     }
 
-    public void addNode(Node node){
-        // find parent
-        Node parent = findNode(this, node.getParent_id());
-        if (parent == null)
+    public void addNode(Node node) {
+        if (node.getParent_id() == 0) {
             addNodeToParent(this, node);
-        else
-            addNodeToParent(parent,node);
+        } else {
+            // find parent
+            Node allNodes[] = getAllNodes();
+            for (Node aNode : allNodes) {
+                if (aNode.getId() == node.getParent_id()) {
+                    addNodeToParent(aNode, node);
+                    break;
+                }
+            }
+        }
     }
 
-    public void addNodeToParent(Node parent, Node node){
+    static void addNodeToParent(Node parent, Node node) {
         parent.children[parent.getChildSize()] = node;
         parent.setChildSize(parent.getChildSize() + 1);
     }
 
-    public void deleteNode(long id){
+    public void deleteNode(long id) {
         boolean startDelete = false;
-        for(int i=0; i < childSize - 1;++i){
-            if (!startDelete){
-                if (children[i].getId() == id){
+        for (int i = 0; i < childSize - 1; ++i) {
+            if (!startDelete) {
+                if (children[i].getId() == id) {
                     startDelete = true;
                 }
             }
-            if (startDelete){
+            if (startDelete) {
                 children[i] = children[i + 1];
             }
         }
@@ -48,25 +54,26 @@ public class Node {
 
     /**
      * Finds node with specified id inside parent Node
+     *
      * @param parent
      * @param id
      * @return
      */
-    private Node findNode(Node parent, long id){
+    private Node findNode(Node parent, long id) {
         // check, if parent has node with id
-        for(int i=0; i < parent.getChildSize();++i){
-            if (children[i].getId()== id){
+        for (int i = 0; i < parent.getChildSize(); ++i) {
+            if (children[i].getId() == id) {
                 return children[i];
             }
         }
 
         // if now call findNode for all children
         Node foundNode = null;
-        for(int i=0;i<parent.getChildSize();++i){
-            if (children[i].getChildSize() > 0){
-                foundNode = findNode(children[i],id);
+        for (int i = 0; i < parent.getChildSize(); ++i) {
+            if (children[i].getChildSize() > 0) {
+                foundNode = findNode(children[i], id);
             }
-            if (foundNode!=null){
+            if (foundNode != null) {
                 return foundNode;
             }
         }
@@ -74,14 +81,14 @@ public class Node {
         return null;
     }
 
-    public Node[] getAllNodes(){
+    public Node[] getAllNodes() {
         Node nodes[] = new Node[255];
         int pointer = 0;
-        for(int i=0; i < getChildSize();++i){
+        for (int i = 0; i < getChildSize(); ++i) {
             nodes[pointer++] = children[i];
-            if (children[i].getChildSize() > 0){
+            if (children[i].getChildSize() > 0) {
                 Node receivedNodes[] = children[i].getAllNodes();
-                for(Node node:receivedNodes){
+                for (Node node : receivedNodes) {
                     if (node == null)
                         break;
                     nodes[pointer++] = node;
