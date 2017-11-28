@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Node {
+class Node {
     private final String name;
     private final long id;
     private final String color;
@@ -8,7 +8,7 @@ public class Node {
     private final long parent_id;
     private int childSize;
 
-    public Node(String name, long id, String color, long parent_id) {
+    Node(String name, long id, String color, long parent_id) {
         this.name = name;
         this.id = id;
         this.color = color;
@@ -17,7 +17,7 @@ public class Node {
         childSize = 0;
     }
 
-    public void addNode(Node node) {
+    void addNode(Node node) {
         if (node.getParent_id() == 0) {
             addNodeToParent(this, node);
         } else {
@@ -32,12 +32,12 @@ public class Node {
         }
     }
 
-    static void addNodeToParent(Node parent, Node node) {
+    private static void addNodeToParent(Node parent, Node node) {
         parent.children[parent.getChildSize()] = node;
         parent.setChildSize(parent.getChildSize() + 1);
     }
 
-    public void deleteNode(long id) {
+    void deleteNode(long id) {
         boolean startDelete = false;
         for (int i = 0; i < childSize - 1; ++i) {
             if (!startDelete) {
@@ -52,36 +52,7 @@ public class Node {
         childSize--;
     }
 
-    /**
-     * Finds node with specified id inside parent Node
-     *
-     * @param parent
-     * @param id
-     * @return
-     */
-    private Node findNode(Node parent, long id) {
-        // check, if parent has node with id
-        for (int i = 0; i < parent.getChildSize(); ++i) {
-            if (children[i].getId() == id) {
-                return children[i];
-            }
-        }
-
-        // if now call findNode for all children
-        Node foundNode = null;
-        for (int i = 0; i < parent.getChildSize(); ++i) {
-            if (children[i].getChildSize() > 0) {
-                foundNode = findNode(children[i], id);
-            }
-            if (foundNode != null) {
-                return foundNode;
-            }
-        }
-
-        return null;
-    }
-
-    public Node[] getAllNodes() {
+    Node[] getAllNodes() {
         Node nodes[] = new Node[255];
         int pointer = 0;
         for (int i = 0; i < getChildSize(); ++i) {
@@ -98,27 +69,27 @@ public class Node {
         return nodes;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public long getId() {
+    long getId() {
         return id;
     }
 
-    public String getColor() {
+    String getColor() {
         return color;
     }
 
-    public Node[] getChilds() {
+    Node[] getChilds() {
         return children;
     }
 
-    public long getParent_id() {
+    long getParent_id() {
         return parent_id;
     }
 
-    public int getChildSize() {
+    private int getChildSize() {
         return childSize;
     }
 
@@ -133,7 +104,7 @@ public class Node {
                 '}';
     }
 
-    public void setChildSize(int childSize) {
+    private void setChildSize(int childSize) {
         this.childSize = childSize;
     }
 }

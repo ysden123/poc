@@ -34,10 +34,10 @@ public class FS {
 
     void ShowDirsandFile() {
         Node nodes[] = tree.getAllNodes();
-        for (int i = 0; i < nodes.length; ++i) {
-            if (nodes[i] == null)
+        for(Node node:nodes){
+            if (node == null)
                 break;
-            System.out.println(nodes[i]);
+            System.out.println(node);
         }
     }
 
