@@ -13,7 +13,7 @@ public class FS {
     }
 
     void DeleteDir(long id) {
-        tree.deleteNode(id);
+        makeDeleteNode(id);
     }
 
     void AddFile(String name, long id, String color, long parent_id) {
@@ -22,7 +22,14 @@ public class FS {
     }
 
     void DeleteFile(long id) {
-        tree.deleteNode(id);
+        makeDeleteNode(id);
+    }
+
+    private void makeDeleteNode(long id) {
+        Node nodes[] = tree.getAllNodes();
+        Node nodeToDelete = findNodeById(nodes, id);
+        Node parentNode = (nodeToDelete.getParent_id() == 0) ? tree : findNodeById(nodes, nodeToDelete.getParent_id());
+        parentNode.deleteNode(id);
     }
 
     void ShowDirsandFile() {
@@ -33,6 +40,18 @@ public class FS {
             System.out.println(nodes[i]);
         }
     }
+
+    private static Node findNodeById(Node allNodes[], long id) {
+        for (Node node : allNodes) {
+            if (node.getId() == id) {
+                return node;
+            }
+        }
+        // todo handle case when no one node was found
+
+        throw new RuntimeException("handle case when no one node was found");
+    }
+
 
     /**
      * Command: command, id,color,parent_id
