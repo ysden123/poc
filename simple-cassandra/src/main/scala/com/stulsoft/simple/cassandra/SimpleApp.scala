@@ -67,6 +67,8 @@ object SimpleApp extends App {
     println("Done!")
   }
   catch{
-    case e:Exception => println(s"Failure: ${e.getMessage}")
+    case e:Exception =>
+      println(s"Failure: ${e.getMessage}")
+      cluster.close()
   }
 }
