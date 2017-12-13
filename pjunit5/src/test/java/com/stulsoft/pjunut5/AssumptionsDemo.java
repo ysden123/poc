@@ -4,6 +4,7 @@
 
 package com.stulsoft.pjunut5;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 /**
  * @author Yuriy Stul
  */
-public class AssumptionsDemo {
+class AssumptionsDemo {
     @Test
     void testOnlyOnTrue() {
         System.out.println("==>testOnlyOnTrue");
@@ -26,6 +27,7 @@ public class AssumptionsDemo {
     }
 
     @Test
+    @DisplayName("Should work per dev env")
     void testOnlyOnTrue2() {
         System.out.println("==>testOnlyOnTrue2");
         System.out.println("Check assumption (false)");
