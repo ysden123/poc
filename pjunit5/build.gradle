@@ -18,6 +18,7 @@ ext.junit4Version = '4.12'
 ext.junitVintageVersion = '4.12.2'
 ext.junitPlatformVersion = '1.0.2'
 ext.junitJupiterVersion = '5.0.2'
+ext.log4jVersion = '2.9.0'
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -47,9 +48,9 @@ junitPlatform {
         }
         // includeClassNamePattern '.*Test'
     }
-    // enableStandardTestTask true
+    enableStandardTestTask true
     // reportsDir file('build/test-results/junit-platform') // this is the default
-    // logManager 'org.apache.logging.log4j.jul.LogManager'
+    logManager 'org.apache.logging.log4j.jul.LogManager'
 }
 
 dependencies {
@@ -64,6 +65,19 @@ dependencies {
     // To avoid compiler warnings about @API annotations in JUnit code
     testCompileOnly('org.apiguardian:apiguardian-api:1.0.0')
 
+    // To use Log4J's LogManager
+    testRuntime("org.apache.logging.log4j:log4j-core:${log4jVersion}")
+    testRuntime("org.apache.logging.log4j:log4j-jul:${log4jVersion}")
+
     // Only needed to run tests in an (IntelliJ) IDE(A) that bundles an older version
     testRuntime("org.junit.platform:junit-platform-launcher:${junitPlatformVersion}")
+}
+
+test {
+    afterTest { desc, result ->
+        logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
 }

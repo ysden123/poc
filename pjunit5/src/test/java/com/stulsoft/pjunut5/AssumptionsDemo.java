@@ -16,16 +16,24 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 public class AssumptionsDemo {
     @Test
     void testOnlyOnTrue() {
+        System.out.println("==>testOnlyOnTrue");
+        System.out.println("Check assumption (true)");
         assumeTrue(true);
         // remainder of test
+        System.out.println("Continue test");
         assertTrue(true);
+        System.out.println("<==testOnlyOnTrue");
     }
 
     @Test
     void testOnlyOnTrue2() {
+        System.out.println("==>testOnlyOnTrue2");
+        System.out.println("Check assumption (false)");
         assumeTrue(false, () -> "Aborting test");
         // remainder of test
+        System.out.println("Continue test");
         assertTrue(false);
+        System.out.println("<==testOnlyOnTrue2");
     }
 
     @Test
