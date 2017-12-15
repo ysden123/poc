@@ -28,6 +28,7 @@ POC project includes following independent projects:
   - [scala-chart](scala-chart/README.md)
   - [scalamock-examples](scalamock-examples/README.md)
   - [simple-cassandra](simple-cassandra/README.md)
+  - [spring-mockito](spring-mockito/README.md)
   - [test-file](test-file/README.md)
   - [usage-sourcetree](usage-sourcetree)
   - [ys-pclojure](ys-pclojure/README.md)
