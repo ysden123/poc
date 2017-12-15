@@ -4,7 +4,6 @@
 
 package com.stulsoft.spring.mockito;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -12,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Yuriy Stul
@@ -32,6 +33,6 @@ public class UserServiceTest {
     public void whenUserIdIsProvided_thenRetrievedNameIsCorrect() {
         Mockito.when(nameService.getUserName("SomeId")).thenReturn("Mock user name");
         String testName = userService.getUserName("SomeId");
-        Assert.assertEquals("Mock user name", testName);
+        assertEquals("Mock user name", testName);
     }
 }
