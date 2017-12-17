@@ -29,6 +29,9 @@ public class Main {
             logger.debug("==>commandLineRunner");
             Manager manager = ctx.getBean(Manager.class);
             manager.userService();
+
+            Manager2 manager2 = ctx.getBean(Manager2.class);
+            manager2.userService();
             logger.debug("<==commandLineRunner");
         };
     }
