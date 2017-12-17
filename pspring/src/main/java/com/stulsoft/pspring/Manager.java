@@ -3,6 +3,8 @@
  */
 package com.stulsoft.pspring;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class Manager {
+    static Logger logger = LoggerFactory.getLogger(Manager.class);
     @Autowired
     private IService service;
 
     void userService(){
-        System.out.println("service.getNextInt()=" + service.getNextInt());
+        logger.debug("==>userService");
+        logger.debug("service.getNextInt()=" + service.getNextInt());
+        logger.debug("<==userService");
     }
 }

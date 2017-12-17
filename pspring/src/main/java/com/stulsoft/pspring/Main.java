@@ -3,6 +3,8 @@
  */
 package com.stulsoft.pspring;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,19 +16,20 @@ import org.springframework.context.annotation.Bean;
  */
 @SpringBootApplication
 public class Main {
+    static Logger logger = LoggerFactory.getLogger(Manager.class);
     public static void main(String[] args) {
-        System.out.println("==>main");
+        logger.debug("==>main");
         SpringApplication.run(Main.class, args);
-        System.out.println("<==main");
+        logger.debug("<==main");
     }
 
     @Bean
     CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
-            System.out.println("==>commandLineRunner");
+            logger.debug("==>commandLineRunner");
             Manager manager = ctx.getBean(Manager.class);
             manager.userService();
-            System.out.println("<==commandLineRunner");
+            logger.debug("<==commandLineRunner");
         };
     }
 }

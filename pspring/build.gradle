@@ -9,6 +9,7 @@ ext{
     springVersion = '1.5.9.RELEASE'
     junitVersion = '4.12'
     mockitoVersion = '2.13.0'
+    logbackVersion = '1.1.2'
 }
 
 repositories {
@@ -17,6 +18,7 @@ repositories {
 
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: "$springVersion"
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: "$logbackVersion"
 
     testCompile group: 'junit', name: 'junit', version: "$junitVersion"
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "$springVersion"

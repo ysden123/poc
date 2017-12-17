@@ -33,3 +33,4 @@ pjunit5/build/
 spring-mockito/build/
 *.iml
 */.gradle
+pspring/out/
