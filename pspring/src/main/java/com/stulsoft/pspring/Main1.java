@@ -18,7 +18,7 @@ import org.springframework.context.annotation.ImportResource;
 @SpringBootApplication
 @ImportResource("classpath:beans1.xml")
 public class Main1 {
-    static Logger logger = LoggerFactory.getLogger(Manager.class);
+    private static Logger logger = LoggerFactory.getLogger(Manager.class);
     public static void main(String[] args) {
         logger.debug("==>main");
         SpringApplication.run(Main1.class, args);
