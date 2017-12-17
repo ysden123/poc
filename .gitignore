@@ -31,3 +31,5 @@ test*.dat
 akka/stream/*result.txt
 pjunit5/build/
 spring-mockito/build/
+*.iml
+*/.gradle
