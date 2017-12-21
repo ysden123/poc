@@ -29,7 +29,7 @@ lazy val root = (project in file("."))
     name := "pspark"
   )
   .dependsOn(util)
-  .aggregate(util, mllib, spark_sql, stream)
+  .aggregate(util, mllib, spark_sql, stream, course, graphx)
 
 lazy val util = (project in file("util"))
   .settings(commonSettings: _*)
@@ -60,7 +60,17 @@ lazy val course = (project in file("course"))
     libraryDependencies ++= Seq("org.apache.spark" %% "spark-mllib" % sparkVersion)
   )
   .settings(
-    name := "mllib"
+    name := "course"
+  )
+  .dependsOn(util)
+
+lazy val graphx = (project in file("graphx"))
+  .settings(commonSettings: _*)
+  .settings(
+    libraryDependencies ++= Seq("org.apache.spark" %% "spark-mllib" % sparkVersion)
+  )
+  .settings(
+    name := "graphx"
   )
   .dependsOn(util)
 
