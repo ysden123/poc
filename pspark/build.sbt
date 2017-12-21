@@ -54,6 +54,16 @@ lazy val mllib = (project in file("mllib"))
   )
   .dependsOn(util)
 
+lazy val course = (project in file("course"))
+  .settings(commonSettings: _*)
+  .settings(
+    libraryDependencies ++= Seq("org.apache.spark" %% "spark-mllib" % sparkVersion)
+  )
+  .settings(
+    name := "mllib"
+  )
+  .dependsOn(util)
+
 lazy val spark_sql = (project in file("spark_sql"))
   .settings(commonSettings: _*)
   .settings(

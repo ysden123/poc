@@ -53,7 +53,7 @@ object CreateFDFromCaseClass extends App {
     import sparkSession.implicits._
 
     val df = sparkSession.sparkContext
-      .textFile(PSparkUtil.getResourceFilePath("data/input1.csv"))
+      .textFile(PSparkUtil.getResourceFilePath("input1.csv"))
       .map(lineToData)
       .toDF()
 

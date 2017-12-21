@@ -25,7 +25,7 @@ object CreateFDFromTuples extends App {
   def noColumnNameDF(): Unit = {
     println("==>noColumnNameDF")
     val df = sparkSession.sparkContext
-      .textFile(PSparkUtil.getResourceFilePath("data/input1.csv"))
+      .textFile(PSparkUtil.getResourceFilePath("input1.csv"))
       .map(line => line.split("\t"))
       .map(x => (x(0).toInt, x(1), x(2).toDouble))
       .toDF
@@ -45,7 +45,7 @@ object CreateFDFromTuples extends App {
   def withColumnNameDF(): Unit = {
     println("==>withColumnNameDF")
     val df = sparkSession.sparkContext
-      .textFile(PSparkUtil.getResourceFilePath("data/input1.csv"))
+      .textFile(PSparkUtil.getResourceFilePath("input1.csv"))
       .map(line => line.split("\t"))
       .map(x => (x(0).toInt, x(1), x(2).toDouble))
       .toDF("id", "name", "value")

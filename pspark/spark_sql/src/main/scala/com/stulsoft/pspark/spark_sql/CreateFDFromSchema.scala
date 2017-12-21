@@ -55,7 +55,7 @@ object CreateFDFromSchema extends App {
     println("==>withSchema")
     val sc = sparkSession.sparkContext
     val rowRDD = sc
-      .textFile(PSparkUtil.getResourceFilePath("data/input1.csv"))
+      .textFile(PSparkUtil.getResourceFilePath("input1.csv"))
       .map(lineToData)
     val df = sparkSession.createDataFrame(rowRDD, dataSchema)
 

@@ -34,3 +34,6 @@ spring-mockito/build/
 *.iml
 */.gradle
 pspring/out/
+pspark/inputStream.txt
+pspark/tmpTest/
+pspark/out/
