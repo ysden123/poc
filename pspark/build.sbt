@@ -23,14 +23,6 @@ resolvers += "Spark Packages Repo" at "http://dl.bintray.com/spark-packages/mave
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 resolvers += "Repo at github.com/ankurdave/maven-repo" at "https://github.com/ankurdave/maven-repo/raw/master"
 
-lazy val root = (project in file("."))
-  .settings(commonSettings: _*)
-  .settings(
-    name := "pspark"
-  )
-  .dependsOn(util)
-  .aggregate(util, mllib, spark_sql, stream, course, graphx)
-
 lazy val util = (project in file("util"))
   .settings(commonSettings: _*)
   .settings(
@@ -43,6 +35,14 @@ lazy val util = (project in file("util"))
       "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
     )
   )
+  
+lazy val basics = (project in file("basics"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "basics"
+  )
+  .dependsOn(util)
+
 
 lazy val mllib = (project in file("mllib"))
   .settings(commonSettings: _*)
