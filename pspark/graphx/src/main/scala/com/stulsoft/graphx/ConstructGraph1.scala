@@ -25,5 +25,23 @@ object ConstructGraph1 extends App {
 
   val graph = Graph(vertices, edges)
 
+  println(s"Graph has ${graph.vertices.count} vertices and ${graph.edges.count} edges.")
+
+  println("Vertices:")
+  graph.vertices
+    .sortBy({ case (i, _) => i })
+    .collect
+    .foreach({ case (i, p) => println(s"$i $p") })
+
+  println("Edges:")
+  graph.edges
+    .sortBy(e => e.srcId)
+    .collect
+    .foreach({ case Edge(s, d, r) => r match {
+      case "marriedTo" => println(s"$s $r $d")
+      case _ => println(s"$s  is $r of $d")
+    }
+    })
+
   sc.stop()
 }
