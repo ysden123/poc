@@ -2,12 +2,12 @@ import sbt.Keys.libraryDependencies
 
 lazy val scalaLoggingVersion = "3.5.0"
 lazy val loggingVersion="2.7"
-lazy val kafkaVersion="0.10.2.0"
+lazy val kafkaVersion="1.0.0"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft.pkafka",
   version := "2.0.0",
-  scalaVersion := "2.12.2",
+  scalaVersion := "2.12.4",
   scalacOptions ++= Seq(
     "-feature",
     "-language:implicitConversions",
