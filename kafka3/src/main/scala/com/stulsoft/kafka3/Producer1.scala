@@ -5,16 +5,18 @@
 package com.stulsoft.kafka3
 
 import java.util.Properties
+import java.util.concurrent.TimeUnit
 
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.kafka.clients.producer.KafkaProducer
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 
 import scala.concurrent.Future
+import scala.util.Random
 
 /**
   * @author Yuriy Stul
   */
-final class Producer1(val interval: Int) extends LazyLogging {
+final class Producer1(val topic:String, val interval: Int) extends LazyLogging {
   private var continueExecuting = false
 
   import scala.concurrent.ExecutionContext.Implicits.global
@@ -35,12 +37,30 @@ final class Producer1(val interval: Int) extends LazyLogging {
     val producer = new KafkaProducer[String, String](props)
 
     while (continueExecuting) {
-      // send here
+      sendMessage(producer)
       Thread.sleep(interval)
     }
 
     producer.close()
-    logger.info("Finished Producer1")
+    logger.info("Stopped Producer1")
+  }
+
+  def sendMessage(producer:KafkaProducer[String,String]): Unit ={
+    try {
+      val future = producer.send(new ProducerRecord[String, String](topic, "theKey_" + Random.nextInt(), "the value_" + Random.nextInt()))
+      logger.info("Sent message")
+      try {
+        val result = future.get(10, TimeUnit.SECONDS)
+        val resultText=s"Succeeded send message. Offset is ${result.offset()}, partition is ${result.partition()}, topic is ${result.topic()}"
+        logger.info(resultText)
+      }
+      catch {
+        case e: Exception => logger.error("Failed send message. Error: {}", e.getMessage)
+      }
+    }
+    catch {
+      case e: Throwable => logger.error("Failed sending message with error {}", e.getMessage)
+    }
   }
 
   def stop(): Unit = continueExecuting = false
