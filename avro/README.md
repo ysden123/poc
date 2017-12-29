@@ -1,3 +1,3 @@
-# kafka2
+# avro
 
-Tests with Kafka(Scala)
+Tests with Apache Avro (serialization/deserialization with schema)

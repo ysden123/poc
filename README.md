@@ -5,6 +5,7 @@ POC project contains prove of concept projects, simple tests of new (for me!) te
 
 POC project includes following independent projects:
   - [akka](akka/README.md)
+  - [avro](avro/README.md)
   - [aws](aws/README.md)
   - [charts](charts/README.md)
   - [deploy1](deploy1/README.md)
@@ -12,6 +13,7 @@ POC project includes following independent projects:
   - [kafka](kafka/README.md)
   - [kafka_cluster](kafka_cluster/README.md)
   - [kafka2](kafka2/README.md)
+  - [kafka3](kafka3/README.md)
   - [mailgun4s](mailgun4s/README.md)
   - [mocha-jenkins](mocha-jenkins/README.md)
   - [pconfig](pconfig/README.md)
@@ -25,6 +27,7 @@ POC project includes following independent projects:
   - [pserialization](pserialization/README.md)
   - [pslick](pslick/README.md)
   - [pspark](pspark/README.md)
+  - [pspring](pspring/README.md)
   - [scala-chart](scala-chart/README.md)
   - [scalamock-examples](scalamock-examples/README.md)
   - [simple-cassandra](simple-cassandra/README.md)
