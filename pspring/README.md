@@ -1,3 +1,3 @@
-# spring-mockito
+# pspring
 
-Playing with Spring and Mockito
+Playing with Spring
