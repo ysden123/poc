@@ -8,7 +8,7 @@ import java.util.{Collections, Properties}
 
 import com.stulsoft.kafka3.AutoCommit.AutoCommit
 import com.stulsoft.kafka3.AutoOffsetRest.AutoOffsetRest
-import com.stulsoft.kafka3.Commit.Commit
+import com.stulsoft.kafka3.Commit._
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.kafka.clients.consumer.KafkaConsumer
 
