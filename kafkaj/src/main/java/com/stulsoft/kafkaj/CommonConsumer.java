@@ -91,7 +91,7 @@ public class CommonConsumer implements Consumer {
 
     @Override
     public Future<Void> stop() {
-        logger.info("Stopping CommonConsumer");
+        logger.info("Stopping CommonConsumer...");
         return executor.submit(() -> {
             continueExecuting = false;
             return null;

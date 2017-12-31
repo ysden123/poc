@@ -12,27 +12,27 @@ import java.util.concurrent.Future;
 /**
  * @author Yuriy Stul.
  */
-public class Main1 {
-    private static Logger logger = LoggerFactory.getLogger(Main1.class);
+public class CommonProducerRunner {
+    private static Logger logger = LoggerFactory.getLogger(CommonProducerRunner.class);
 
     public static void main(String[] args) {
-        logger.info("==>Main1");
+        logger.info("==>CommonProducerRunner");
         String topic = "main1TestTopic";
-        Consumer consumer = new CommonConsumer("test", AutoCommit.DisabledAutoCommit, AutoOffsetRest.Latest, Commit.Commit, topic);
-        Future<Void> startedConsumer = consumer.start();
+        Producer producer = new CommonProducer(topic, 1500);
+        Future<Void> startedProducer = producer.start();
         System.out.println("Enter line to exit...");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
         scanner.close();
-        logger.info("Stopping consumer...");
+        logger.info("Stopping producer...");
         try {
-            consumer.stop().get();
+            producer.stop().get();
         } catch (Exception ignore) {
         }
         try {
-            startedConsumer.get();
+            startedProducer.get();
         } catch (Exception ignore) {
         }
-        logger.info("==<Main1");
+        logger.info("<==CommonProducerRunner");
     }
 }
