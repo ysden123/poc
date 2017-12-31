@@ -38,3 +38,4 @@ pspark/inputStream.txt
 pspark/tmpTest/
 pspark/out/
 avro/users.avro
+kafkaj/out/
