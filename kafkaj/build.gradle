@@ -7,7 +7,7 @@ sourceCompatibility = 1.8
 
 ext{
     logbackVersion = '1.1.2'
-    kafkaClientsVersion = '1.0.0'
+    kafkaVersion = '1.0.0'
 }
 
 repositories {
@@ -16,5 +16,7 @@ repositories {
 
 dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: "$logbackVersion"
-    compile group: 'org.apache.kafka', name: 'kafka-clients', version: "$kafkaClientsVersion"
+    compile group: 'org.apache.kafka', name: 'kafka-clients', version: "$kafkaVersion"
+    compile group: 'org.apache.kafka', name: 'kafka-streams', version: "$kafkaVersion"
+
 }
