@@ -5,6 +5,7 @@ package com.stulsoft.kafkaj.stream.wordcount;
 
 import com.stulsoft.kafkaj.Common;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.KStream;
@@ -35,13 +36,20 @@ public class WordCountProcessor {
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        // sets "metadata.max.age.ms" to 1 minute for consumer only
+        props.put(StreamsConfig.consumerPrefix(ConsumerConfig.METADATA_MAX_AGE_CONFIG), 1000);
+        // sets "metadata.max.age.ms" to 1 minute for producer only
+        props.put(StreamsConfig.producerPrefix(ProducerConfig.METADATA_MAX_AGE_CONFIG), 1000);
+
+//        StreamsConfig sc = new StreamsConfig(props);
+//        System.out.println("StreamsConfig" + sc.values());
         StreamsBuilder builder = new StreamsBuilder();
         KStream<String, String> source = builder.stream(Common.WORD_COUNT_INPUT_TOPIC);
 
         final Pattern pattern = Pattern.compile("\\W+");
         KStream counts = source.flatMapValues(value -> Arrays.asList(pattern.split(value.toLowerCase())))
                 .map((key, value) -> {
-//                    logger.debug("key=" + key + ". value=" + value);
+                    logger.debug("key=" + key + ". value=" + value);
                     return new KeyValue<Object, Object>(value, value);
                 })
                 .filter((key, value) -> (!value.equals("the")))

@@ -9,9 +9,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.Properties;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -27,6 +25,7 @@ public class WordCountResultReader {
 
     private Future<Void> start(final ExecutorService executor) {
         return executor.submit(() -> {
+            Map<String,String> words = new TreeMap<>();
             continueExecuting = true;
             while (continueExecuting) {
                 Properties props = new Properties();
@@ -34,24 +33,27 @@ public class WordCountResultReader {
                 props.put("group.id", "wordCountResultReader");
 //                props.put("enable.auto.commit", enabledAutoCommit.toString());
 //                props.put("auto.offset.reset", autoOffsetRest.toString());
-                props.put("auto.commit.interval.ms", "1000");
+                props.put("auto.commit.interval.ms", "500");
                 props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
                 props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
                 KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
                 consumer.subscribe(Collections.singletonList(Common.WORD_COUNT_OUTPUT_TOPIC));
                 while (continueExecuting) {
-                    ConsumerRecords<String, String> records = consumer.poll(1000);
+                    ConsumerRecords<String, String> records = consumer.poll(500);
                     records.forEach(record -> {
-                        String resultText = String.format("Received message.\n\tPartition=%d, offset=%d, topic=\"%s\", key=%s, value=%s",
-                                record.partition(),
-                                record.offset(),
-                                record.topic(),
-                                record.key(),
-                                record.value());
-                        logger.info(resultText);
+//                        String resultText = String.format("Received message.\n\tPartition=%d, offset=%d, topic=\"%s\", key=%s, value=%s",
+//                                record.partition(),
+//                                record.offset(),
+//                                record.topic(),
+//                                record.key(),
+//                                record.value());
+//                        logger.info(resultText);
+                        words.put(record.key(),record.value());
                     });
                     if (!records.isEmpty()) {
+                        System.out.println("");
+                        words.forEach((k,v)->logger.info(k + "  " + v));
                         consumer.commitSync();
                     }
                 }
