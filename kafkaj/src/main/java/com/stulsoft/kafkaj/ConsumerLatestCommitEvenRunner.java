@@ -14,28 +14,28 @@ import java.util.concurrent.Future;
 /**
  * @author Yuriy Stul.
  */
-public class CommonProducerRunner {
-    private static Logger logger = LoggerFactory.getLogger(CommonProducerRunner.class);
+public class ConsumerLatestCommitEvenRunner {
+    private static Logger logger = LoggerFactory.getLogger(ConsumerLatestCommitEvenRunner.class);
 
     public static void main(String[] args) {
-        logger.info("==>CommonProducerRunner");
+        logger.info("==>ConsumerLatestCommitAllRunner");
+        ExecutorService executor= Executors.newFixedThreadPool(4);
         String topic = "main1TestTopic";
-        ExecutorService executor = Executors.newFixedThreadPool(4);
-        Producer producer = new CommonProducer(executor, topic, 1500);
-        Future<Void> startedProducer = producer.start();
+        Consumer consumer = new CommonConsumer(executor, "test", AutoCommit.DisabledAutoCommit, AutoOffsetRest.Latest, Commit.CommitEven, topic);
+        Future<Void> startedConsumer = consumer.start();
         System.out.println("Enter line to exit...");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
         scanner.close();
-        logger.info("Stopping producer...");
+        logger.info("Stopping consumer...");
         try {
-            producer.stop().get();
+            consumer.stop().get();
         } catch (Exception ignore) {
         }
         try {
-            startedProducer.get();
+            startedConsumer.get();
         } catch (Exception ignore) {
         }
-        logger.info("<==CommonProducerRunner");
+        logger.info("==<ConsumerLatestCommitAllRunner");
     }
 }

@@ -7,18 +7,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
  * @author Yuriy Stul.
  */
-public class CommonConsumerRunner {
-    private static Logger logger = LoggerFactory.getLogger(CommonConsumerRunner.class);
+public class ConsumerEarliestCommitAllRunner {
+    private static Logger logger = LoggerFactory.getLogger(ConsumerEarliestCommitAllRunner.class);
 
     public static void main(String[] args) {
-        logger.info("==>CommonConsumerRunner");
+        logger.info("==>ConsumerEarliestCommitAllRunner");
+        ExecutorService executor= Executors.newFixedThreadPool(4);
         String topic = "main1TestTopic";
-        Consumer consumer = new CommonConsumer("test", AutoCommit.DisabledAutoCommit, AutoOffsetRest.Latest, Commit.Commit, topic);
+        Consumer consumer = new CommonConsumer(executor, "test", AutoCommit.DisabledAutoCommit, AutoOffsetRest.Earliest, Commit.Commit, topic);
         Future<Void> startedConsumer = consumer.start();
         System.out.println("Enter line to exit...");
         Scanner scanner = new Scanner(System.in);
@@ -33,6 +36,6 @@ public class CommonConsumerRunner {
             startedConsumer.get();
         } catch (Exception ignore) {
         }
-        logger.info("==<CommonConsumerRunner");
+        logger.info("==<ConsumerEarliestCommitAllRunner");
     }
 }

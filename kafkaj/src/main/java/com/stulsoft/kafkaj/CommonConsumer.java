@@ -5,13 +5,14 @@ package com.stulsoft.kafkaj;
 
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.OffsetAndMetadata;
+import org.apache.kafka.common.TopicPartition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
@@ -26,17 +27,18 @@ public class CommonConsumer implements Consumer {
     private final Commit commit;
     private final String topic;
 
+    private int commitCount=0;
+
     private final ExecutorService executor;
 
-    CommonConsumer(final String groupId, final AutoCommit enabledAutoCommit, final AutoOffsetRest autoOffsetRest,
+    CommonConsumer(final ExecutorService executor, final String groupId, final AutoCommit enabledAutoCommit, final AutoOffsetRest autoOffsetRest,
                    final Commit commit, final String topic) {
+        this.executor = executor;
         this.groupId = groupId;
         this.enabledAutoCommit = enabledAutoCommit;
         this.autoOffsetRest = autoOffsetRest;
         this.commit = commit;
         this.topic = topic;
-
-        executor = Executors.newFixedThreadPool(2);
     }
 
     @Override
@@ -64,6 +66,28 @@ public class CommonConsumer implements Consumer {
                                 record.partition(),
                                 record.offset(),
                                 record.topic());
+                        switch(commit){
+                            case CommitEven:
+                                if (record.offset() % 2 == 0) {
+                                    // Commit even offsets only
+                                    logger.info("Commit for offset " + record.offset());
+                                    consumer.commitSync(Collections.singletonMap(
+                                            new TopicPartition(record.topic(), record.partition()),
+                                            new OffsetAndMetadata(record.offset() + 1)));
+
+                                }
+                                break;
+                            case CommitN:
+                                if (++commitCount <= 5){
+                                    logger.info("Commit for offset " + record.offset());
+                                    consumer.commitSync(Collections.singletonMap(
+                                            new TopicPartition(record.topic(), record.partition()),
+                                            new OffsetAndMetadata(record.offset() + 1)));
+                                }
+                            default:
+                                break;
+                        }
+
                         logger.info(resultText);
                     });
 
@@ -81,8 +105,7 @@ public class CommonConsumer implements Consumer {
                 consumer.close();
                 executor.shutdown();
                 logger.info("Stopped CommonConsumer");
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
