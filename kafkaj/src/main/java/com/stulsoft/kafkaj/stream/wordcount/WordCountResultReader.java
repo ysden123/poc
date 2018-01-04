@@ -9,24 +9,29 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import static com.stulsoft.kafkaj.Commit.Commit;
+import java.util.stream.Stream;
 
 /**
  * @author Yuriy Stul.
  */
 public class WordCountResultReader {
     private static Logger logger = LoggerFactory.getLogger(WordCountResultReader.class);
+    private String SAVED_RESULT_FILE_NAME = "words.txt";
+    private String SAVED_RESULT_SEPARATOR = "@";
     private boolean continueExecuting = false;
 
     private Future<Void> start(final ExecutorService executor) {
         return executor.submit(() -> {
             logger.info("Started WordCountResultReader");
-            Map<String, String> words = new TreeMap<>();
+            Map<String, String> words = readSavedResult();
             continueExecuting = true;
             while (continueExecuting) {
                 Properties props = new Properties();
@@ -43,14 +48,13 @@ public class WordCountResultReader {
                 consumer.subscribe(Collections.singletonList(Common.WORD_COUNT_OUTPUT_TOPIC));
                 while (continueExecuting) {
                     ConsumerRecords<String, String> records = consumer.poll(500);
-                    records.forEach(record -> {
-                        words.put(record.key(), record.value());
-                    });
+                    records.forEach(record -> words.put(record.key(), record.value()));
                     if (!records.isEmpty())
                         showResults(words);
                 }
                 consumer.close();
             }
+            saveResult(words);
             logger.info("Stopped WordCountResultReader");
             return null;
         });
@@ -70,6 +74,53 @@ public class WordCountResultReader {
             logger.info("\n");
             sortedEntries.forEach(e -> logger.info("{} {}", e.getKey(), e.getValue()));
         }
+    }
+
+    private void saveResult(final Map<String, String> words) {
+        File file = new File(SAVED_RESULT_FILE_NAME);
+
+        try(OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(SAVED_RESULT_FILE_NAME), "UTF-8")){
+            words.forEach((k,v)->{
+                try{
+                 writer.write(String.format("%s%s%s%s", k, SAVED_RESULT_SEPARATOR, v, System.getProperty("line.separator")));
+                }catch (Exception ex) {
+                    logger.error("(1) Failed write word to file. Error: {}", ex.getMessage());
+                }
+            });
+        }catch (Exception e) {
+            logger.error("(2) Failed write word to file. Error: {}", e.getMessage());
+        }
+//
+//        try (PrintWriter writer = new PrintWriter(file)) {
+//            words.forEach((k, v) -> {
+//                        try {
+//                            writer.println(String.format("%s%s%s", k, SAVED_RESULT_SEPARATOR, v));
+//                        } catch (Exception ex) {
+//                            logger.error("(1) Failed write word to file. Error: {}", ex.getMessage());
+//                        }
+//                    }
+//            );
+//        } catch (Exception e) {
+//            logger.error("(2) Failed write word to file. Error: {}", e.getMessage());
+//        }
+    }
+
+    private TreeMap<String, String> readSavedResult() {
+        TreeMap<String, String> words = new TreeMap<>();
+
+        if (new File(SAVED_RESULT_FILE_NAME).exists()) {
+            try (Stream<String> input = Files.lines(Paths.get(SAVED_RESULT_FILE_NAME), Charset.forName("UTF-8"))) {
+                input.forEach(line -> {
+                    String items[] = line.split(SAVED_RESULT_SEPARATOR);
+                    logger.debug("'{}' '{}'", items[0], items[1]);
+                    if (items.length > 1)
+                        words.put(items[0], items[1]);
+                });
+            } catch (Exception e) {
+                logger.error("(2) Failed read word from file. Error: {}", e.getMessage());
+            }
+        }
+        return words;
     }
 
     public static void main(String[] args) {
