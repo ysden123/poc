@@ -1,5 +1,5 @@
 group 'com.stulsoft'
-version '1.0-SNAPSHOT'
+version '1.0.1'
 
 apply plugin: 'java'
 
@@ -20,6 +20,22 @@ dependencies {
     compile group: 'org.apache.kafka', name: 'kafka-streams', version: "$kafkaVersion"
 
     // https://mvnrepository.com/artifact/org.rocksdb/rocksdbjni
-    compile group: 'org.rocksdb', name: 'rocksdbjni', version: '5.8.7'
+//    compile group: 'org.rocksdb', name: 'rocksdbjni', version: '5.8.7'
+}
 
+// Include dependent libraries in archive.
+jar {
+    baseName = 'kafkaj'
+    version = version
+    manifest {
+        attributes(
+                'Main-Class': 'com.stulsoft.kafkaj.stream.wordcount.WordCountMain',
+                "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+        )
+    }
+
+    doFirst {
+        from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
 }

@@ -6,11 +6,14 @@ package com.stulsoft.kafkaj.stream.wordcount;
 import com.stulsoft.kafkaj.Common;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Yuriy Stul.
@@ -39,7 +42,15 @@ public class WordProducer {
                 if (statement.length() == 0) break;
 
                 try {
-                    producer.send(new ProducerRecord<>( Common.WORD_COUNT_INPUT_TOPIC, "statement", statement));
+                    Future<RecordMetadata> future = producer.send(new ProducerRecord<>( Common.WORD_COUNT_INPUT_TOPIC, "statement", statement));
+                    try {
+                        RecordMetadata result = future.get(10, TimeUnit.SECONDS);
+                        String resultText = String.format("Succeeded send message. Offset is %d, partition is %d, topic is %s",
+                                result.offset(), result.partition(), result.topic());
+                        logger.info(resultText);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
