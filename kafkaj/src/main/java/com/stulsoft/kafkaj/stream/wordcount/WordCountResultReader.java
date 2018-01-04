@@ -25,7 +25,8 @@ public class WordCountResultReader {
 
     private Future<Void> start(final ExecutorService executor) {
         return executor.submit(() -> {
-            Map<String,String> words = new TreeMap<>();
+            logger.info("Started WordCountResultReader");
+            Map<String, String> words = new TreeMap<>();
             continueExecuting = true;
             while (continueExecuting) {
                 Properties props = new Properties();
@@ -33,6 +34,7 @@ public class WordCountResultReader {
                 props.put("group.id", "wordCountResultReader");
 //                props.put("enable.auto.commit", enabledAutoCommit.toString());
 //                props.put("auto.offset.reset", autoOffsetRest.toString());
+                props.put("auto.offset.reset", "earliest");
                 props.put("auto.commit.interval.ms", "500");
                 props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
                 props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
@@ -42,23 +44,14 @@ public class WordCountResultReader {
                 while (continueExecuting) {
                     ConsumerRecords<String, String> records = consumer.poll(500);
                     records.forEach(record -> {
-//                        String resultText = String.format("Received message.\n\tPartition=%d, offset=%d, topic=\"%s\", key=%s, value=%s",
-//                                record.partition(),
-//                                record.offset(),
-//                                record.topic(),
-//                                record.key(),
-//                                record.value());
-//                        logger.info(resultText);
-                        words.put(record.key(),record.value());
+                        words.put(record.key(), record.value());
                     });
-                    if (!records.isEmpty()) {
-                        System.out.println("");
-                        words.forEach((k,v)->logger.info(k + "  " + v));
-                        consumer.commitSync();
-                    }
+                    if (!records.isEmpty())
+                        showResults(words);
                 }
                 consumer.close();
             }
+            logger.info("Stopped WordCountResultReader");
             return null;
         });
     }
@@ -68,6 +61,15 @@ public class WordCountResultReader {
             continueExecuting = false;
             return null;
         });
+    }
+
+    private void showResults(final Map<String, String> words) {
+        if (!words.isEmpty()) {
+            List<Map.Entry<String, String>> sortedEntries = new ArrayList<>(words.entrySet());
+            sortedEntries.sort(Comparator.comparingInt(o -> -Integer.parseInt(o.getValue())));
+            logger.info("\n");
+            sortedEntries.forEach(e -> logger.info("{} {}", e.getKey(), e.getValue()));
+        }
     }
 
     public static void main(String[] args) {

@@ -39,3 +39,4 @@ pspark/tmpTest/
 pspark/out/
 avro/users.avro
 kafkaj/out/
+kafkaj/build/
