@@ -9,7 +9,9 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -77,32 +79,17 @@ public class WordCountResultReader {
     }
 
     private void saveResult(final Map<String, String> words) {
-        File file = new File(SAVED_RESULT_FILE_NAME);
-
-        try(OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(SAVED_RESULT_FILE_NAME), "UTF-8")){
-            words.forEach((k,v)->{
-                try{
-                 writer.write(String.format("%s%s%s%s", k, SAVED_RESULT_SEPARATOR, v, System.getProperty("line.separator")));
-                }catch (Exception ex) {
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(SAVED_RESULT_FILE_NAME), "UTF-8")) {
+            words.forEach((k, v) -> {
+                try {
+                    writer.write(String.format("%s%s%s%n", k, SAVED_RESULT_SEPARATOR, v));
+                } catch (Exception ex) {
                     logger.error("(1) Failed write word to file. Error: {}", ex.getMessage());
                 }
             });
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.error("(2) Failed write word to file. Error: {}", e.getMessage());
         }
-//
-//        try (PrintWriter writer = new PrintWriter(file)) {
-//            words.forEach((k, v) -> {
-//                        try {
-//                            writer.println(String.format("%s%s%s", k, SAVED_RESULT_SEPARATOR, v));
-//                        } catch (Exception ex) {
-//                            logger.error("(1) Failed write word to file. Error: {}", ex.getMessage());
-//                        }
-//                    }
-//            );
-//        } catch (Exception e) {
-//            logger.error("(2) Failed write word to file. Error: {}", e.getMessage());
-//        }
     }
 
     private TreeMap<String, String> readSavedResult() {
@@ -112,9 +99,10 @@ public class WordCountResultReader {
             try (Stream<String> input = Files.lines(Paths.get(SAVED_RESULT_FILE_NAME), Charset.forName("UTF-8"))) {
                 input.forEach(line -> {
                     String items[] = line.split(SAVED_RESULT_SEPARATOR);
-                    logger.debug("'{}' '{}'", items[0], items[1]);
-                    if (items.length > 1)
+                    if (items.length > 1) {
+                        logger.debug("'{}' '{}'", items[0], items[1]);
                         words.put(items[0], items[1]);
+                    }
                 });
             } catch (Exception e) {
                 logger.error("(2) Failed read word from file. Error: {}", e.getMessage());
