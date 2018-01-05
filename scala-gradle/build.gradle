@@ -1,0 +1,41 @@
+group 'com.stulsoft'
+version '1.0.0'
+
+apply plugin: 'scala'
+apply plugin: 'java'
+sourceCompatibility = 1.8
+
+// Versions
+def scalaMajor = "2.12"
+def scalaMinor = "4"
+
+
+//mainClassName = "io.github.vigoo.example.Main"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile(
+        [group: 'org.scala-lang', name: 'scala-compiler', version: "$scalaMajor.$scalaMinor"],
+    )
+
+//    testCompile(
+//        [group: 'junit', name: 'junit', version: '4.12'],
+//        [group: 'org.specs2', name: "specs2-core_$scalaMajor", version: '3.8.5.1'],
+//        [group: 'org.specs2', name: "specs2-junit_$scalaMajor", version: '3.8.5.1'],
+//    )
+}
+
+// Specifying the main class for the 'application' plugin
+//jar {
+//    baseName = project.name
+//    manifest {
+//        attributes("Main-Class": mainClassName)
+//    }
+//}
+
+tasks.withType(ScalaCompile) {
+	scalaCompileOptions.additionalParameters = ["-unchecked", "-deprecation", "-feature", "-Xfatal-warnings", "-encoding", "utf8"]
+}
