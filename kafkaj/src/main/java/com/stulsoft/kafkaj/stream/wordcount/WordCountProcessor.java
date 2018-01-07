@@ -5,7 +5,6 @@ package com.stulsoft.kafkaj.stream.wordcount;
 
 import com.stulsoft.kafkaj.Common;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.KStream;
@@ -47,8 +46,12 @@ public class WordCountProcessor {
         // sets commit.interval.ms
         props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 1000);
 
+        // Output StreamConfig
         StreamsConfig sc = new StreamsConfig(props);
-        System.out.println("StreamsConfig" + sc.values());
+        System.out.println("StreamsConfig:");
+        System.out.println("=============");
+        sc.values().forEach((k,v)->System.out.println(k + ": " + v));
+
         StreamsBuilder builder = new StreamsBuilder();
         KStream<String, String> source = builder.stream(Common.WORD_COUNT_INPUT_TOPIC);
 
