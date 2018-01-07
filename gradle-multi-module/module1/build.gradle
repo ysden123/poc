@@ -1,0 +1,16 @@
+// Include dependent libraries in archive.
+jar {
+    baseName = 'module1'
+    version = "$releaseVersion"
+    manifest {
+        attributes(
+                'Main-Class': 'com.stulsoft.module1.Main1',
+                "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+        )
+    }
+
+    doFirst {
+        from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+}

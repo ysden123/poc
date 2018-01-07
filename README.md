@@ -29,6 +29,7 @@ POC project includes following independent projects:
   - [pspark](pspark/README.md)
   - [pspring](pspring/README.md)
   - [scala-chart](scala-chart/README.md)
+  - [scala-gradle](scala-gradle/README.md)
   - [scalamock-examples](scalamock-examples/README.md)
   - [simple-cassandra](simple-cassandra/README.md)
   - [spring-mockito](spring-mockito/README.md)
