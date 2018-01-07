@@ -40,3 +40,6 @@ pspark/out/
 avro/users.avro
 kafkaj/out/
 kafkaj/build/
+gradle-multi-module/build/
+gradle-multi-module/module1/build/
+gradle-multi-module/module2/build/

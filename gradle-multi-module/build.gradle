@@ -1,0 +1,23 @@
+group 'com.stulsoft'
+version '1.0.1'
+
+
+ext {
+    logbackVersion = '1.1.2'
+    releaseVersion = '1.0.0'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile group: 'ch.qos.logback', name: 'logback-classic', version: "$logbackVersion"
+    }
+
+}
