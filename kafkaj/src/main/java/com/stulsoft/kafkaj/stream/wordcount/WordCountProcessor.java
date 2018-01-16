@@ -5,7 +5,6 @@ package com.stulsoft.kafkaj.stream.wordcount;
 
 import com.stulsoft.kafkaj.Common;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.KStream;
@@ -37,12 +36,22 @@ public class WordCountProcessor {
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         // sets "metadata.max.age.ms" to 1 second for consumer only
-        props.put(StreamsConfig.consumerPrefix(ConsumerConfig.METADATA_MAX_AGE_CONFIG), 50);
+//        props.put(StreamsConfig.consumerPrefix(ConsumerConfig.METADATA_MAX_AGE_CONFIG), 50);
         // sets "metadata.max.age.ms" to 1 second for producer only
-        props.put(StreamsConfig.producerPrefix(ProducerConfig.METADATA_MAX_AGE_CONFIG), 50);
+//        props.put(StreamsConfig.producerPrefix(ProducerConfig.METADATA_MAX_AGE_CONFIG), 50);
 
+        // sets metrics.sample.window.ms (default is 30000)
+//        props.put(StreamsConfig.METRICS_SAMPLE_WINDOW_MS_CONFIG, 1000);
+
+        // sets commit.interval.ms
+        props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 1000);
+
+        // Output StreamConfig
         StreamsConfig sc = new StreamsConfig(props);
-        System.out.println("StreamsConfig" + sc.values());
+        System.out.println("StreamsConfig:");
+        System.out.println("=============");
+        sc.values().forEach((k,v)->System.out.println(k + ": " + v));
+
         StreamsBuilder builder = new StreamsBuilder();
         KStream<String, String> source = builder.stream(Common.WORD_COUNT_INPUT_TOPIC);
 
