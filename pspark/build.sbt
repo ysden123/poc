@@ -1,6 +1,6 @@
 import sbt.Keys.libraryDependencies
 
-lazy val sparkVersion = "2.2.0"
+lazy val sparkVersion = "2.2.1"
 lazy val scalaLoggingVersion = "3.5.0"
 lazy val commonIoVersion = "1.3.2"
 lazy val scalaTestVersion = "3.0.1"

@@ -8,7 +8,7 @@ import org.apache.spark.sql.SparkSession
   *
   * Created by Yuriy Stul on 11/26/2016.
   */
-object CreateFDFromTuples extends App {
+object CreateDFFromTuples extends App {
   println("==>main")
 
   val sparkSession = SparkSession
