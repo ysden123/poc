@@ -6,7 +6,7 @@ import org.apache.spark.sql.SparkSession
 /** Playing with DataFrame from JSon
   *
   * @author Yuriy Stul.
-  *         @see [[https://spark.apache.org/docs/latest/sql-programming-guide.html#overview Spark SQL, DataFrames and Datasets Guide]]
+  * @see [[https://spark.apache.org/docs/latest/sql-programming-guide.html#overview Spark SQL, DataFrames and Datasets Guide]]
   */
 object CreateDFFromJson extends App {
   println("==>main")
