@@ -8,7 +8,7 @@ import com.stulsoft.pspark.util.PSparkUtil
   *
   * Created by Yuriy Stul on 11/26/2016.
   */
-object CreateFDFromCaseClass extends App {
+object CreateDFFromCaseClass extends App {
   println("==>main")
 
   case class Data(

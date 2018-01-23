@@ -9,7 +9,7 @@ import org.apache.spark.sql.{Row, SparkSession}
   *
   * Created by Yuriy Stul on 11/26/2016.
   */
-object CreateFDFromSchema extends App {
+object CreateDFFromSchema extends App {
   println("==>main")
 
   val NULLABLE = true
