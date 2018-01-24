@@ -43,3 +43,5 @@ kafkaj/build/
 gradle-multi-module/build/
 gradle-multi-module/module1/build/
 gradle-multi-module/module2/build/
+kafka-mock/out/
+kafka-mock/build/
