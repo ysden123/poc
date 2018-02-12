@@ -8,13 +8,13 @@ import com.google.cloud.bigquery.testing.RemoteBigQueryHelper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Yuriy Stul
  */
 public class Main1 {
     public static void main(String[] args) {
+        Duration duration = new Duration();
         System.out.println("==>main");
         try {
             RemoteBigQueryHelper bigqueryHelper = RemoteBigQueryHelper.create();
@@ -33,9 +33,10 @@ public class Main1 {
                     .setTimePartitioning(TimePartitioning.of(TimePartitioning.Type.DAY))
                     .build();
 
-            long start = System.nanoTime();
+            duration.start();
             Table table = dataset.create(tableName, tableDefinition);
-            System.out.println("Created table " + tableName + " during " + TimeUnit.MILLISECONDS.convert(System.nanoTime() - start, TimeUnit.NANOSECONDS) + "ms.");
+            duration.stop();
+            System.out.println("Created table " + tableName + " during " + duration.duration() + " ms");
 
             // Add rows
             InsertAllRequest.Builder builder = InsertAllRequest.newBuilder(table);
@@ -46,9 +47,10 @@ public class Main1 {
                 recordContent.put(ageFieldName, i);
                 builder.addRow(recordContent);
             }
-            start = System.nanoTime();
+            duration.start();
             InsertAllResponse response = bigQuery.insertAll(builder.build());
-            System.out.println("Inserted during " + TimeUnit.MILLISECONDS.convert(System.nanoTime() - start, TimeUnit.NANOSECONDS) + "ms.");
+            duration.stop();
+            System.out.println("Inserted during " + duration.duration() + " ms");
             if (response.hasErrors()){
                 System.out.println("Errors in insert");
                 System.out.println(response.getInsertErrors().toString());
