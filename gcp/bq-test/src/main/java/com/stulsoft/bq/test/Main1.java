@@ -8,6 +8,7 @@ import com.google.cloud.bigquery.testing.RemoteBigQueryHelper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Yuriy Stul
@@ -32,29 +33,33 @@ public class Main1 {
                     .setTimePartitioning(TimePartitioning.of(TimePartitioning.Type.DAY))
                     .build();
 
+            long start = System.nanoTime();
             Table table = dataset.create(tableName, tableDefinition);
-            System.out.println("Created table " + tableName);
+            System.out.println("Created table " + tableName + " during " + TimeUnit.MILLISECONDS.convert(System.nanoTime() - start, TimeUnit.NANOSECONDS) + "ms.");
 
-            // Add row
+            // Add rows
             InsertAllRequest.Builder builder = InsertAllRequest.newBuilder(table);
-            for(int i = 1; i <= 3; ++i){
+            int n = 500;
+            for (int i = 1; i <= n; ++i) {
                 Map<String, Object> recordContent = new HashMap<>();
                 recordContent.put(nameFieldName, "yuriys " + i);
                 recordContent.put(ageFieldName, i);
                 builder.addRow(recordContent);
             }
+            start = System.nanoTime();
             InsertAllResponse response = bigQuery.insertAll(builder.build());
+            System.out.println("Inserted during " + TimeUnit.MILLISECONDS.convert(System.nanoTime() - start, TimeUnit.NANOSECONDS) + "ms.");
             if (response.hasErrors()){
                 System.out.println("Errors in insert");
                 System.out.println(response.getInsertErrors().toString());
             }else{
-                System.out.println("Inserted 3 records");
+                System.out.println("Inserted " + n + " records");
             }
 
             System.out.println("Tables:");
             dataset.list().iterateAll().forEach(t -> System.out.format("getFriendlyName()=%s%n", t));
 
-//            RemoteBigQueryHelper.forceDelete(bigquery, dataSetName);
+            RemoteBigQueryHelper.forceDelete(bigQuery, dataSetName);
 
         } catch (Exception e) {
             e.printStackTrace();
