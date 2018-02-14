@@ -32,6 +32,12 @@ public class Main {
 
             Manager2 manager2 = ctx.getBean(Manager2.class);
             manager2.userService();
+
+            ClassWithValueAnnotation cwv = ctx.getBean(ClassWithValueAnnotation.class);
+            System.out.println("value1=" + cwv.getValue1());
+            System.out.println("value2=" + cwv.getValue2());
+            System.out.println("javaHome=" + cwv.getJavaHome());
+
             logger.debug("<==commandLineRunner");
         };
     }
