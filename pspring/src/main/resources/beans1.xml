@@ -13,5 +13,4 @@
     <bean id = "srv31" class = "com.stulsoft.pspring.Service31Impl" primary="true"></bean>
 
     <bean id = "mngr31" class = "com.stulsoft.pspring.Manager3" primary="true"></bean>
-
 </beans>

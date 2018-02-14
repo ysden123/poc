@@ -1,6 +1,6 @@
-#bg-test
+#datastore-test
 
-Playing with Google Cloud Big Query
+Playing with Google Cloud Datastore
 
 ##Configuration
 JSon file with configuration should be stored on disk.

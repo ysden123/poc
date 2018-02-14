@@ -32,6 +32,19 @@ public class Main {
 
             Manager2 manager2 = ctx.getBean(Manager2.class);
             manager2.userService();
+
+            System.out.println("\nClassWithValueAnnotation:");
+            ClassWithValueAnnotation cwv = ctx.getBean(ClassWithValueAnnotation.class);
+            System.out.println("value1=" + cwv.getValue1());
+            System.out.println("value2=" + cwv.getValue2());
+            System.out.println("javaHome=" + cwv.getJavaHome());
+
+            System.out.println("\nClassWithValueAnnotation2:");
+            ClassWithValueAnnotation2 cwv2 = new ClassWithValueAnnotation2();
+            System.out.println("value1=" + cwv2.getValue1());
+            System.out.println("value2=" + cwv2.getValue2());
+            System.out.println("javaHome=" + cwv2.getJavaHome());
+
             logger.debug("<==commandLineRunner");
         };
     }
