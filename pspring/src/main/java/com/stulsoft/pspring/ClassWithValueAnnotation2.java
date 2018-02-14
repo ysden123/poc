@@ -4,18 +4,16 @@
 package com.stulsoft.pspring;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 /**
  * Playing Spring annotation <i>{@code @Value}</i>
  * <p>
- * For using with Spring initialization
+ * For using without Spring initialization.
  *
  * @author Yuriy Stul
  * @since 2/14/2018
  */
-@Component
-public class ClassWithValueAnnotation {
+public class ClassWithValueAnnotation2 {
     @Value("${test.value1:default}")
     private String value1;
 
