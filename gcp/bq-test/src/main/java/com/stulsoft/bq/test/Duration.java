@@ -14,7 +14,7 @@ public class Duration {
 
     public void start() {
         start = System.nanoTime();
-        end = start;
+        end = 0L;
     }
 
     public void stop() {
@@ -22,6 +22,8 @@ public class Duration {
     }
 
     public long duration() {
+        if (end == 0l)
+            stop();
         return TimeUnit.MILLISECONDS.convert(end - start, TimeUnit.NANOSECONDS);
     }
 }
