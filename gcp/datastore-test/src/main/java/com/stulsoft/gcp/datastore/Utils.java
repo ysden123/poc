@@ -14,11 +14,11 @@ import java.util.List;
 /**
  * @author Yuriy Stul
  */
-public class Utils {
+class Utils {
     private Utils() {
     }
 
-    public static void addManyValues(Datastore datastore, int n) {
+    static void addManyValues(Datastore datastore, int n) {
         System.out.println("==>addManyValues2");
         try {
             Duration totalDuration = new Duration();
