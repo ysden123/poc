@@ -1,3 +1,3 @@
-﻿#SimpleProducer
+﻿# SimpleProducer
 
-Playing with Kafka using c#. Simple Kafka producer.
+Playing with Kafka using c#. Simple Kafka producer on C#.
