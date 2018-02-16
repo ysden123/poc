@@ -49,3 +49,6 @@ kafka/CSharp/SimpleProducer/.vs/
 kafka/CSharp/SimpleProducer/packages/
 kafka/CSharp/SimpleProducer/SimpleProducer/bin/
 kafka/CSharp/SimpleProducer/SimpleProducer/obj/
+*.sln
+kafka/CSharp/SimpleProducer/SimpleProducer/.vs/
+kafka/CSharp/SimpleProducer/SimpleProducer/packages/
