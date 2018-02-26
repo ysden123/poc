@@ -49,3 +49,16 @@ kafka/CSharp/SimpleProducer/.vs/
 kafka/CSharp/SimpleProducer/packages/
 kafka/CSharp/SimpleProducer/SimpleProducer/bin/
 kafka/CSharp/SimpleProducer/SimpleProducer/obj/
+*.sln
+kafka/CSharp/SimpleProducer/SimpleProducer/.vs/
+kafka/CSharp/SimpleProducer/SimpleProducer/packages/
+kafka/CSharp/SimpleProducer/bin/
+kafka/CSharp/SimpleProducer/obj/
+kafka/CSharp/ConsumerFromFirst/obj/
+Qvx/QvxConnector1/.vs/
+Qvx/QvxConnector1/bin/
+Qvx/QvxConnector1/obj/
+Qvx/.vs/
+Qvx/EventLogSimple/bin/
+Qvx/EventLogSimple/obj/
+*.user
