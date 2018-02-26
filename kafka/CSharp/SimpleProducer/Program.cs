@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SimpleProducer
+namespace StulSoft.Poc.Kafka.SimpleProducer
 {
     /*
      * Playing with Kafka. Simple producer. 
