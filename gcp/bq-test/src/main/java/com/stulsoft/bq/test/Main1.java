@@ -37,28 +37,25 @@ public class Main1 {
         // Wait for query to complete
         try {
             System.out.println("Waiting result...");
-            queryJob = queryJob.waitFor();
-
-            System.out.printf("Duration = %d ms.%n",duration.duration());
-
+            // Get the results.
+            TableResult result = queryJob.getQueryResults(BigQuery.QueryResultsOption.maxWaitTime(1000), BigQuery.QueryResultsOption.pageSize(10));
+            System.out.printf("Duration = %d ms.%n", duration.duration());
             // Check for errors
-            if (queryJob == null){
-                throw new RuntimeException("Job no longer exists");
-            }else if (queryJob.getStatus().getError() != null){
+            if (queryJob.getStatus().getError() != null) {
                 // You can also look at queryJob.getStatus().getExecutionErrors() for all
                 // errors, not just the latest one.
                 throw new RuntimeException(queryJob.getStatus().getError().toString());
             }
-            // Get the results.
-            TableResult result = queryJob.getQueryResults();
 
             FieldList fields = result.getSchema().getFields();
             int numberOfFields = fields.size();
 
             // Print all pages of the results.
+            int page = 0;
             while (result != null) {
+                System.out.printf("page=%d%n", ++page);
                 for (List<FieldValue> row : result.iterateAll()) {
-                    for(int fieldIndex = 0; fieldIndex < numberOfFields; ++ fieldIndex){
+                    for (int fieldIndex = 0; fieldIndex < numberOfFields; ++fieldIndex) {
                         FieldValue val = row.get(fieldIndex);
                         System.out.printf("%s=%s, ", fields.get(fieldIndex).getName(), val.getValue().toString());
                     }
@@ -123,7 +120,9 @@ public class Main1 {
             System.out.println("Tables:");
             dataset.list().iterateAll().forEach(t -> System.out.format("getFriendlyName()=%s%n", t));
 
-            readValue(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 10");
+//            readValue(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 10");
+            readValue(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 30");
+//            readValue(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName);
 
             RemoteBigQueryHelper.forceDelete(bigQuery, dataSetName);
 
