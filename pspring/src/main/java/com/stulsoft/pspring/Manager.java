@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, William Hill Online. All rights reserved
+ * Copyright (c) 2017, Yuriy Stul . All rights reserved
  */
 package com.stulsoft.pspring;
 
