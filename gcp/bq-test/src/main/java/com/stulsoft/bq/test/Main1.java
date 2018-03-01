@@ -5,7 +5,6 @@ package com.stulsoft.bq.test;
 
 import com.google.cloud.bigquery.*;
 import com.google.cloud.bigquery.testing.RemoteBigQueryHelper;
-import com.google.cloud.bigquery.TableResult;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,17 +18,18 @@ public class Main1 {
     /**
      * @see <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/enabling-standard-sql">Enabling Standard SQL</a>
      */
-    private static void readValue(final BigQuery bigQuery, final String queryString) {
-        final Duration duration = new Duration();
+    private static void readValue1(final BigQuery bigQuery, final String queryString) {
+        System.out.println("==>readValue1");
+        final Stopwatch stopwatch = new Stopwatch();
         QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(queryString)
                 .setUseLegacySql(false)
                 .build();
 
-        // Create a job ID so that we can
+        // Create a job ID so that we can safely retry.
         JobId jobId = JobId.of(UUID.randomUUID().toString());
 
         System.out.println("Running query...");
-        duration.start();
+        stopwatch.start();
         Job queryJob = bigQuery.create(JobInfo.newBuilder(queryConfig)
                 .setJobId(jobId)
                 .build());
@@ -39,7 +39,7 @@ public class Main1 {
             System.out.println("Waiting result...");
             // Get the results.
             TableResult result = queryJob.getQueryResults(BigQuery.QueryResultsOption.maxWaitTime(1000), BigQuery.QueryResultsOption.pageSize(10));
-            System.out.printf("Duration = %d ms.%n", duration.duration());
+            System.out.printf("Stopwatch = %d ms.%n", stopwatch.duration());
             // Check for errors
             if (queryJob.getStatus().getError() != null) {
                 // You can also look at queryJob.getStatus().getExecutionErrors() for all
@@ -71,10 +71,89 @@ public class Main1 {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("<==readValue1");
+    }
+
+    /**
+     * @see <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/enabling-standard-sql">Enabling Standard SQL</a>
+     */
+    private static void readValue2(final BigQuery bigQuery, final String queryString) {
+        System.out.println("==>readValue2");
+        final Stopwatch stopwatch = new Stopwatch();
+        QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(queryString)
+                .setUseLegacySql(false)
+                .build();
+
+        // Create a job ID so that we can safely retry.
+        JobId jobId = JobId.of(UUID.randomUUID().toString());
+
+        System.out.println("Running query...");
+        stopwatch.start();
+        Job queryJob = bigQuery.create(JobInfo.newBuilder(queryConfig)
+                .setJobId(jobId)
+                .build());
+        // Wait for the query to complete.
+        try {
+            queryJob = queryJob.waitFor();
+        } catch (InterruptedException e) {
+            System.out.println("Failed queryJob.waitFor()");
+            e.printStackTrace();
+            return;
+        }
+        System.out.printf("'bigQuery.create' takes %d ms.%n", stopwatch.duration());
+
+        // Check for errors
+        if (queryJob == null) {
+            throw new RuntimeException("Job no longer exists");
+        } else if (queryJob.getStatus().getError() != null) {
+            System.out.println("Failed creating queryJob");
+            // You can also look at queryJob.getStatus().getExecutionErrors() for all
+            // errors, not just the latest one.
+            System.out.println(queryJob.getStatus().getError().toString());
+            return;
+        }
+
+        // Get the results.
+        try {
+            stopwatch.start();
+            TableResult result = queryJob.getQueryResults();
+            System.out.printf("Time to get result is %d ms.%n", stopwatch.duration());
+            // Check for errors
+            if (queryJob.getStatus().getError() != null) {
+                // You can also look at queryJob.getStatus().getExecutionErrors() for all
+                // errors, not just the latest one.
+                System.out.println(queryJob.getStatus().getError().toString());
+                return;
+            }
+
+
+            FieldList fields = result.getSchema().getFields();
+            int numberOfFields = fields.size();
+
+            // Print all pages of the results.
+            int page = 0;
+            while (result != null) {
+                System.out.printf("page=%d%n", ++page);
+                for (List<FieldValue> row : result.iterateAll()) {
+                    for (int fieldIndex = 0; fieldIndex < numberOfFields; ++fieldIndex) {
+                        FieldValue val = row.get(fieldIndex);
+                        System.out.printf("%s=%s, ", fields.get(fieldIndex).getName(), val.getValue().toString());
+                    }
+                    System.out.println("");
+                }
+                result = result.getNextPage();
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Failed getting result (InterruptedException):");
+            e.printStackTrace();
+            return;
+        }
+
+        System.out.println("<==readValue2");
     }
 
     public static void main(String[] args) {
-        Duration duration = new Duration();
+        Stopwatch stopwatch = new Stopwatch();
         System.out.println("==>main");
         try {
             RemoteBigQueryHelper bigqueryHelper = RemoteBigQueryHelper.create();
@@ -92,10 +171,10 @@ public class Main1 {
                     .setTimePartitioning(TimePartitioning.of(TimePartitioning.Type.DAY))
                     .build();
 
-            duration.start();
+            stopwatch.start();
             Table table = dataset.create(tableName, tableDefinition);
-            duration.stop();
-            System.out.println("Created table " + tableName + " during " + duration.duration() + " ms");
+            stopwatch.stop();
+            System.out.println("Created table " + tableName + " during " + stopwatch.duration() + " ms");
 
             // Add rows
             InsertAllRequest.Builder builder = InsertAllRequest.newBuilder(table);
@@ -106,10 +185,10 @@ public class Main1 {
                 recordContent.put(ageFieldName, i);
                 builder.addRow(recordContent);
             }
-            duration.start();
+            stopwatch.start();
             InsertAllResponse response = bigQuery.insertAll(builder.build());
-            duration.stop();
-            System.out.println("Inserted during " + duration.duration() + " ms");
+            stopwatch.stop();
+            System.out.println("Inserted during " + stopwatch.duration() + " ms");
             if (response.hasErrors()) {
                 System.out.println("Errors in insert");
                 System.out.println(response.getInsertErrors().toString());
@@ -120,9 +199,10 @@ public class Main1 {
             System.out.println("Tables:");
             dataset.list().iterateAll().forEach(t -> System.out.format("getFriendlyName()=%s%n", t));
 
-//            readValue(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 10");
-            readValue(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 30");
-//            readValue(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName);
+//            readValue1(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 10");
+            readValue1(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 30");
+            readValue2(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 30");
+//            readValue1(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName);
 
             RemoteBigQueryHelper.forceDelete(bigQuery, dataSetName);
 
