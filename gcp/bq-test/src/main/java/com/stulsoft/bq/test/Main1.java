@@ -79,6 +79,7 @@ public class Main1 {
      */
     private static void readValue2(final BigQuery bigQuery, final String queryString) {
         System.out.println("==>readValue2");
+        System.out.printf("queryString: %s%n", queryString);
         final Stopwatch stopwatch = new Stopwatch();
         QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(queryString)
                 .setUseLegacySql(false)
@@ -95,6 +96,9 @@ public class Main1 {
         // Wait for the query to complete.
         try {
             queryJob = queryJob.waitFor();
+        } catch (BigQueryException e) {
+            System.out.printf("Failed creating query job for query string [%s]. Error: %s%n", queryString, e.getMessage());
+            return;
         } catch (InterruptedException e) {
             System.out.println("Failed queryJob.waitFor()");
             e.printStackTrace();
@@ -202,6 +206,7 @@ public class Main1 {
 //            readValue1(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 10");
             readValue1(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 30");
             readValue2(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 30");
+            readValue2(bigQuery, "SELECT * FROMERROR " + dataSetName + "." + tableName + " LIMIT 30");
 //            readValue1(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName);
 
             RemoteBigQueryHelper.forceDelete(bigQuery, dataSetName);
