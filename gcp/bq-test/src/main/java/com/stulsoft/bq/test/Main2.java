@@ -1,30 +1,24 @@
-/*
-   Created by Yuriy Stul 2018
-*/
 package com.stulsoft.bq.test;
 
 import com.google.cloud.bigquery.*;
 import com.google.cloud.bigquery.testing.RemoteBigQueryHelper;
 
+import java.util.logging.Logger;
+
 import static com.stulsoft.bq.test.BQUtils.*;
 
 /**
  * @author Yuriy Stul
+ * @since 3/4/2018
  */
-public class Main1 {
+public class Main2 {
+    private static final Logger logger = LoggerUtils.getLogger(Main2.class.getName());
+
     public static void main(String[] args) {
         Stopwatch stopwatch = new Stopwatch();
-        System.out.println("==>main");
+        logger.info("==>main");
+        BigQuery bigQuery = BigQueryOptions.getDefaultInstance().getService();
         try {
-            RemoteBigQueryHelper bigQueryHelper = RemoteBigQueryHelper.create();
-            BigQuery bigQuery = bigQueryHelper.getOptions().getService();
-
-/*
-            FileInputStream is = new FileInputStream(System.getenv("GOOGLE_APPLICATION_CREDENTIALS"));
-            BigQuery bigQuery = RemoteBigQueryHelper.create("api-project-829216641821", is).getOptions().getService();
-*/
-
-
             String dataSetName = RemoteBigQueryHelper.generateDatasetName();
             System.out.format("dataSetName: %s%n", dataSetName);
             Dataset dataset = bigQuery.create(DatasetInfo.newBuilder(dataSetName).build());
@@ -51,6 +45,7 @@ public class Main1 {
 
             InsertAllResponse response = bigQuery.insertAll(builder.build());
             stopwatch.stop();
+
             System.out.println("Inserted during " + stopwatch.duration() + " ms");
             if (response.hasErrors()) {
                 System.out.println("Errors in insert");
@@ -62,18 +57,14 @@ public class Main1 {
             System.out.println("Tables:");
             dataset.list().iterateAll().forEach(t -> System.out.format("getFriendlyName()=%s%n", t));
 
-//            readValuesWithoutCheckCreateJob(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 10");
             readValuesWithoutCheckCreateJob(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 30");
-//            readValuesWithoutCheckCreateJob(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName);
-
             readValuesWithCheckCreateJob(bigQuery, "SELECT * FROM " + dataSetName + "." + tableName + " LIMIT 30");
             readValuesWithCheckCreateJob(bigQuery, "SELECT * FROMERROR " + dataSetName + "." + tableName + " LIMIT 30");
 
             RemoteBigQueryHelper.forceDelete(bigQuery, dataSetName);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("<==main");
+        logger.info("<==main");
     }
 }

@@ -8,9 +8,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Yuriy Stul
  */
-public class Duration {
+public class Stopwatch {
     private long start;
     private long end;
+
+    public Stopwatch() {
+        start();
+    }
 
     public void start() {
         start = System.nanoTime();
