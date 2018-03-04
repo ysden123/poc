@@ -145,9 +145,8 @@ public class BQUtils {
         System.out.println("<==readValuesWithCheckCreateJob");
     }
 
-    public static void addRows(int n, Table table, String nameFieldName, String ageFieldName){
+    public static void addRows(int n, final InsertAllRequest.Builder builder, String nameFieldName, String ageFieldName){
         // Add rows
-        InsertAllRequest.Builder builder = InsertAllRequest.newBuilder(table);
         for (int i = 1; i <= n; ++i) {
             Map<String, Object> recordContent = new HashMap<>();
             recordContent.put(nameFieldName, "yuriys " + i);

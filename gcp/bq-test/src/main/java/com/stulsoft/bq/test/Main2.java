@@ -38,10 +38,11 @@ public class Main2 {
             System.out.println("Created table " + tableName + " during " + stopwatch.duration() + " ms");
 
             // Add rows
-            int n = 500;
-            addRows(n, table, nameFieldName, ageFieldName);
             InsertAllRequest.Builder builder = InsertAllRequest.newBuilder(table);
+            int n = 500;
+            addRows(n, builder, nameFieldName, ageFieldName);
             stopwatch.start();
+
             InsertAllResponse response = bigQuery.insertAll(builder.build());
             stopwatch.stop();
 
