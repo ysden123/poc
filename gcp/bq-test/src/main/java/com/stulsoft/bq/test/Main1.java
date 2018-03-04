@@ -6,9 +6,6 @@ package com.stulsoft.bq.test;
 import com.google.cloud.bigquery.*;
 import com.google.cloud.bigquery.testing.RemoteBigQueryHelper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static com.stulsoft.bq.test.BQUtils.*;
 
 /**
