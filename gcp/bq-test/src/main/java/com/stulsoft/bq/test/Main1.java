@@ -6,6 +6,7 @@ package com.stulsoft.bq.test;
 import com.google.cloud.bigquery.*;
 import com.google.cloud.bigquery.testing.RemoteBigQueryHelper;
 
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,7 @@ public class Main1 {
         } else if (queryJob.getStatus().getError() != null) {
             // You can also look at queryJob.getStatus().getExecutionErrors() for all
             // errors, not just the latest one.
-            System.out.printf("Failed creating job for queryString: [%s] with error: %s %n", queryConfig, queryJob.getStatus().getError().toString());
+            System.out.printf("Failed creating job for queryString: [%s] with error: %s %n", queryString, queryJob.getStatus().getError().toString());
             return;
         }
 
@@ -151,8 +152,15 @@ public class Main1 {
         Stopwatch stopwatch = new Stopwatch();
         System.out.println("==>main");
         try {
-            RemoteBigQueryHelper bigqueryHelper = RemoteBigQueryHelper.create();
-            BigQuery bigQuery = bigqueryHelper.getOptions().getService();
+            RemoteBigQueryHelper bigQueryHelper = RemoteBigQueryHelper.create();
+            BigQuery bigQuery = bigQueryHelper.getOptions().getService();
+
+/*
+            FileInputStream is = new FileInputStream(System.getenv("GOOGLE_APPLICATION_CREDENTIALS"));
+            BigQuery bigQuery = RemoteBigQueryHelper.create("api-project-829216641821", is).getOptions().getService();
+*/
+
+
             String dataSetName = RemoteBigQueryHelper.generateDatasetName();
             System.out.format("dataSetName: %s%n", dataSetName);
             Dataset dataset = bigQuery.create(DatasetInfo.newBuilder(dataSetName).build());
