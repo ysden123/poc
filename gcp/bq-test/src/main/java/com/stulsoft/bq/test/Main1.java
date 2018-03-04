@@ -3,6 +3,7 @@
 */
 package com.stulsoft.bq.test;
 
+import com.google.cloud.RetryOption;
 import com.google.cloud.bigquery.*;
 import com.google.cloud.bigquery.testing.RemoteBigQueryHelper;
 import com.google.cloud.bigquery.TableResult;
@@ -38,7 +39,13 @@ public class Main1 {
         try {
             System.out.println("Waiting result...");
             // Get the results.
-            TableResult result = queryJob.getQueryResults(BigQuery.QueryResultsOption.maxWaitTime(1000), BigQuery.QueryResultsOption.pageSize(10));
+//            TableResult result = queryJob.getQueryResults(BigQuery.QueryResultsOption.maxWaitTime(1000), BigQuery.QueryResultsOption.pageSize(10));
+            final Duration duration2 = new Duration();
+
+            bigQuery.query(queryConfig, )
+
+            TableResult result = queryJob.getQueryResults(BigQuery.QueryResultsOption.maxWaitTime(1), BigQuery.QueryResultsOption.pageSize(10));
+            System.out.printf("getQueryResults duration = %d ms.%n", duration2.duration());
             System.out.printf("Duration = %d ms.%n", duration.duration());
             // Check for errors
             if (queryJob.getStatus().getError() != null) {

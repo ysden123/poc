@@ -12,6 +12,10 @@ public class Duration {
     private long start;
     private long end;
 
+    public Duration() {
+        start();
+    }
+
     public void start() {
         start = System.nanoTime();
         end = 0L;
