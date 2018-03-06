@@ -10,6 +10,7 @@ import org.springframework.boot.{CommandLineRunner, SpringApplication}
 class Main1 extends CommandLineRunner {
   override def run(strings: String*): Unit = {
     println(s"==>Main1.run")
+
   }
 }
 
