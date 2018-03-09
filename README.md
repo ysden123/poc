@@ -28,7 +28,6 @@ POC project includes following independent projects:
   - [pserialization](pserialization/README.md)
   - [pslick](pslick/README.md)
   - [pspark](pspark/README.md)
-  - [pspring](pspring/README.md)
   - [scala-chart](scala-chart/README.md)
   - [scala-gradle](scala-gradle/README.md)
   - [scalamock-examples](scalamock-examples/README.md)
