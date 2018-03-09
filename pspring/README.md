@@ -1,3 +1,0 @@
-# pspring
-
-Playing with Spring
