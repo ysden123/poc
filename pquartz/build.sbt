@@ -9,10 +9,7 @@ lazy val quartzVersion = "2.2.3"
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
   version := "0.0.1-SNAPSHOT",
-  scalaVersion := "2.12.2",
-  ivyScala := ivyScala.value map {
-    _.copy(overrideScalaVersion = true)
-  },
+  scalaVersion := "2.12.4",
   scalacOptions ++= Seq(
     "-feature",
     "-language:implicitConversions",
