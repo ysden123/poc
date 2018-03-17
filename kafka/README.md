@@ -1,3 +1,3 @@
 # kafka
 
-Tests with Kafka (NodeJS and Scala)
+Tests with Kafka (CSharp, NodeJS, and Scala)
