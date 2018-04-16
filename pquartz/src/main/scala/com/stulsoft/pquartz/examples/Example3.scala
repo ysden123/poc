@@ -28,7 +28,7 @@ object Example3 extends App with LazyLogging {
   // define the job and tie it to our MyJob class
   val job = newJob(classOf[MyJob3]).withIdentity("job1", "group1").build
 
-  // Trigger the job to run now, and then repeat every 40 seconds
+  // Trigger the job to run now, and then repeat every 10 seconds
   val trigger = newTrigger()
     .withIdentity("trigger1", "group1")
     .startNow()

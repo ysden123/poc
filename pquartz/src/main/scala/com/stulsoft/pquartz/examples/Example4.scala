@@ -13,7 +13,7 @@ import org.quartz.impl.StdSchedulerFactory
 class MyJob4 extends Job {
   override def execute(context: JobExecutionContext): Unit = {
     val someConf = context.getScheduler.getContext.get("someConf").asInstanceOf[SomeConf]
-    println(s"Hello World!  MyJob4 is executing. ${someConf.getParameter}")
+    println(s"Hello World!  MyJob4 is executing. ${someConf.getParameter()}")
   }
 }
 
@@ -34,7 +34,7 @@ object Example4 extends App with LazyLogging {
   val job = newJob(classOf[MyJob4]).withIdentity("job1", "group1").build
 
 
-  // Trigger the job to run now, and then repeat every 40 seconds
+  // Trigger the job to run now, and then repeat every 10 seconds
   val trigger = newTrigger()
     .withIdentity("trigger1", "group1")
     .startNow()
