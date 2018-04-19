@@ -1,16 +1,18 @@
 package com.stulsoft.pslick
 
+import org.slf4j.LoggerFactory
 import slick.jdbc.H2Profile.api._
 
 /**
   * @author Yuriy Stul
   */
 object Main extends App {
-
+val logger = LoggerFactory.getLogger(getClass)
 
   val db = Database.forConfig("h2mem1")
 
   try {
+    logger.info("Started")
     Queries.init(db)
     Queries.readAllCoffees(db)
     Queries.conversions(db)
@@ -20,7 +22,10 @@ object Main extends App {
     Queries.coffeeById(db)
     Queries.coffeeByName(db)
   }
-  finally db.close
+  finally {
+    db.close
+    logger.info("Finished")
+  }
 
 
 }

@@ -4,7 +4,7 @@ lazy val scalaTestVersion = "3.0.1"
 lazy val scalaLoggingVersion = "3.5.0"
 lazy val logbackVersion = "1.1.2"
 lazy val slickVersion = "3.2.3"
-lazy val slf4j_nopVersion = "1.6.4"
+lazy val loggingVersion="2.7"
 lazy val h2Version = "1.4.193"
 
 lazy val commonSettings = Seq(
@@ -17,7 +17,10 @@ lazy val commonSettings = Seq(
     "-language:postfixOps"),
   libraryDependencies ++= Seq(
     "com.h2database" % "h2" % h2Version,
-    "org.slf4j" % "slf4j-nop" % slf4j_nopVersion,
+    "com.typesafe.scala-logging" %% "scala-logging" % scalaLoggingVersion,
+    "org.apache.logging.log4j" % "log4j-api" % loggingVersion,
+    "org.apache.logging.log4j" % "log4j-core" % loggingVersion,
+    "org.apache.logging.log4j" % "log4j-slf4j-impl" % loggingVersion,
     "com.typesafe.slick" %% "slick" % slickVersion,
     "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,
     //    "ch.qos.logback" % "logback-classic" % logbackVersion,
