@@ -10,6 +10,7 @@ object Main extends App {
 val logger = LoggerFactory.getLogger(getClass)
 
   val db = Database.forConfig("h2mem1")
+  val playingWithSuppliers=new PlayingWithSuppliers(db)
 
   try {
     logger.info("Started")
@@ -25,6 +26,8 @@ val logger = LoggerFactory.getLogger(getClass)
     PlainQueries.printAllCoffees(db)
     PlainQueries.printAllCoffees2(db)
     PlainQueries.printAllCoffees3(db)
+
+    playingWithSuppliers.printAllSuppliers
   }
   finally {
     db.close

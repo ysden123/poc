@@ -1,6 +1,5 @@
 package com.stulsoft.pslick
 
-import slick.jdbc.GetResult
 import slick.jdbc.H2Profile.api._
 import slick.lifted.{ForeignKeyQuery, ProvenShape, Rep, Tag}
 
