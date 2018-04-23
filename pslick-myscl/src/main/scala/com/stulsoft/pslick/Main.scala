@@ -27,6 +27,9 @@ object Main extends App {
     PlainQueries.printAllCoffees3(db)
 
     playingWithSuppliers.printAllSuppliers
+
+    val playingWithCoffees = new PlayingWithCoffees(db)
+    playingWithCoffees.printAllCoffeesWithSuplliers()
   }
   catch {
     case e: Exception => logger.error(e.getMessage, e)

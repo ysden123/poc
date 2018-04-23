@@ -18,35 +18,35 @@ object Queries {
     *
     * @param db the database
     */
-//  def init(db: Database): Unit = {
-//    println("==>init")
-//    val setup = DBIO.seq(
-//      (suppliers.schema ++ coffees.schema).create
-//
-//      // Insert some suppliers
-////      suppliers += Supplier(101L, "Acme, Inc.", "99 Market Street", "Groundsville", "CA", "95199"),
-////      suppliers += Supplier(49L, "Superior Coffee", "1 Party Place", "Mendocino", "CA", "95460"),
-////      suppliers += Supplier(150L, "The High Ground", "100 Coffee Lane", "Meadows", "CA", "93966"),
-//      // Equivalent SQL code:
-//      // insert into SUPPLIERS(SUP_ID, SUP_NAME, STREET, CITY, STATE, ZIP) values (?,?,?,?,?,?)
-//
-//      // Insert some coffees (using JDBC's batch insert feature, if supported by the DB)
-////      coffees ++= Seq(
-////        Coffee(101, "Colombian", 7.99, 0, 0),
-////        Coffee(49, "French_Roast", 8.99, 0, 0),
-////        Coffee(150, "Espresso", 9.99, 0, 0),
-////        Coffee(101, "Colombian_Decaf", 8.99, 0, 0),
-////        Coffee(49, "French_Roast_Decaf", 9.99, 0, 0)
-////      )
-//      // Equivalent SQL code:
-//      // insert into COFFEES(COF_NAME, SUP_ID, PRICE, SALES, TOTAL) values (?,?,?,?,?)
-//    )
-//
-//    val setupFuture = db.run(setup)
-//
-//    val result1 = Await.result(setupFuture, 2.seconds)
-//    println(s"result1: $result1")
-//  }
+  //  def init(db: Database): Unit = {
+  //    println("==>init")
+  //    val setup = DBIO.seq(
+  //      (suppliers.schema ++ coffees.schema).create
+  //
+  //      // Insert some suppliers
+  ////      suppliers += Supplier(101L, "Acme, Inc.", "99 Market Street", "Groundsville", "CA", "95199"),
+  ////      suppliers += Supplier(49L, "Superior Coffee", "1 Party Place", "Mendocino", "CA", "95460"),
+  ////      suppliers += Supplier(150L, "The High Ground", "100 Coffee Lane", "Meadows", "CA", "93966"),
+  //      // Equivalent SQL code:
+  //      // insert into SUPPLIERS(SUP_ID, SUP_NAME, STREET, CITY, STATE, ZIP) values (?,?,?,?,?,?)
+  //
+  //      // Insert some coffees (using JDBC's batch insert feature, if supported by the DB)
+  ////      coffees ++= Seq(
+  ////        Coffee(101, "Colombian", 7.99, 0, 0),
+  ////        Coffee(49, "French_Roast", 8.99, 0, 0),
+  ////        Coffee(150, "Espresso", 9.99, 0, 0),
+  ////        Coffee(101, "Colombian_Decaf", 8.99, 0, 0),
+  ////        Coffee(49, "French_Roast_Decaf", 9.99, 0, 0)
+  ////      )
+  //      // Equivalent SQL code:
+  //      // insert into COFFEES(COF_NAME, SUP_ID, PRICE, SALES, TOTAL) values (?,?,?,?,?)
+  //    )
+  //
+  //    val setupFuture = db.run(setup)
+  //
+  //    val result1 = Await.result(setupFuture, 2.seconds)
+  //    println(s"result1: $result1")
+  //  }
 
   /**
     * Read all coffees and print them to the console
@@ -134,7 +134,7 @@ object Queries {
     println(s"result: $result")
   }
 
-  /*def getResult1(db: Database): List[Coffees] = {
+  def getResult1(db: Database): List[Coffee] = {
     println("==>getResult1")
     val q = for {
       c <- coffees if c.price < 9.0
@@ -143,7 +143,7 @@ object Queries {
     val f = db.run(q.result)
     val result = Await.result(f, 2.seconds)
     result.toList
-  }*/
+  }
 
   def coffeeById(db: Database): Unit = {
     println("==>coffeeById")
