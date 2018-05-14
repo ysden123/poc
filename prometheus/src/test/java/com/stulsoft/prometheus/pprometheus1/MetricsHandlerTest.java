@@ -71,10 +71,12 @@ public class MetricsHandlerTest {
 	}
 
 	private String makeRequest(String url) throws IOException {
-		Scanner scanner = new Scanner(new URL("http://localhost:" + port + url).openStream(), "UTF-8")
-				.useDelimiter("\\A");
-		String out = scanner.next();
-		scanner.close();
-		return out;
+		try (Scanner scanner = new Scanner(new URL("http://localhost:" + port + url).openStream(), "UTF-8")
+				.useDelimiter("\\A")) {
+			String out = scanner.next();
+			return out;
+		} catch (Exception ignore) {
+			return null;
+		}
 	}
 }
