@@ -62,3 +62,9 @@ Qvx/.vs/
 Qvx/EventLogSimple/bin/
 Qvx/EventLogSimple/obj/
 *.user
+
+prometheus/\.settings/
+
+prometheus/\.classpath
+
+prometheus/\.project
