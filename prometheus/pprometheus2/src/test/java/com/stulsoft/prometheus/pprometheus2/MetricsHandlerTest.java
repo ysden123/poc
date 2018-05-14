@@ -57,7 +57,7 @@ public class MetricsHandlerTest {
 		testHistogram1 = Histogram.build("test_histogram_1", "Test histogram #1").register(registry);
 		testHistogram2 = Histogram
 				.build("test_histogram_2", "Test histogram #2")
-				.buckets(5.0, 10.0, 20.0, 30.0, 40.0)
+				.buckets(0.5, 1.0, 2.0, 3.0, 4.0)
 				.register(registry);
 	}
 
@@ -114,8 +114,7 @@ public class MetricsHandlerTest {
 		System.out.println("testForHistogram1 -> 1");
 		Histogram.Timer timer = testHistogram1.startTimer();
 		try {
-			Thread.sleep(5000);
-			testHistogram1.observe(5);
+			Thread.sleep(500);
 		} catch (InterruptedException ignore) {
 		} finally {
 			timer.observeDuration();
@@ -125,8 +124,7 @@ public class MetricsHandlerTest {
 		System.out.println("testForHistogram1 -> 2");
 		timer = testHistogram1.startTimer();
 		try {
-			Thread.sleep(40000);
-			testHistogram1.observe(15);
+			Thread.sleep(1000);
 		} catch (InterruptedException ignore) {
 		} finally {
 			timer.observeDuration();
@@ -140,8 +138,7 @@ public class MetricsHandlerTest {
 		System.out.println("testForHistogram2 -> 1");
 		Histogram.Timer timer = testHistogram2.startTimer();
 		try {
-			Thread.sleep(5000);
-			testHistogram2.observe(5);
+			Thread.sleep(500);
 		} catch (InterruptedException ignore) {
 		} finally {
 			timer.observeDuration();
@@ -151,8 +148,7 @@ public class MetricsHandlerTest {
 		System.out.println("testForHistogram2 -> 2");
 		timer = testHistogram2.startTimer();
 		try {
-			Thread.sleep(40000);
-			testHistogram2.observe(15);
+			Thread.sleep(1000);
 		} catch (InterruptedException ignore) {
 		} finally {
 			timer.observeDuration();
