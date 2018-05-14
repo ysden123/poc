@@ -18,6 +18,7 @@ import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Counter;
 import io.prometheus.client.Gauge;
 import io.prometheus.client.Histogram;
+import io.prometheus.client.Summary;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
 
@@ -35,6 +36,7 @@ public class MetricsHandlerTest {
 	private static Gauge testGauge1;
 	private static Histogram testHistogram1;
 	private static Histogram testHistogram2;
+	private static Summary testSummary1;
 
 	@BeforeClass
 	public static void setUp() throws IOException {
@@ -55,10 +57,9 @@ public class MetricsHandlerTest {
 		testCounter3 = Counter.build("test_counter_3", "Test counter #3").labelNames("label").register(registry);
 		testGauge1 = Gauge.build("test_gauge_1", "Test gauge 1").register(registry);
 		testHistogram1 = Histogram.build("test_histogram_1", "Test histogram #1").register(registry);
-		testHistogram2 = Histogram
-				.build("test_histogram_2", "Test histogram #2")
-				.buckets(0.5, 1.0, 2.0, 3.0, 4.0)
+		testHistogram2 = Histogram.build("test_histogram_2", "Test histogram #2").buckets(0.5, 1.0, 2.0, 3.0, 4.0)
 				.register(registry);
+		testSummary1 = Summary.build("test_summary_1", "Test summary #1").register(registry);
 	}
 
 	@AfterClass
@@ -150,6 +151,30 @@ public class MetricsHandlerTest {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException ignore) {
+		} finally {
+			timer.observeDuration();
+			showMetrics();
+		}
+	}
+
+	@Test
+	public void testForSummary1() {
+		System.out.println("==>testForSummary1");
+		System.out.println("testForSummary1 -> 1");
+		Summary.Timer timer = testSummary1.startTimer();
+		try {
+			Thread.sleep(500);
+		} catch (Exception ignore) {
+		} finally {
+			timer.observeDuration();
+			showMetrics();
+		}
+
+		System.out.println("testForSummary1 -> 2");
+		timer = testSummary1.startTimer();
+		try {
+			Thread.sleep(1000);
+		} catch (Exception ignore) {
 		} finally {
 			timer.observeDuration();
 			showMetrics();
