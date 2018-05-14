@@ -55,7 +55,7 @@ public class MetricsHandlerTest {
 	@Test
 	public void metricsRequest_shouldReturnMetrics() throws IOException {
 		String out = makeRequest("/metrics");
-
+		System.out.printf("metricsRequest_shouldReturnMetrics: out=%s%n", out);
 		assertThat(out).contains("a 0.0");
 		assertThat(out).contains("b 0.0");
 		assertThat(out).contains("c 0.0");
@@ -64,6 +64,7 @@ public class MetricsHandlerTest {
 	@Test
 	public void metricsRequest_shouldAllowFilteringMetrics() throws IOException {
 		String out = makeRequest("/metrics?name[]=b&name[]=c");
+		System.out.printf("metricsRequest_shouldAllowFilteringMetrics: out=%s%n", out);
 
 		assertThat(out).doesNotContain("a 0.0");
 		assertThat(out).contains("b 0.0");
@@ -74,6 +75,7 @@ public class MetricsHandlerTest {
 		try (Scanner scanner = new Scanner(new URL("http://localhost:" + port + url).openStream(), "UTF-8")
 				.useDelimiter("\\A")) {
 			String out = scanner.next();
+			System.out.printf("makeRequest: out=%s%n", out);
 			return out;
 		} catch (Exception ignore) {
 			return null;
