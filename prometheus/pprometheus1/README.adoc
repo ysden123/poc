@@ -1,0 +1,4 @@
+= pprometheus1
+Test project. Usage of Vertx handler
+
+Original code: https://github.com/prometheus/client_java/tree/master/simpleclient_vertx[Simple client with Vert.x]
