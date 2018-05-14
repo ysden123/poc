@@ -16,6 +16,7 @@ import com.stulsoft.prometheus.pprometheus2.MetricsHandler;
 
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Counter;
+import io.prometheus.client.Gauge;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
 
@@ -29,6 +30,8 @@ public class MetricsHandlerTest {
 	private static CollectorRegistry registry;
 	private static Counter testCounter1;
 	private static Counter testCounter2;
+	private static Counter testCounter3;
+	private static Gauge testGauge1;
 
 	@BeforeClass
 	public static void setUp() throws IOException {
@@ -46,6 +49,11 @@ public class MetricsHandlerTest {
 		vertx.createHttpServer().requestHandler(router::accept).listen(port);
 		testCounter1 = Counter.build("test_counter_1", "Test counter #1").register(registry);
 		testCounter2 = Counter.build("test_counter_2", "Test counter #2").register(registry);
+		testCounter3 = Counter
+				.build("test_counter_3", "Test counter #3")
+				.labelNames("label")
+				.register(registry);
+		testGauge1 = Gauge.build("test_gauge_1", "Test gauge 1").register(registry);
 	}
 
 	@AfterClass
@@ -78,6 +86,28 @@ public class MetricsHandlerTest {
 			assertThat(out).contains("test_counter_2 1.0");
 		} catch (Exception e) {
 			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testForGause1() {
+		System.out.println("==>testForGause1");
+		
+		testGauge1.inc();
+		showMetrics();
+		
+		testCounter3.labels("the_test_label").inc(15.0);
+		testCounter3.labels("the_test_label_2").inc(30.0);
+		
+		testGauge1.dec();
+		showMetrics();
+	}
+	
+	private void showMetrics() {
+		try{
+			System.out.println(makeRequest("/metrics"));
+		}catch(Exception e) {
+			System.err.println("failed getting metrics. " + e.getMessage());
 		}
 	}
 
