@@ -68,3 +68,9 @@ prometheus/\.settings/
 prometheus/\.classpath
 
 prometheus/\.project
+
+prometheus/pprometheus1/\.settings/
+
+prometheus/pprometheus1/\.classpath
+
+prometheus/pprometheus1/\.project
