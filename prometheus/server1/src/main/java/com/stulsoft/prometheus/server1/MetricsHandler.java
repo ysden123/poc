@@ -1,4 +1,4 @@
-package com.stulsoft.prometheus.pprometheus1;
+package com.stulsoft.prometheus.server1;
 
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exporter.common.TextFormat;
@@ -12,6 +12,9 @@ import java.io.Writer;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Metrics Handler for Vert.x Web.
  * <p>
@@ -23,9 +26,12 @@ import java.util.Set;
  * router.route("/metrics").handler(new MetricsHandler());
  * 
  * @author Yuriy Stul
+ * @since 15 May 2018
  *
  */
 public class MetricsHandler implements Handler<RoutingContext> {
+	private static Logger logger=LoggerFactory.getLogger(MetricsHandler.class);
+	
 	/**
 	 * Wrap a Vert.x Buffer as a Writer so it can be used with TextFormat writer
 	 */
@@ -74,6 +80,7 @@ public class MetricsHandler implements Handler<RoutingContext> {
 	}
 
 	public void handle(RoutingContext ctx) {
+//		logger.debug("==>MetricsHandler.handle");
 		try {
 			final BufferWriter writer = new BufferWriter();
 			TextFormat.write004(writer, registry.filteredMetricFamilySamples(parse(ctx.request())));
