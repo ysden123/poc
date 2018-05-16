@@ -86,3 +86,9 @@ prometheus/server1/\.settings/
 prometheus/server1/\.classpath
 
 prometheus/server1/\.project
+
+prometheus/pprometheus3/\.classpath
+
+prometheus/pprometheus3/\.project
+
+prometheus/pprometheus3/\.settings/
