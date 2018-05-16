@@ -19,6 +19,9 @@ pmongodb/.idea/
 pquartz/.idea/
 **/node_modules
 **/.idea
+**/.project
+**/.classpath
+**/.settings/*
 /pquartz/.idea
 pjunit5/.gradle/
 pjunit5/build/test-results/junit-platform/TEST-junit-jupiter.xml
