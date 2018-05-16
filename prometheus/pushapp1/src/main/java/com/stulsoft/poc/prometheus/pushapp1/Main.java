@@ -4,6 +4,7 @@
 package com.stulsoft.poc.prometheus.pushapp1;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -59,20 +60,27 @@ public class Main {
 			logger.error("Failed during push. {}", e.getMessage());
 		}
 
-		executionTime.setToCurrentTime();
+		executionTime.set(Utils.timeToMinutes(new Date(System.currentTimeMillis())));
+		logger.info("executionTime = {}", executionTime.get());
 		counter.inc();
 		gauge.set(random.nextDouble());
 		Gauge.Timer durationTimer = duration.startTimer();
 		try {
 			Thread.sleep((long) (20000 * random.nextDouble()));
 			lastSuccess.setToCurrentTime();
+			logger.info("lastSuccess = {}", lastSuccess.get());
 		} catch (InterruptedException ignore) {
 		} finally {
 			durationTimer.setDuration();
 		}
-		logger.info("Set status to 0.0");
-		runningStatus.set(0.0);
-		
+
+		try {
+			Thread.sleep(15000);
+			logger.info("Set status to 0.0");
+			runningStatus.set(0.0);
+		} catch (Exception ignore) {
+		}
+
 		try {
 			pushGateway.pushAdd(registry, "pushapp1_job");
 			logger.info("Pushed metrics");
