@@ -8,9 +8,9 @@ import java.util.Scanner;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.fail;
 
 import io.prometheus.client.CollectorRegistry;
-import io.prometheus.client.hotspot.DefaultExports;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
 
@@ -33,11 +33,10 @@ public class Test4 {
 		final Vertx vertx = Vertx.vertx();
 		final Router router = Router.router(vertx);
 
-		// registry = new CollectorRegistry();
-		registry = CollectorRegistry.defaultRegistry;
+		registry = new CollectorRegistry();
 		router.route("/metrics").handler(new MetricsHandler(registry));
-
-		DefaultExports.initialize();
+		
+		InitDefaultExports.initialize(registry);
 
 		ServerSocket socket = new ServerSocket(0);
 		port = socket.getLocalPort();
@@ -47,6 +46,11 @@ public class Test4 {
 				.createHttpServer()
 				.requestHandler(router::accept)
 				.listen(port);
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException ignore) {
+		}
 	}
 
 	@AfterClass
@@ -76,7 +80,9 @@ public class Test4 {
 			String out = scanner.next();
 			return out;
 		} catch (Exception e) {
-			System.err.println("Failed getting metrics. " + e.getMessage());
+			String msg = "Failed getting metrics. " + e.getMessage();
+			System.err.println(msg);
+			fail(msg);
 			return null;
 		}
 	}
