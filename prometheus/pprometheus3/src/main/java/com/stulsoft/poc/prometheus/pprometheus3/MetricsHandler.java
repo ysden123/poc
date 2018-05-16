@@ -1,4 +1,9 @@
-package com.stulsoft.prometheus.pprometheus1;
+package com.stulsoft.poc.prometheus.pprometheus3;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.HashSet;
+import java.util.Set;
 
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exporter.common.TextFormat;
@@ -7,25 +12,11 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.ext.web.RoutingContext;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
- * Metrics Handler for Vert.x Web.
- * <p>
- * This handler will allow the usage of Prometheus Client Java API with Vert.x
- * applications and expose a API compatible handler for the collector.
- * <p>
- * Usage:
- * <p>
- * router.route("/metrics").handler(new MetricsHandler());
- * 
  * @author Yuriy Stul
  *
  */
-public class MetricsHandler implements Handler<RoutingContext> {
+public class MetricsHandler  implements Handler<RoutingContext> {
 	/**
 	 * Wrap a Vert.x Buffer as a Writer so it can be used with TextFormat writer
 	 */
@@ -83,5 +74,4 @@ public class MetricsHandler implements Handler<RoutingContext> {
 			ctx.fail(e);
 		}
 	}
-
 }
