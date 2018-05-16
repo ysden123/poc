@@ -92,3 +92,9 @@ prometheus/pprometheus3/\.classpath
 prometheus/pprometheus3/\.project
 
 prometheus/pprometheus3/\.settings/
+
+prometheus/server2/\.classpath
+
+prometheus/server2/\.project
+
+prometheus/server2/\.settings/

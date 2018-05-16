@@ -1,0 +1,2 @@
+= server1
+Test project. Server with application monitoring metrics

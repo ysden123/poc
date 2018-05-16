@@ -1,0 +1,2 @@
+= pprometheus3
+Test project. Playing with monitoring metrics
