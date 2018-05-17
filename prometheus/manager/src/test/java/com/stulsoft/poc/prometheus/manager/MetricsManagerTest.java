@@ -1,0 +1,106 @@
+package com.stulsoft.poc.prometheus.manager;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.junit.Test;
+
+import io.prometheus.client.Counter;
+
+/**
+ * Unit tests for MetricsManager class.
+ * 
+ * @author Yuriy Stul
+ *
+ */
+public class MetricsManagerTest {
+
+	@Test
+	public void testGetInstance() {
+		MetricsManager metricsManager = MetricsManager.getInstance();
+		assertNotNull(metricsManager);
+	}
+
+	@Test
+	public void testGetInstance_multiThreads() {
+		Random random = new Random(123);
+		List<MetricsManager> instances = new ArrayList<>();
+		List<Thread> threads = new ArrayList<>();
+		for (int i = 0; i < 10; ++i) {
+			Thread t = new Thread(() -> {
+				try {
+					Thread.sleep(100 + random.nextInt(500));
+				} catch (Exception ignore) {
+				}
+				instances.add(MetricsManager.getInstance());
+			});
+			threads.add(t);
+			t.start();
+		}
+		threads.forEach(thread -> {
+			try {
+				thread.join();
+			} catch (InterruptedException ignore) {
+			}
+		});
+		instances.forEach(manager -> assertTrue(instances.get(0) == manager));
+	}
+
+	@Test
+	public void testAddCounter() {
+		Counter counter1 = MetricsManager.getInstance().addCounter("serviceName", "counterName", "description");
+		assertNotNull(counter1);
+		Counter counter2 = MetricsManager.getInstance().addCounter("serviceName", "counterName", "description");
+		assertNotNull(counter2);
+		assertTrue(counter1 == counter2);
+	}
+
+	@Test
+	public void testAddCounter_failure() {
+		try {
+			MetricsManager.getInstance().addCounter(null, "counterName", "description");
+			fail("serviceName should be validated");
+		} catch (NullPointerException e) {
+			assertEquals("serviceName should be defined", e.getMessage());
+		}
+
+		try {
+			MetricsManager.getInstance().addCounter("serviceName", null, "description");
+			fail("counterName should be validated");
+		} catch (NullPointerException e) {
+			assertEquals("counterName should be defined", e.getMessage());
+		}
+
+		try {
+			MetricsManager.getInstance().addCounter("serviceName", "counterName", null);
+			fail("description should be validated");
+		} catch (NullPointerException e) {
+			assertEquals("description should be defined", e.getMessage());
+		}
+	}
+
+	@Test
+	public void testGetAccounter() {
+		Counter counter1 = MetricsManager.getInstance().addCounter("serviceName", "counterName", "description");
+		Counter counter2 = MetricsManager.getInstance().getCounter("serviceName", "counterName");
+		assertEquals(counter1, counter2);
+		assertTrue(counter1 == counter2);
+	}
+	
+	@Test
+	public void testGetAccounter_failure() {
+		try {
+			MetricsManager.getInstance().getCounter("wrongServiceName", "wrongCounterName");
+			fail("No exception occured");
+		}catch(RuntimeException e) {
+			String expectedMessage = "Counter with service name wrongServiceName and counter name wrongCounterName doesn't exist.";
+			assertEquals(expectedMessage, e.getMessage());
+		}
+	}
+}
