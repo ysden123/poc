@@ -19,9 +19,47 @@ import io.prometheus.client.hotspot.MemoryPoolsExports;
 import io.prometheus.client.hotspot.StandardExports;
 import io.prometheus.client.hotspot.ThreadExports;
 import io.prometheus.client.hotspot.VersionInfoExports;
+import io.vertx.ext.web.Router;
 
 /**
  * Prometheus metrics manager.
+ * <p>
+ * Example 1 (without default metrics):
+ * 
+ * <pre>
+ * {@code
+ * // Add new counter
+ * MetricsManager.getInstance().addCounter(SERVICE_NAME, COUNTER_NAME_GETS, "Counts all gets");
+ * ...
+ * // Increment counter
+ * MetricsManager.getInstance().getCounter(SERVICE_NAME, COUNTER_NAME_GETS).inc();
+ * }
+ * </pre>
+ * 
+ * Example 2 (with default metrics):
+ * 
+ * <pre>
+ * {@code
+ * ...
+ * // Initialize default metrics
+ * MetricsManager.getInstance().initDefaultMetrics();
+ * ...
+ * // Add new counter
+ * MetricsManager.getInstance().addCounter(SERVICE_NAME, COUNTER_NAME_GETS, "Counts all gets");
+ * ...
+ * // Increment counter
+ * MetricsManager.getInstance().getCounter(SERVICE_NAME, COUNTER_NAME_GETS).inc();
+ * }
+ * </pre>
+ * 
+ * Activating "/metrics" handler:
+ * <pre>
+ * {@code
+ * ...
+ * Router router = Router.router(vertx);
+ * router.get("/metrics").handler(MetricsManager.getInstance().getMetricsHandler());
+ * }
+ * </pre>
  * 
  * @author Yuriy Stul
  *
