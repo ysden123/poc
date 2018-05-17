@@ -72,6 +72,9 @@ public class MetricsHandler implements Handler<RoutingContext> {
 
 	/**
 	 * Construct a MetricsHandler for the given registry.
+	 * 
+	 * @param registry
+	 *            the collector registry
 	 */
 	public MetricsHandler(CollectorRegistry registry) {
 		this.registry = registry;
@@ -88,6 +91,7 @@ public class MetricsHandler implements Handler<RoutingContext> {
 			ctx.response().setStatusCode(200).putHeader("Content-Type", TextFormat.CONTENT_TYPE_004)
 					.end(writer.getBuffer());
 		} catch (IOException e) {
+			logger.error("Failed sending metrics. {}", e.getMessage());
 			ctx.fail(e);
 		}
 	}
