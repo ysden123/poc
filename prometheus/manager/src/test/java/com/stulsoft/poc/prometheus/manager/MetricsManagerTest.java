@@ -62,6 +62,17 @@ public class MetricsManagerTest {
 	}
 
 	@Test
+	public void testAddCounter_withLables() {
+		Counter counter = MetricsManager.getInstance().addCounter("serviceName", "counterNameWithLabels", "description", "label1", "label2");
+		assertNotNull(counter);
+		counter.labels("label1", "label2").inc();
+		List<String> labels = new ArrayList<>();
+		counter.collect().forEach(c -> c.samples.forEach(s -> s.labelNames.forEach(n->labels.add(n))));
+		assertTrue(labels.contains("label1"));
+		assertTrue(labels.contains("label2"));
+	}
+
+	@Test
 	public void testAddCounter_failure() {
 		try {
 			MetricsManager.getInstance().addCounter(null, "counterName", "description");

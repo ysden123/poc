@@ -82,9 +82,12 @@ public class MetricsManager {
 	 *            specifies the counter name
 	 * @param description
 	 *            specifies the description
+	 * @param labelNames
+	 *            optional, specifies labels
 	 * @return the Counter
 	 */
-	public Counter addCounter(final String serviceName, final String counterName, final String description) {
+	public Counter addCounter(final String serviceName, final String counterName, final String description,
+			final String... labelNames) {
 		Objects.requireNonNull(serviceName, "serviceName should be defined");
 		Objects.requireNonNull(counterName, "counterName should be defined");
 		Objects.requireNonNull(description, "description should be defined");
@@ -93,9 +96,12 @@ public class MetricsManager {
 		if (counter == null) {
 			synchronized (lock) {
 				if (counter == null) {
-					counter = Counter
-							.build(fullMetricsName, description)
-							.register(registry);
+					Counter.Builder builder = Counter
+							.build(fullMetricsName, description);
+					if (labelNames != null && labelNames.length > 0) {
+						builder.labelNames(labelNames);
+					}
+					counter = builder.register(registry);
 					counters.put(fullMetricsName, counter);
 				}
 			}
