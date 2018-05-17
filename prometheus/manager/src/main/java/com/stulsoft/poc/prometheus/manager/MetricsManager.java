@@ -12,6 +12,13 @@ import org.slf4j.LoggerFactory;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Counter;
 import io.prometheus.client.Gauge;
+import io.prometheus.client.hotspot.BufferPoolsExports;
+import io.prometheus.client.hotspot.ClassLoadingExports;
+import io.prometheus.client.hotspot.GarbageCollectorExports;
+import io.prometheus.client.hotspot.MemoryPoolsExports;
+import io.prometheus.client.hotspot.StandardExports;
+import io.prometheus.client.hotspot.ThreadExports;
+import io.prometheus.client.hotspot.VersionInfoExports;
 
 /**
  * Prometheus metrics manager.
@@ -22,20 +29,24 @@ import io.prometheus.client.Gauge;
 public class MetricsManager {
 	private static final Logger logger = LoggerFactory.getLogger(MetricsManager.class);
 	private static final Object lock = new Object();
+	private static boolean defaultMetricsInitialized = false;
 	private static MetricsManager instance = null;
 
-	private static final String METRICS_NAME_PREFIX = "webpals";
+	public static final String METRICS_NAME_PREFIX = "webpals";
 
-	private final CollectorRegistry registry = new CollectorRegistry();
+	private final CollectorRegistry registry;
 	private final HashMap<String, Counter> counters;
 	private final HashMap<String, Gauge> gauges;
+	private final MetricsHandler metricsHandler;
 
 	/**
 	 * Initializes a new instance of the MetricsManager class.
 	 */
 	private MetricsManager() {
+		registry = new CollectorRegistry();
 		counters = new HashMap<>();
 		gauges = new HashMap<>();
+		metricsHandler = new MetricsHandler(registry);
 	}
 
 	/**
@@ -52,6 +63,28 @@ public class MetricsManager {
 	}
 
 	/**
+	 * Initializes a default JVM metrics.
+	 */
+	public void initDefaultMetrics() {
+		if (!defaultMetricsInitialized) {
+			synchronized (lock) {
+				if (!defaultMetricsInitialized) {
+					logger.info("Initializing default exports...");
+					new StandardExports().register(registry);
+					new MemoryPoolsExports().register(registry);
+					new BufferPoolsExports().register(registry);
+					new GarbageCollectorExports().register(registry);
+					new ThreadExports().register(registry);
+					new ClassLoadingExports().register(registry);
+					new VersionInfoExports().register(registry);
+					defaultMetricsInitialized = true;
+					logger.info("Initialized default exports.");
+				}
+			}
+		}
+	}
+
+	/**
 	 * Returns an instance of the MetricsManager class.
 	 * 
 	 * @return the instance of the MetricsManager class.
@@ -65,6 +98,10 @@ public class MetricsManager {
 			}
 		}
 		return instance;
+	}
+
+	public MetricsHandler getMetricsHandler() {
+		return metricsHandler;
 	}
 
 	/**
@@ -137,9 +174,9 @@ public class MetricsManager {
 	 * Adds a new Gauge.
 	 * 
 	 * <p>
-	 * If a gauge with same service and counter names already exists then the
-	 * method returns existing gauge. Otherwise the method creates new gauge and
-	 * returns created gauge.
+	 * If a gauge with same service and counter names already exists then the method
+	 * returns existing gauge. Otherwise the method creates new gauge and returns
+	 * created gauge.
 	 * </p>
 	 * 
 	 * @param serviceName
