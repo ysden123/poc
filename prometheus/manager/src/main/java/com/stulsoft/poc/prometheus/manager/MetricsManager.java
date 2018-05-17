@@ -48,7 +48,7 @@ public class MetricsManager {
 	 * @return full metrics name in the format PREFIX_SERVICENAME_METRICSNAME
 	 */
 	private String buildMetricsName(final String serviceName, final String metricsName) {
-		return String.format("%s_%s_%s", METRICS_NAME_PREFIX, serviceName, metricsName);
+		return Counter.sanitizeMetricName(String.format("%s_%s_%s", METRICS_NAME_PREFIX, serviceName, metricsName));
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class MetricsManager {
 	}
 
 	/**
-	 * Adds a new Counter without labels.
+	 * Adds a new Counter.
 	 * 
 	 * <p>
 	 * If a counter with same service and counter names already exists then the
@@ -101,6 +101,7 @@ public class MetricsManager {
 					if (labelNames != null && labelNames.length > 0) {
 						builder.labelNames(labelNames);
 					}
+
 					counter = builder.register(registry);
 					counters.put(fullMetricsName, counter);
 				}
@@ -109,6 +110,17 @@ public class MetricsManager {
 		return counter;
 	}
 
+	/**
+	 * Returns a Counter for specified service and counter names.
+	 * 
+	 * @param serviceName
+	 *            specifies service
+	 * @param counterName
+	 *            specifies counter
+	 * @return the Counter for specified service and counter names.
+	 * @throws RuntimeException
+	 *             if no counter exists
+	 */
 	public Counter getCounter(final String serviceName, final String counterName) {
 		final String fullMetricsName = buildMetricsName(serviceName, counterName);
 		Counter counter = counters.get(fullMetricsName);
@@ -120,4 +132,71 @@ public class MetricsManager {
 		}
 		return counter;
 	}
+
+	/**
+	 * Adds a new Gauge.
+	 * 
+	 * <p>
+	 * If a gauge with same service and counter names already exists then the
+	 * method returns existing gauge. Otherwise the method creates new gauge and
+	 * returns created gauge.
+	 * </p>
+	 * 
+	 * @param serviceName
+	 *            specifies the service name
+	 * @param counterName
+	 *            specifies the counter name
+	 * @param description
+	 *            specifies the description
+	 * @param labelNames
+	 *            optional, specifies labels
+	 * @return the Gauge
+	 */
+	public Gauge addGauge(final String serviceName, final String counterName, final String description,
+			final String... labelNames) {
+		Objects.requireNonNull(serviceName, "serviceName should be defined");
+		Objects.requireNonNull(counterName, "counterName should be defined");
+		Objects.requireNonNull(description, "description should be defined");
+		final String fullMetricsName = buildMetricsName(serviceName, counterName);
+		Gauge gauge = gauges.get(fullMetricsName);
+		if (gauge == null) {
+			synchronized (lock) {
+				if (gauge == null) {
+					Gauge.Builder builder = Gauge
+							.build(fullMetricsName, description);
+					if (labelNames != null && labelNames.length > 0) {
+						builder.labelNames(labelNames);
+					}
+
+					gauge = builder.register(registry);
+					gauges.put(fullMetricsName, gauge);
+				}
+			}
+		}
+		return gauge;
+	}
+
+	/**
+	 * Returns a Gauge for specified service and counter names.
+	 * 
+	 * @param serviceName
+	 *            specifies service
+	 * @param gaugeName
+	 *            specifies gauge
+	 * @return the Gauge for specified service and gauge names.
+	 * @throws RuntimeException
+	 *             if no gauge exists
+	 */
+	public Gauge getGauge(final String serviceName, final String gaugeName) {
+		final String fullMetricsName = buildMetricsName(serviceName, gaugeName);
+		Gauge gauge = gauges.get(fullMetricsName);
+		if (gauge == null) {
+			final String message = String.format("Gauge with service name %s and gauge name %s doesn't exist.",
+					serviceName, gaugeName);
+			logger.error(message);
+			throw new RuntimeException(message);
+		}
+		return gauge;
+	}
+
 }
