@@ -1,10 +1,5 @@
 package com.stulsoft.poc.prometheus.manager;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,6 +8,8 @@ import org.junit.Test;
 
 import io.prometheus.client.Counter;
 import io.prometheus.client.Gauge;
+
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for MetricsManager class.
@@ -50,7 +47,7 @@ public class MetricsManagerTest {
 			} catch (InterruptedException ignore) {
 			}
 		});
-		instances.forEach(manager -> assertTrue(instances.get(0) == manager));
+		instances.forEach(manager -> assertSame(instances.get(0), manager));
 	}
 
 	@Test
@@ -59,7 +56,7 @@ public class MetricsManagerTest {
 		assertNotNull(counter1);
 		Counter counter2 = MetricsManager.getInstance().addCounter("serviceName", "counterName", "description");
 		assertNotNull(counter2);
-		assertTrue(counter1 == counter2);
+		assertSame(counter1, counter2);
 	}
 
 	@Test
@@ -68,7 +65,7 @@ public class MetricsManagerTest {
 		assertNotNull(counter);
 		counter.labels("label1", "label2").inc();
 		List<String> labels = new ArrayList<>();
-		counter.collect().forEach(c -> c.samples.forEach(s -> s.labelNames.forEach(n->labels.add(n))));
+		counter.collect().forEach(c -> c.samples.forEach(s -> labels.addAll(s.labelNames)));
 		assertTrue(labels.contains("label1"));
 		assertTrue(labels.contains("label2"));
 	}
@@ -102,7 +99,7 @@ public class MetricsManagerTest {
 		Counter counter1 = MetricsManager.getInstance().addCounter("serviceName", "counterName", "description");
 		Counter counter2 = MetricsManager.getInstance().getCounter("serviceName", "counterName");
 		assertEquals(counter1, counter2);
-		assertTrue(counter1 == counter2);
+		assertSame(counter1, counter2);
 	}
 	
 	@Test
@@ -122,7 +119,7 @@ public class MetricsManagerTest {
 		assertNotNull(gauge1);
 		Gauge gauge2 = MetricsManager.getInstance().addGauge("serviceName", "gaugeName", "description");
 		assertNotNull(gauge2);
-		assertTrue(gauge1 == gauge2);
+		assertSame(gauge1, gauge2);
 	}
 
 	@Test
@@ -131,7 +128,7 @@ public class MetricsManagerTest {
 		assertNotNull(gauge);
 		gauge.labels("label1", "label2").inc();
 		List<String> labels = new ArrayList<>();
-		gauge.collect().forEach(c -> c.samples.forEach(s -> s.labelNames.forEach(n->labels.add(n))));
+		gauge.collect().forEach(c -> c.samples.forEach(s -> labels.addAll(s.labelNames)));
 		assertTrue(labels.contains("label1"));
 		assertTrue(labels.contains("label2"));
 	}
@@ -165,14 +162,14 @@ public class MetricsManagerTest {
 		Gauge counter1 = MetricsManager.getInstance().addGauge("serviceName", "gaugeName", "description");
 		Gauge counter2 = MetricsManager.getInstance().getGauge("serviceName", "gaugeName");
 		assertEquals(counter1, counter2);
-		assertTrue(counter1 == counter2);
+		assertSame(counter1, counter2);
 	}
 	
 	@Test
 	public void testGetGauge_failure() {
 		try {
 			MetricsManager.getInstance().getGauge("wrongServiceName", "wrongGaugeName");
-			fail("No exception occured");
+			fail("No exception occurred");
 		}catch(RuntimeException e) {
 			String expectedMessage = "Gauge with service name wrongServiceName and gauge name wrongGaugeName doesn't exist.";
 			assertEquals(expectedMessage, e.getMessage());
