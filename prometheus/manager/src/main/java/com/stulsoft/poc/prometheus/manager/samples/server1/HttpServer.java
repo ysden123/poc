@@ -36,6 +36,7 @@ public class HttpServer extends AbstractVerticle {
 	@Override
 	public void start(Future<Void> startFuture) {
 		logger.info("Starting HTTP server...");
+		MetricsManager.getInstance().initDefaultMetrics();
 		MetricsManager.getInstance().addCounter(SERVICE_NAME, COUNTER_NAME_GETS, "Counts all gets");
 		io.vertx.core.http.HttpServer server = vertx.createHttpServer();
 
