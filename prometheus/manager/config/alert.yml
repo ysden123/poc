@@ -1,0 +1,11 @@
+groups:
+- name: example
+  rules:
+  - alert: service_down
+    expr: up < 1.0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Service is down"
+      description: "Some description"

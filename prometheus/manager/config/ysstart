@@ -1,0 +1,4 @@
+#!/bin/bash
+# Starts Alertmanager
+
+./alertmanager --config.file=ys-alert-manager-test-config.yml
