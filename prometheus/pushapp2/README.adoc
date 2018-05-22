@@ -1,0 +1,5 @@
+= pushapp2
+
+This project is a simple stand alone application.
+
+This is a simple example of the usage the Pushgateway for Prometheus monitoring system.
