@@ -1,4 +1,4 @@
-/**
+/*
  * Created by Yuriy Stul 17 May 2018
  */
 package com.stulsoft.poc.prometheus.manager;

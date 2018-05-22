@@ -1,4 +1,4 @@
-/**
+/*
  * Created by Yuriy Stul 17 May 2018
  */
 package com.stulsoft.poc.prometheus.manager;
@@ -42,17 +42,17 @@ public class MetricsHandler implements Handler<RoutingContext> {
 		private final Buffer buffer = Buffer.buffer();
 
 		@Override
-		public void write(char[] cbuf, int off, int len) throws IOException {
+		public void write(char[] cbuf, int off, int len){
 			buffer.appendString(new String(cbuf, off, len));
 		}
 
 		@Override
-		public void flush() throws IOException {
+		public void flush(){
 			// NO-OP
 		}
 
 		@Override
-		public void close() throws IOException {
+		public void close(){
 			// NO-OP
 		}
 
@@ -62,13 +62,6 @@ public class MetricsHandler implements Handler<RoutingContext> {
 	}
 
 	private CollectorRegistry registry;
-
-	/**
-	 * Construct a MetricsHandler for the default registry.
-	 */
-	public MetricsHandler() {
-		this(CollectorRegistry.defaultRegistry);
-	}
 
 	/**
 	 * Construct a MetricsHandler for the given registry.
@@ -81,7 +74,7 @@ public class MetricsHandler implements Handler<RoutingContext> {
 	}
 
 	private Set<String> parse(HttpServerRequest request) {
-		return new HashSet<String>(request.params().getAll("name[]"));
+		return new HashSet<>(request.params().getAll("name[]"));
 	}
 
 	public void handle(RoutingContext ctx) {
