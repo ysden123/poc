@@ -93,18 +93,16 @@ public class MetricsManager {
      */
     public void initDefaultMetrics() {
         if (!defaultMetricsInitialized) {
-            if (!defaultMetricsInitialized) {
-                logger.info("Initializing default exports...");
-                new StandardExports().register(registry);
-                new MemoryPoolsExports().register(registry);
-                new BufferPoolsExports().register(registry);
-                new GarbageCollectorExports().register(registry);
-                new ThreadExports().register(registry);
-                new ClassLoadingExports().register(registry);
-                new VersionInfoExports().register(registry);
-                defaultMetricsInitialized = true;
-                logger.info("Initialized default exports.");
-            }
+            logger.info("Initializing default exports...");
+            new StandardExports().register(registry);
+            new MemoryPoolsExports().register(registry);
+            new BufferPoolsExports().register(registry);
+            new GarbageCollectorExports().register(registry);
+            new ThreadExports().register(registry);
+            new ClassLoadingExports().register(registry);
+            new VersionInfoExports().register(registry);
+            defaultMetricsInitialized = true;
+            logger.info("Initialized default exports.");
         }
     }
 
