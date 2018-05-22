@@ -231,5 +231,4 @@ public class MetricsManager {
         }
         return gauge;
     }
-
 }
