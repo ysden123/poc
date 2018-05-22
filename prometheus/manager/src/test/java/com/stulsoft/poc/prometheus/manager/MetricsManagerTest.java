@@ -26,31 +26,6 @@ public class MetricsManagerTest {
 	}
 
 	@Test
-	public void testGetInstance_multiThreads() {
-		Random random = new Random(123);
-		List<MetricsManager> instances = new ArrayList<>();
-		List<Thread> threads = new ArrayList<>();
-		for (int i = 0; i < 10; ++i) {
-			Thread t = new Thread(() -> {
-				try {
-					Thread.sleep(100 + random.nextInt(500));
-				} catch (Exception ignore) {
-				}
-				instances.add(MetricsManager.getInstance());
-			});
-			threads.add(t);
-			t.start();
-		}
-		threads.forEach(thread -> {
-			try {
-				thread.join();
-			} catch (InterruptedException ignore) {
-			}
-		});
-		instances.forEach(manager -> assertSame(instances.get(0), manager));
-	}
-
-	@Test
 	public void testAddCounter() {
 		Counter counter1 = MetricsManager.getInstance().addCounter("serviceName", "counterName", "description");
 		assertNotNull(counter1);
