@@ -1,15 +1,18 @@
 package com.stulsoft.poc.prometheus.manager;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.junit.Test;
 
 import io.prometheus.client.Counter;
 import io.prometheus.client.Gauge;
-
-import static org.junit.Assert.*;
 
 /**
  * Unit tests for MetricsManager class.
