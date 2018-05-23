@@ -1,0 +1,6 @@
+{
+	"pushgateway": {
+		"host": "localhost",
+		"port": 9091
+	}
+}

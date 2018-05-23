@@ -2,70 +2,37 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.stulsoft.prometheus</groupId>
-	<artifactId>manager</artifactId>
+	<groupId>com.stulsoft.poc.prometheus</groupId>
+	<artifactId>pushapp2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>manager</name>
-	<description>Prometheus metrics manager</description>
+	<name>pushapp2</name>
+	<description>Playing with pushing metrics</description>
 
 	<properties>
-		<vertx.version>3.5.1</vertx.version>
-		<slf4j.version>1.7.25</slf4j.version>
-		<prometheus.version>0.4.0</prometheus.version>
-		<junit.version>4.12</junit.version>
-		<log4jSlf4jImpl.version>2.11.0</log4jSlf4jImpl.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<slf4j.version>1.7.5</slf4j.version>
 	</properties>
 
-<!-- 	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>io.vertx</groupId>
-				<artifactId>vertx-stack-depchain</artifactId>
-				<version>${vertx.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
- -->
 	<dependencies>
 		<dependency>
 			<groupId>io.prometheus</groupId>
 			<artifactId>simpleclient</artifactId>
-			<version>${prometheus.version}</version>
+			<version>0.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>io.prometheus</groupId>
-			<artifactId>simpleclient_common</artifactId>
-			<version>${prometheus.version}</version>
+			<artifactId>simpleclient_pushgateway</artifactId>
+			<version>0.4.0</version>
 		</dependency>
 		<dependency>
-			<groupId>io.prometheus</groupId>
-			<artifactId>simpleclient_hotspot</artifactId>
-			<version>${prometheus.version}</version>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
 		</dependency>
-
-		<dependency>
-			<groupId>io.vertx</groupId>
-			<artifactId>vertx-core</artifactId>
-			<version>${vertx.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.vertx</groupId>
-			<artifactId>vertx-web</artifactId>
-			<version>${vertx.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.vertx</groupId>
-			<artifactId>vertx-unit</artifactId>
-			<version>${vertx.version}</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -74,17 +41,13 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>${log4jSlf4jImpl.version}</version>
+			<version>2.9.0</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -149,4 +112,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>

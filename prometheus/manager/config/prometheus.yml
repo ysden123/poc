@@ -27,7 +27,7 @@ scrape_configs:
     # scheme defaults to 'http'.
 
     static_configs:
-      # Prometheus oneself and Pushgateway
+      # Prometheus itself and Pushgateway
       # - targets: ['localhost:9090','localhost:9091']
       # Prometheus oneself
       - targets: ['localhost:9090']
@@ -38,3 +38,5 @@ scrape_configs:
 
     static_configs:
       - targets: ['localhost:8080']
+        labels: 
+          service: 'test server'
