@@ -16,7 +16,7 @@
 		<log4jSlf4jImpl.version>2.11.0</log4jSlf4jImpl.version>
 	</properties>
 
-	<dependencyManagement>
+<!-- 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>io.vertx</groupId>
@@ -27,7 +27,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
+ -->
 	<dependencies>
 		<dependency>
 			<groupId>io.prometheus</groupId>
@@ -65,6 +65,7 @@
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-unit</artifactId>
+			<version>${vertx.version}</version>
 			<scope>test</scope>
 		</dependency>
 
