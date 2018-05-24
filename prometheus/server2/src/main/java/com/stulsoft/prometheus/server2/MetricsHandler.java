@@ -1,19 +1,16 @@
 package com.stulsoft.prometheus.server2;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.util.HashSet;
+import java.util.Set;
+
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exporter.common.TextFormat;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.ext.web.RoutingContext;
-
-import java.io.IOException;
-import java.io.Writer;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Metrics Handler for Vert.x Web.
@@ -31,7 +28,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class MetricsHandler implements Handler<RoutingContext> {
-	private static Logger logger = LoggerFactory.getLogger(MetricsHandler.class);
 
 	/**
 	 * Wrap a Vert.x Buffer as a Writer so it can be used with TextFormat writer
