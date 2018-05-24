@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Test;
 
@@ -29,6 +30,31 @@ public class MetricsManagerTest {
 	}
 
 	@Test
+	public void testGetInstance_multiThreads() {
+		Random random = new Random(123);
+		List<MetricsManager> instances = new ArrayList<>();
+		List<Thread> threads = new ArrayList<>();
+		for (int i = 0; i < 10; ++i) {
+			Thread t = new Thread(() -> {
+				try {
+					Thread.sleep(100 + random.nextInt(500));
+				} catch (Exception ignore) {
+				}
+				instances.add(MetricsManager.getInstance());
+			});
+			threads.add(t);
+			t.start();
+		}
+		threads.forEach(thread -> {
+			try {
+				thread.join();
+			} catch (InterruptedException ignore) {
+			}
+		});
+		instances.forEach(manager -> assertSame(instances.get(0), manager));
+	}
+
+	@Test
 	public void testAddCounter() {
 		Counter counter1 = MetricsManager.getInstance().addCounter("serviceName", "counterName", "description");
 		assertNotNull(counter1);
@@ -39,7 +65,8 @@ public class MetricsManagerTest {
 
 	@Test
 	public void testAddCounter_withLables() {
-		Counter counter = MetricsManager.getInstance().addCounter("serviceName", "counterNameWithLabels", "description", "label1", "label2");
+		Counter counter = MetricsManager.getInstance().addCounter("serviceName", "counterNameWithLabels", "description",
+				"label1", "label2");
 		assertNotNull(counter);
 		counter.labels("label1", "label2").inc();
 		List<String> labels = new ArrayList<>();
@@ -79,18 +106,18 @@ public class MetricsManagerTest {
 		assertEquals(counter1, counter2);
 		assertSame(counter1, counter2);
 	}
-	
+
 	@Test
 	public void testGetCounter_failure() {
 		try {
 			MetricsManager.getInstance().getCounter("wrongServiceName", "wrongCounterName");
 			fail("No exception occured");
-		}catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			String expectedMessage = "Counter with service name wrongServiceName and counter name wrongCounterName doesn't exist.";
 			assertEquals(expectedMessage, e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testAddGauge() {
 		Gauge gauge1 = MetricsManager.getInstance().addGauge("serviceName", "gaugeName", "description");
@@ -102,7 +129,8 @@ public class MetricsManagerTest {
 
 	@Test
 	public void testAddGauge_withLables() {
-		Gauge gauge = MetricsManager.getInstance().addGauge("serviceName", "gaugeNameWithLabels", "description", "label1", "label2");
+		Gauge gauge = MetricsManager.getInstance().addGauge("serviceName", "gaugeNameWithLabels", "description",
+				"label1", "label2");
 		assertNotNull(gauge);
 		gauge.labels("label1", "label2").inc();
 		List<String> labels = new ArrayList<>();
@@ -142,13 +170,13 @@ public class MetricsManagerTest {
 		assertEquals(counter1, counter2);
 		assertSame(counter1, counter2);
 	}
-	
+
 	@Test
 	public void testGetGauge_failure() {
 		try {
 			MetricsManager.getInstance().getGauge("wrongServiceName", "wrongGaugeName");
 			fail("No exception occurred");
-		}catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			String expectedMessage = "Gauge with service name wrongServiceName and gauge name wrongGaugeName doesn't exist.";
 			assertEquals(expectedMessage, e.getMessage());
 		}
