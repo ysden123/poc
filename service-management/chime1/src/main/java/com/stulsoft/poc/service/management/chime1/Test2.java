@@ -13,19 +13,18 @@ import io.vertx.core.eventbus.MessageConsumer;
 import io.vertx.core.json.JsonObject;
 
 /**
- * Executes some service every 1 second 3 times
+ * Executes some service each minute
  * 
  * @author Yuriy Stul
  *
  */
-public class Test1 {
-	private static final Logger logger = LoggerFactory.getLogger(Test1.class);
+public class Test2 {
+	private static final Logger logger = LoggerFactory.getLogger(Test2.class);
 
-	// Scheduling with Chime
-	static void scheduling(Vertx vertx) {
+	private static void scheduling(final Vertx vertx) {
 		logger.info("==>scheduling");
-
 		EventBus eventBus = vertx.eventBus();
+
 		// Consumer of the timer events
 		MessageConsumer<JsonObject> consumer = eventBus.consumer("scheduler:timer");
 		// Listens and prints timer events. When timer completes stops the Vertx
@@ -39,13 +38,23 @@ public class Test1 {
 						logger.info(event.toString());
 					}
 				});
-		logger.info("Create new timer");
+
 		// Create new timer
+		logger.info("Create new timer");
 		eventBus.send(
 				"chime",
-				(new JsonObject()).put("operation", "create").put("name", "scheduler:timer")
-						.put("publish", false).put("max count", 3)
-						.put("description", (new JsonObject()).put("type", "interval").put("delay", 1)),
+				(new JsonObject())
+						.put("operation", "create")
+						.put("name", "scheduler:timer")
+						.put("publish", false)
+						.put("max count", 3)
+						.put("description", (new JsonObject())
+								.put("type", "cron")
+						.put("seconds", "0")
+						.put("minutes", "1/1")
+						.put("hours", "*")
+						.put("days of month", "*")
+						.put("months", "*")),
 				ar -> {
 					if (ar.succeeded()) {
 						logger.info("Scheduling started: " + ar.result().body());
@@ -62,8 +71,6 @@ public class Test1 {
 	public static void main(String[] args) {
 		logger.info("==>main");
 		try {
-			// Vertx vertx = Vertx.vertx();
-
 			VertxOptions vertxOptions = new VertxOptions();
 			vertxOptions.setBlockedThreadCheckInterval(1000000);
 			Vertx vertx = Vertx.vertx(vertxOptions);
