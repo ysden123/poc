@@ -1,0 +1,4 @@
+= chime1
+Usage of Chime. Test 1.
+
+See also https://github.com/LisiLisenok/ChimeJavaExample[ChimeJavaExample]
