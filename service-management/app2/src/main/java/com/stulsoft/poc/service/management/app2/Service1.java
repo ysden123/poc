@@ -1,7 +1,7 @@
 /*
  * Created by Yuriy Stul 28 May 2018
  */
-package com.stulsoft.poc.service.management.app1;
+package com.stulsoft.poc.service.management.app2;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +10,8 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.Message;
 
 /**
+ * Service with exception
+ * 
  * @author Yuriy Stul
  *
  */
@@ -40,10 +42,13 @@ public class Service1 extends AbstractVerticle {
 	private void executeLongTimeJob(Message<String> message) {
 		logger.info("==>executeLongTimeJob");
 
-		vertx.setTimer(1000 * 60 * 3, l->{
-			logger.info("Completed execution");
-			message.reply("Service1 completed execution");
+		vertx.setTimer(1000, l -> {
+			try {
+				throw new RuntimeException("Test exception");
+			} catch (Exception e) {
+				logger.error("(1) {}", e.getMessage());
+				message.fail(123, e.getMessage());
+			}
 		});
 	}
-
 }

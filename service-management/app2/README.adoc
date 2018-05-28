@@ -1,0 +1,2 @@
+= app2
+Usage of Chime. Application 2. With exception
