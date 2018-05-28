@@ -41,7 +41,7 @@ public class Service1 extends AbstractVerticle {
 		logger.info("==>executeLongTimeJob");
 		vertx.executeBlocking(f -> {
 			try {
-				Thread.sleep(1000 * 60 * 30);
+				Thread.sleep(1000 * 60 * 3);
 				f.complete();
 			} catch (Exception ignore) {
 			}

@@ -36,12 +36,17 @@ public class Main {
 					} else {
 						logger.info(event.toString());
 						logger.info("Sending start message to Service5");
-						vertx.eventBus().send(Service1.EB_ADDRESS, "execute", ar -> {
-							if (ar.succeeded())
-								logger.info("Reply from Service1: {}", ar.result().body());
-							else
-								logger.error("Failed Service1: {}", ar.cause().getMessage());
-						});
+						/*DeliveryOptions deliveryOptions = (new DeliveryOptions())
+								.setSendTimeout(1000 * 60 * 30 * 2);
+						vertx.eventBus().send(Service1.EB_ADDRESS, "execute",
+								deliveryOptions,
+								ar -> {
+									if (ar.succeeded())
+										logger.info("Reply from Service1: {}", ar.result().body());
+									else
+										logger.error("Failed Service1: {}", ar.cause().getMessage());
+								});*/
+						vertx.eventBus().publish(Service1.EB_ADDRESS, "execute");
 					}
 				});
 
@@ -56,7 +61,7 @@ public class Main {
 						.put("description", (new JsonObject())
 								.put("type", "cron")
 								.put("seconds", "0")
-								.put("minutes", "1/5")
+								.put("minutes", "0/5")
 								.put("hours", "*")
 								.put("days of month", "*")
 								.put("months", "*")),
