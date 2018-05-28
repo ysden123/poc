@@ -39,22 +39,26 @@ public class Service1 extends AbstractVerticle {
 
 	private void executeLongTimeJob(Message<String> message) {
 		logger.info("==>executeLongTimeJob");
-		vertx.executeBlocking(f -> {
-			try {
-				Thread.sleep(1000 * 60 * 3);
-				f.complete();
-			} catch (Exception ignore) {
-			}
-		}, ar -> {
-			if (ar.succeeded()) {
-				logger.info("Completed execution");
-				message.reply("Service1 completed execution");
-			} else {
-				logger.error("Failed execution. {}", ar.cause().getMessage());
-				message.fail(123, ar.cause().getMessage());
-			}
-		});
+//		vertx.executeBlocking(f -> {
+//			try {
+//				Thread.sleep(1000 * 60 * 3);
+//				f.complete();
+//			} catch (Exception ignore) {
+//			}
+//		}, ar -> {
+//			if (ar.succeeded()) {
+//				logger.info("Completed execution");
+//				message.reply("Service1 completed execution");
+//			} else {
+//				logger.error("Failed execution. {}", ar.cause().getMessage());
+//				message.fail(123, ar.cause().getMessage());
+//			}
+//		});
 
+		vertx.setTimer(1000 * 60 * 3, l->{
+			logger.info("Completed execution");
+			message.reply("Service1 completed execution");
+		});
 	}
 
 }

@@ -6,6 +6,7 @@ package com.stulsoft.poc.service.management.app1;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Verticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
@@ -36,16 +37,6 @@ public class Main {
 					} else {
 						logger.info(event.toString());
 						logger.info("Sending start message to Service5");
-						/*DeliveryOptions deliveryOptions = (new DeliveryOptions())
-								.setSendTimeout(1000 * 60 * 30 * 2);
-						vertx.eventBus().send(Service1.EB_ADDRESS, "execute",
-								deliveryOptions,
-								ar -> {
-									if (ar.succeeded())
-										logger.info("Reply from Service1: {}", ar.result().body());
-									else
-										logger.error("Failed Service1: {}", ar.cause().getMessage());
-								});*/
 						vertx.eventBus().publish(Service1.EB_ADDRESS, "execute");
 					}
 				});
@@ -82,14 +73,18 @@ public class Main {
 	public static void main(String[] args) {
 		logger.info("Started app1");
 		try {
-			VertxOptions vertxOptions = new VertxOptions();
-			vertxOptions.setBlockedThreadCheckInterval(1000000);
+			VertxOptions vertxOptions = new VertxOptions()
+					.setBlockedThreadCheckInterval(1000000);
 			Vertx vertx = Vertx.vertx(vertxOptions);
 
 			Verticle servive1 = new Service1();
+
 			// deploying Service5
 			logger.info("deploying Service1");
-			vertx.deployVerticle(servive1);
+			DeploymentOptions deploymentOptions = new DeploymentOptions()
+					.setWorker(true)
+					.setMaxWorkerExecuteTime(1000 * 1000 * 60 * 4);
+			vertx.deployVerticle(servive1, deploymentOptions);
 
 			// deploying Chime
 			logger.info("deploying Chime");
