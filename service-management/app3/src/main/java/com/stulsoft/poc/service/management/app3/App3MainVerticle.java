@@ -88,7 +88,7 @@ public class App3MainVerticle extends AbstractVerticle {
 		logger.info("Deploying verticles...");
 		Verticle servive1 = new Service1();
 
-		// deploying Service5
+		// deploying Service1
 		logger.info("deploying Service1");
 		DeploymentOptions deploymentOptions = new DeploymentOptions()
 				.setWorker(true)
