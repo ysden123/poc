@@ -77,31 +77,37 @@ public class App3MainVerticle extends AbstractVerticle {
 			VertxOptions vertxOptions = new VertxOptions()
 					.setBlockedThreadCheckInterval(1000000);
 			Vertx vertx = Vertx.vertx(vertxOptions);
-
-			Verticle servive1 = new Service1();
-
-			// deploying Service5
-			logger.info("deploying Service1");
-			DeploymentOptions deploymentOptions = new DeploymentOptions()
-					.setWorker(true)
-					.setMaxWorkerExecuteTime(1000 * 1000 * 60 * 4);
-			vertx.deployVerticle(servive1, deploymentOptions);
-
-			// deploying Chime
-			logger.info("deploying Chime");
-			vertx.deployVerticle("ceylon:herd.schedule.chime/0.2.1", res -> {
-				if (res.succeeded()) {
-					logger.info("Deployed Chime");
-					// Chime has been successfully deployed - start scheduling
-					scheduling(vertx);
-				} else {
-					logger.info("Deployment failed! " + res.cause());
-					vertx.close();
-				}
-			});
+			App3MainVerticle app3MainVerticle = new App3MainVerticle();
+			app3MainVerticle.deployVerticles(vertx);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+	}
+
+	private void deployVerticles(final Vertx vertx) {
+		logger.info("Deploying verticles...");
+		Verticle servive1 = new Service1();
+
+		// deploying Service5
+		logger.info("deploying Service1");
+		DeploymentOptions deploymentOptions = new DeploymentOptions()
+				.setWorker(true)
+				.setMaxWorkerExecuteTime(1000 * 1000 * 60 * 4);
+		vertx.deployVerticle(servive1, deploymentOptions);
+
+		// deploying Chime
+		logger.info("deploying Chime");
+		vertx.deployVerticle("ceylon:herd.schedule.chime/0.2.1", res -> {
+			if (res.succeeded()) {
+				logger.info("Deployed Chime");
+				// Chime has been successfully deployed - start scheduling
+				scheduling(vertx);
+			} else {
+				logger.info("Deployment failed! " + res.cause());
+				vertx.close();
+			}
+		});
+
 	}
 
 	/* (non-Javadoc)
@@ -112,6 +118,7 @@ public class App3MainVerticle extends AbstractVerticle {
 		logger.info("Starting App3MainVerticle...");
 		System.out.println("Starting App3MainVerticle...");
 		super.start();
+		deployVerticles(vertx);
 	}
 
 	/* (non-Javadoc)
@@ -123,6 +130,5 @@ public class App3MainVerticle extends AbstractVerticle {
 		System.out.println("Stopping App3MainVerticle...");
 		super.stop();
 	}
-	
-	
+
 }

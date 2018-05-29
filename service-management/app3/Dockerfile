@@ -1,20 +1,28 @@
-FROM openjdk:8-jdk-alpine                                           
+###
+# vert.x docker example using a Java verticle
+# To build:
+#  docker build -t app3 .
+# To run:
+#   docker run -t -i --name=app3 app3
+# To start:
+#   docker start app3
+###
 
-ARG VERTICLE_FILE_ARG=app3-0.0.1-SNAPSHOT-fat.jar     
-ENV VERTICLE_FILE=$VERTICLE_FILE_ARG
+# Extend vert.x image
+FROM vertx/vertx3
+
+ENV VERTICLE_NAME com.stulsoft.poc.service.management.app3.App3MainVerticle
+ENV VERTICLE_FILE target/app3-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+
 # Set the location of the verticles
 ENV VERTICLE_HOME /usr/verticles
 
-#Configuring the Java Virtual Machine
-ENV JAVA_OPTS ""
+EXPOSE 8080
 
-#vertx syatem variales configured though env variable
-ENV VERTX_OPTS "-Dvertx.cluster.managerClass=io.vertx.spi.cluster.hazelcast.HazelcastClusterManager"
-
-# Copy your fat jar to the container
-COPY target/$VERTICLE_FILE $VERTICLE_HOME/                         
+# Copy your verticle to the container
+COPY $VERTICLE_FILE $VERTICLE_HOME/
 
 # Launch the verticle
 WORKDIR $VERTICLE_HOME
 ENTRYPOINT ["sh", "-c"]
-CMD ["exec java $DEBUG $JAVA_OPTS $VERTX_OPTS -jar $VERTICLE_FILE -cluster"]
+CMD ["exec vertx run $VERTICLE_NAME -cp $VERTICLE_HOME/*"]
