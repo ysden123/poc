@@ -1,18 +1,18 @@
 ###
 # vert.x docker example using a Java verticle
 # To build:
-#  docker build -t app3 .
+#  docker build -t quartz1 .
 # To run:
-#   docker run -t -i --name=app3 app3
+#   docker run -t -i --name=quartz1 quartz1
 # To start:
-#   docker start app3
+#   docker start quartz1
 ###
 
 # Extend vert.x image
 FROM vertx/vertx3
 
-ENV VERTICLE_NAME com.stulsoft.poc.service.management.app3.App3MainVerticle
-ENV VERTICLE_FILE target/app3-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+ENV VERTICLE_NAME com.stulsoft.poc.service.management.quartz1.Quartz1MainVerticle
+ENV VERTICLE_FILE target/quartz1-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
 # Set the location of the verticles
 ENV VERTICLE_HOME /usr/verticles

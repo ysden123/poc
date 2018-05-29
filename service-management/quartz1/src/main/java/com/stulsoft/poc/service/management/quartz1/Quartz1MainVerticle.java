@@ -63,6 +63,7 @@ public class Quartz1MainVerticle extends AbstractVerticle {
 	public void start() throws Exception {
 		logger.info("Starting Quartz1MainVerticle ...");
 		super.start();
+		deployVerticles(vertx);
 	}
 
 	/* (non-Javadoc)
