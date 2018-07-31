@@ -1,0 +1,17 @@
+= scala-json
+
+Playing with JSon in Scala
+
+See common review https://manuel.bernhardt.io/2015/11/06/a-quick-tour-of-json-libraries-in-scala/[A quick tour of JSON libraries in Scala]
+
+== JSon from Play
+See https://www.playframework.com/documentation/2.6.x/ScalaJson[JSON basics]
+
+== json4s
+See http://json4s.org/[json4s]
+
+== Argonaut
+See http://argonaut.io/[Argonaut]
+
+== spray-json
+See https://github.com/spray/spray-json[spray/spray-json]
