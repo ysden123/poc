@@ -16,6 +16,8 @@
         <scala.compat.version>2.12</scala.compat.version>
         <scala.test.version>3.2.0-SNAP10</scala.test.version>
         <spray.json.version>1.3.4</spray.json.version>
+        <json4s.version>3.6.0</json4s.version>
+        <argonaut.version>6.2.2</argonaut.version>
     </properties>
 
     <dependencies>
@@ -24,10 +26,31 @@
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
         </dependency>
+
+        <!--spray-json-->
         <dependency>
             <groupId>io.spray</groupId>
             <artifactId>spray-json_${scala.compat.version}</artifactId>
             <version>${spray.json.version}</version>
+        </dependency>
+
+        <!--json4s-->
+        <dependency>
+            <groupId>org.json4s</groupId>
+            <artifactId>json4s-native_${scala.compat.version}</artifactId>
+            <version>${json4s.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json4s</groupId>
+            <artifactId>json4s-jackson_${scala.compat.version}</artifactId>
+            <version>${json4s.version}</version>
+        </dependency>
+
+        <!--argonaut-->
+        <dependency>
+            <groupId>io.argonaut</groupId>
+            <artifactId>argonaut_${scala.compat.version}</artifactId>
+            <version>${argonaut.version}</version>
         </dependency>
 
         <!-- Test -->
