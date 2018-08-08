@@ -11,8 +11,8 @@ import org.quartz.TriggerBuilder._
 import org.quartz._
 import org.quartz.impl.StdSchedulerFactory
 
-class MyJob1 extends Job {
-  override def execute(context: JobExecutionContext): Unit = println("Hello World!  MyJob1 is executing.")
+class MyJob1 extends Job with LazyLogging {
+  override def execute(context: JobExecutionContext): Unit = logger.info("Hello World!  MyJob1 is executing.")
 }
 
 /**
