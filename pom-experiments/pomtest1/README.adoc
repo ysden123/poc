@@ -1,0 +1,6 @@
+= pomtest1
+
+Experiments with POM based projects
+
+== Build
+??? TBD
