@@ -11,10 +11,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.stulsoft.pom.experiments</groupId>
     <artifactId>pomtest1</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
     <name>POM experiments test1 parent</name>
     <description>StulSoft POM experiments</description>
+
+    <properties>
+        <revision>1.0.0-SNAPSHOT</revision>
+    </properties>
 
     <modules>
         <module>common</module>
@@ -83,34 +87,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <!--<repositories>-->
-        <!--<repository>-->
-            <!--<id>central</id>-->
-            <!--<name>Maven Repository Switchboard</name>-->
-            <!--<layout>default</layout>-->
-            <!--<url>http://repo1.maven.org/maven2</url>-->
-            <!--<snapshots>-->
-                <!--<enabled>false</enabled>-->
-            <!--</snapshots>-->
-        <!--</repository>-->
-
-        <!--<repository>-->
-            <!--<id>terracotta-releases</id>-->
-            <!--<url>http://www.terracotta.org/download/reflector/releases</url>-->
-            <!--<releases>-->
-                <!--<enabled>true</enabled>-->
-            <!--</releases>-->
-            <!--<snapshots>-->
-                <!--<enabled>false</enabled>-->
-            <!--</snapshots>-->
-        <!--</repository>-->
-    <!--</repositories>-->
-
-    <!--<pluginRepositories>-->
-        <!--<pluginRepository>-->
-            <!--<id>onejar-maven-plugin.googlecode.com</id>-->
-            <!--<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>-->
-        <!--</pluginRepository>-->
-    <!--</pluginRepositories>-->
 </project>

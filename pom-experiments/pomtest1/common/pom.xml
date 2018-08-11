@@ -8,16 +8,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	 <modelVersion>4.0.0</modelVersion>
-	 <parent>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
         <groupId>com.stulsoft.pom.experiments</groupId>
         <artifactId>pomtest1</artifactId>
-        <!--<version>[1.0,99.0)</version>-->
-        <version>1.0.0-SNAPSHOT</version>
-        <!--<version>${project.parent.version}</version>-->
+        <!--suppress MavenPropertyInParent -->
+        <version>${revision}</version>
     </parent>
     <artifactId>common</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>POM experiments test1 common</name>
     <description>StulSoft POM experiments common</description>
@@ -34,12 +32,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.6</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.scala-tools</groupId>
-                    <artifactId>maven-scala-plugin</artifactId>
-                    <version>2.15.2</version>
                 </plugin>
 
                 <plugin>
