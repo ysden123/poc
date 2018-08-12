@@ -3,4 +3,7 @@
 Common classes
 
 == Build
-??? TBD
+Run command from console
+```
+mvn -fae -am -pl common clean package
+```
