@@ -46,6 +46,12 @@
                                 ${app.main.class}
                             </mainClass>
                         </manifest>
+                        <manifestSection>
+                            <name>${project.name}</name>
+                            <manifestEntries>
+                                <version>${revision}</version>
+                            </manifestEntries>
+                        </manifestSection>
                     </archive>
                     <excludes>
                         <exclude>**/application.properties</exclude>
