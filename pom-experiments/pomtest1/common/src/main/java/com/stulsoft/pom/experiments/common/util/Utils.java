@@ -11,7 +11,7 @@ public class Utils {
     private Utils() {
     }
 
-    static String testText() {
+    public static String testText() {
         return "Some test text";
     }
 

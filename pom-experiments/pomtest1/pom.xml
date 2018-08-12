@@ -17,11 +17,12 @@
     <description>StulSoft POM experiments</description>
 
     <properties>
-        <revision>1.0.1-SNAPSHOT</revision>
+        <revision>1.0.2-SNAPSHOT</revision>
     </properties>
 
     <modules>
         <module>common</module>
+        <module>application</module>
     </modules>
 
     <scm>
