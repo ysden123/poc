@@ -25,13 +25,8 @@ public class App2Application implements CommandLineRunner, InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        System.out.println("Properties:");
-        MutablePropertySources mps = env.getPropertySources();
-        mps.forEach(ps -> {
-            System.out.printf("Property source name: %s%n", ps.getName());
-        });
-        String testName = env.getRequiredProperty("test.name");
-        System.out.printf("testName: %s%n", testName);
+
+
     }
 
     /**
@@ -43,7 +38,11 @@ public class App2Application implements CommandLineRunner, InitializingBean {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("==>run App2");
-        System.out.println(Utils.testText());
+        System.out.println("Properties:");
+        MutablePropertySources mps = env.getPropertySources();
+        mps.forEach(ps -> {
+            System.out.printf("Property source name: %s%n", ps.getName());
+        });
         System.out.println("<==run  App2");
     }
 }
