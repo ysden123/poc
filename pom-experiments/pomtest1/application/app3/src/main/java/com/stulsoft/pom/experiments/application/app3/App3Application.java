@@ -34,9 +34,6 @@ public class App3Application implements CommandLineRunner {
             System.out.printf("Property source name: %s%n", ps.getName());
         });
         System.out.printf("environment.getProperty(\"test.name\"): %s%n", environment.getProperty("test.name"));
-        environment.getPropertySources().forEach(ps -> {
-            System.out.printf("%s%n", ps.getName());
-        });
         System.out.println("<==run  App3");
     }
 }

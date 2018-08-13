@@ -4,3 +4,7 @@ Experiments with POM based projects
 
 == Build
 ??? TBD
+
+== Running
+Set VM to -Dspring.config.location=${STATISTICS_BUILDER_CONF_DEVELOPMENT} -Dspring.config.name=application
+

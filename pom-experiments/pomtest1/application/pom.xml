@@ -22,6 +22,7 @@
         <module>app1</module>
         <module>app2</module>
         <module>app3</module>
+        <module>app4</module>
     </modules>
 
     <properties>

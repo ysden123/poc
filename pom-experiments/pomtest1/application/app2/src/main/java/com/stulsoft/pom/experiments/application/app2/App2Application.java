@@ -43,6 +43,7 @@ public class App2Application implements CommandLineRunner, InitializingBean {
         mps.forEach(ps -> {
             System.out.printf("Property source name: %s%n", ps.getName());
         });
+        System.out.printf("env.getProperty(\"test.name\"): %s%n", env.getProperty("test.name"));
         System.out.println("<==run  App2");
     }
 }
