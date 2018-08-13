@@ -18,6 +18,7 @@
 
     <modules>
         <module>app1</module>
+        <module>app2</module>
     </modules>
 
     <properties>
@@ -44,6 +45,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>${spring.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
         </dependency>
     </dependencies>
 </project>
