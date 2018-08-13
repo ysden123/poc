@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Yuriy Stul
  */
 @SpringBootApplication
-public class Application implements CommandLineRunner {
+public class App1Application implements CommandLineRunner {
 
     /**
      * Callback used to run the bean.

@@ -15,6 +15,6 @@ public class Runner {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(App1Application.class, args);
     }
 }

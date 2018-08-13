@@ -16,7 +16,7 @@ import javax.inject.Inject;
  * @author Yuriy Stul
  */
 @SpringBootApplication
-public class Application implements CommandLineRunner, InitializingBean {
+public class App2Application implements CommandLineRunner, InitializingBean {
     @Inject
     private ConfigurableEnvironment env;
 
