@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2018. Yuriy Stul
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.stulsoft.pom.experiments</groupId>
+        <artifactId>pomtest1</artifactId>
+        <!--suppress MavenPropertyInParent -->
+        <version>${revision}</version>
+    </parent>
+    <artifactId>application</artifactId>
+    <name>application</name>
+    <description>Parent project for applications</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>app1</module>
+        <module>app2</module>
+        <module>app3</module>
+        <module>app4</module>
+    </modules>
+
+    <properties>
+        <spring.boot.version>1.5.2.RELEASE</spring.boot.version>
+    </properties>
+
+
+</project>
