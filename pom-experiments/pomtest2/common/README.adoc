@@ -1,0 +1,9 @@
+= common
+
+Common classes
+
+== Build
+Run command from console
+```
+mvn -fae -am -pl common clean package
+```
