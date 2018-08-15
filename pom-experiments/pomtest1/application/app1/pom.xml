@@ -21,6 +21,8 @@
 
     <properties>
         <app.main.class>com.stulsoft.pom.experiments.application.app1.Runner</app.main.class>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     </properties>
 
     <dependencies>
@@ -78,6 +80,7 @@
                             <name>${project.name}</name>
                             <manifestEntries>
                                 <version>${revision}</version>
+                                <date>${timestamp}</date>
                             </manifestEntries>
                         </manifestSection>
                     </archive>
