@@ -12,8 +12,6 @@ import org.springframework.context.ApplicationContext
 import org.springframework.core.env.Environment
 import org.springframework.scheduling.annotation.{EnableScheduling, Scheduled}
 
-import scala.io.StdIn
-
 /**
   * @author Yuriy Stul
   */
@@ -23,17 +21,15 @@ class ApplicationConfiguration @Inject()(env: Environment, ctx: ApplicationConte
   private val logger = LoggerFactory.getLogger(classOf[ApplicationConfiguration])
 
   @Inject
-  var someService:SomeService=_
+  var someService: SomeService = _
 
   @Scheduled(cron = "*/10 * * * * *")
-  def makeFoo(): Unit ={
+  def makeFoo(): Unit = {
     someService.foo()
   }
 
   override def run(args: String*): Unit = {
     logger.info("==>run")
-    println("Enter any line to exit:")
-    StdIn.readLine()
     logger.info("<==run")
   }
 }

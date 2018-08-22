@@ -16,7 +16,6 @@ object Application {
   def main(args: Array[String]): Unit = {
     logger.info("==>main")
     val context = SpringApplication.run(classOf[ApplicationConfiguration], args: _*)
-    context.close()
     logger.info("<==main")
   }
 }
