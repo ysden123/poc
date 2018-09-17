@@ -3,6 +3,7 @@ POC projects, playing with Akka
 
 Contains following independent projects:
   - [akka-stream](akka-stream/README.md)
+  - [akka-http-client](akka-http-client/README.md)
   - [broadcast](broadcast/README.md)
   - [clustering](clustering/README.md)
   - [data-watcher1](data-watcher1/README.md)

@@ -13,19 +13,18 @@ import org.springframework.core.env.AbstractEnvironment
   * @author Yuriy Stul
   */
 @SpringBootApplication
-class App4Application extends CommandLineRunner{
+class App4Application extends CommandLineRunner {
   @Inject
   private var environment: AbstractEnvironment = _
 
   override def run(args: String*): Unit = {
     println("==>run App4Application")
+    println("spring.config.location: " + System.getProperty("spring.config.location"))
     val envIter = environment.getPropertySources.iterator()
     println("Prop sources:")
-    while (envIter.hasNext) {
-      val propSource = envIter.next()
-//      println(propSource.getSource.toString)
+    environment.getPropertySources.forEach(propSource => {
       println(s"Prop source name: ${propSource.getName}")
-    }
+    })
     println(s"""environment.getProperty("test.name"): ${environment.getProperty("test.name")} """)
 
     println("<==run")
