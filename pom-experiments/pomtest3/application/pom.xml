@@ -20,7 +20,8 @@
     <description>StulSoft POM experiments application</description>
 
     <properties>
-        <app.main.class>com.stulsoft.pom.experiments.application.app1.Runner</app.main.class>
+        <app.main.class>com.stulsoft.poc.pomtest3.app.Application</app.main.class>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <dependencies>
@@ -28,6 +29,12 @@
             <groupId>com.stulsoft.pom.experiments</groupId>
             <artifactId>common</artifactId>
             <version>${revision}</version>
+        </dependency>
+        <!--Unit tes-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
         </dependency>
     </dependencies>
 

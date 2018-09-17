@@ -19,6 +19,14 @@
     <name>POM experiments test3 common</name>
     <description>Common Scala classes</description>
 
+    <properties>
+        <scala.version>2.12.6</scala.version>
+        <scala.compat.version>2.12</scala.compat.version>
+        <scalaTest.version>3.2.0-SNAP10</scalaTest.version>
+        <scalaCheck.version>1.14.0</scalaCheck.version>
+        <scalaMock.version>4.1.0</scalaMock.version>
+    </properties>
+
     <dependencies>
         <!-- Scala -->
         <dependency>
@@ -36,6 +44,27 @@
             <artifactId>scala-compiler</artifactId>
             <version>${scala.version}</version>
         </dependency>
+
+        <!--Unit testing-->
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.compat.version}</artifactId>
+            <version>${scalaTest.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.scalacheck</groupId>
+            <artifactId>scalacheck_${scala.compat.version}</artifactId>
+            <version>${scalaCheck.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.scalamock</groupId>
+            <artifactId>scalamock_${scala.compat.version}</artifactId>
+            <version>4.1.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

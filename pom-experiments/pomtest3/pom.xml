@@ -18,7 +18,6 @@
 
     <properties>
         <revision>0.0.1</revision>
-        <scala.version>2.12.6</scala.version>
 		<java.version>10</java.version>
     </properties>
 
