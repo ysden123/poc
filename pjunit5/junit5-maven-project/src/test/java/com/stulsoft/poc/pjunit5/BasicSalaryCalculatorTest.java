@@ -4,10 +4,9 @@
 
 package com.stulsoft.poc.pjunit5;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,6 +44,23 @@ class BasicSalaryCalculatorTest {
         double basicSalary = -100;
         assertThrows(IllegalArgumentException.class, () -> basicSalaryCalculator.setBasicSalary(basicSalary));
 
+    }
+
+    @Test
+    void testImmutableCollections() {
+        List<String> fruits = List.of("Mangosteen", "Durian fruit", "Longan");
+
+        assertThrows(UnsupportedOperationException.class, () -> {
+            fruits.add("Mango");
+            fruits.remove(1);
+        });
+
+        assertEquals(3, fruits.size());
+    }
+
+    @Test
+    @Disabled
+    void testSomeMethod() {
     }
 
     @AfterEach
