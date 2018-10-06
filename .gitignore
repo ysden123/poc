@@ -65,3 +65,5 @@ Qvx/.vs/
 Qvx/EventLogSimple/bin/
 Qvx/EventLogSimple/obj/
 *.user
+.gradle/
+build/
