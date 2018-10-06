@@ -1,0 +1,40 @@
+= spring-boot-junit5
+
+This project demonstrates usage of Spring Boot framework.
+Main goal is to give an example of development and unit testing
+of Spring schedule feature.
+
+JUnit 5 is used.
+
+The main problem with unit testing of schedule feature of the Spring framework is to prevent automatic execution of a scheduled methods in the tests. Automatic execution of a scheduled methods is nice feature for production but it does unit testing very problematic task. Developer do not want to execute all scheduled tasks in unit tests but to test a dedeicated methods only.
+
+This demo projects shows how to achieve:
+
+- use schedule feature of Spring framework
+- prevent execution scheduled methods in unit tests
+
+== Project structure
+Project consists of:
+
+- _SomeService_ - a service which does some work
+- _SomeComponent_ - a component which uses SomeService;
+_SomeComponent_ gets SomeService reference as autowired dependency
+- _Scheduling_ - holds configuration od scheduled services;
+_Scheduling_ gets services via autowired Spring mechanism.
+- _Application_ - a configuration initialization
+- _ApplicationRunner_ - the application entry point
+
+== Unit tests
+Unit tests are:
+
+- _SomeServiceTest_ - very simple test
+- _SomeComponentTest_ - this test demonstrates usage of the _@ConditionalOnProperty_ annotation
+
+In the production code, in the _Scheduling_ class _@ConditionalOnProperty_ specifies condition when to
+use _@Scheduled_ annotation. By default the _Scheduling_ class is in context and all methods with
+_@Scheduled_ annotation will be scheduled.
+
+In the test code, in the _SomeComponentTest_ following code disables scheduling:
+----
+@TestPropertySource(properties = "app.scheduling.enable=false")
+----
