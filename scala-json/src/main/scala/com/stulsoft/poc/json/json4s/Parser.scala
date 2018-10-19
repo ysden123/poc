@@ -19,4 +19,19 @@ object Parser extends App {
 
   val jsonObject2 = parse("""{"name": "Toy", "price": 35.35}""", useBigDecimalForDouble = true)
   println(s"jsonObject2: $jsonObject2")
+
+  val price2 = for {
+    JObject(child) <- jsonObject2
+    JField("price", JDecimal(price)) <- child
+  } yield price
+  println(s"price2=$price2")
+
+  val jsonObject3 = parse("""{"name": "Toy", "price": 35.35}""")
+  println(s"jsonObject3: $jsonObject3")
+
+  val price3 = for {
+    JObject(child) <- jsonObject3
+    JField("price", JDouble(price)) <- child
+  } yield price
+  println(s"price2=$price3")
 }
