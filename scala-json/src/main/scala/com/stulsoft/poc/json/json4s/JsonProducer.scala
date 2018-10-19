@@ -13,7 +13,7 @@ import org.json4s.jackson.JsonMethods._
   *
   * @author Yuriy Stul
   */
-object ProduceJson extends App {
+object JsonProducer extends App {
   val jsonList = compact(render(List(1, 2, 3)))
   println(s"jsonList: $jsonList")
 
