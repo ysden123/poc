@@ -9,11 +9,12 @@ import org.json4s.jackson.Serialization.read
 
 import scala.io.Source
 
-/**
+/** Parses JSON with array of objects using ''read''
+  *
   * @author Yuriy Stul
   */
-object ParseArrayWithRead extends App {
-  println("==>ParseArrayWithRead")
+object ArrayParserWithRead extends App {
+  println("==>ArrayParserWithRead")
   try {
     implicit val formats = DefaultFormats
     val items = read[Seq[TheObject]](Source.fromResource("arrayOfObjects.json").getLines().mkString)

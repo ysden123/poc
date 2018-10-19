@@ -7,7 +7,8 @@ package com.stulsoft.poc.json.json4s
 import org.json4s._
 import org.json4s.jackson.Serialization.read
 
-/**
+/** Parses JSON using ''read''
+  *
   * @author Yuriy Stul
   */
 object ParserWithRead extends App {

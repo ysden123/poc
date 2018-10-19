@@ -9,10 +9,11 @@ import org.json4s.jackson.JsonMethods._
 
 import scala.io.Source
 
-/**
+/** Parses JSON with array of objects
+  *
   * @author Yuriy Stul
   */
-object ParseArray extends App {
+object ArrayParser extends App {
   try {
     val jsonObject = parse(Source.fromResource("arrayOfObjects.json").getLines().mkString)
     val items: Seq[(String, BigInt, Double)] = for {
