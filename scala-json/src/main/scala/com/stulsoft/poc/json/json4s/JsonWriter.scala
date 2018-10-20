@@ -5,7 +5,7 @@
 package com.stulsoft.poc.json.json4s
 
 import org.json4s._
-import org.json4s.jackson.Serialization.write
+import org.json4s.jackson.Serialization._
 
 /** Converts an object or objects to JSON string.
   *
@@ -26,4 +26,6 @@ object JsonWriter extends App {
   )
   val json2 = write(theObjects)
   println(s"(2) json: $json2")
+  val json3 = writePretty(theObjects)
+  println(s"(3) json: $json3")
 }
