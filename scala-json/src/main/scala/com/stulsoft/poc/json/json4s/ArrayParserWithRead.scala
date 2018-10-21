@@ -7,8 +7,6 @@ package com.stulsoft.poc.json.json4s
 import org.json4s._
 import org.json4s.jackson.Serialization.read
 
-import scala.io.Source
-
 /** Parses JSON with array of objects using ''read''
   *
   * @author Yuriy Stul
@@ -17,7 +15,7 @@ object ArrayParserWithRead extends App {
   println("==>ArrayParserWithRead")
   try {
     implicit val formats = DefaultFormats
-    val items = read[Seq[TheObject]](Source.fromResource("arrayOfObjects.json").getLines().mkString)
+    val items = read[Seq[TheObject]](StreamInput(getClass.getClassLoader.getResourceAsStream("arrayOfObjects.json")))
     items.foreach(println)
     val totalAge = items.map(i => i.age).sum
     val totalHeight = items.map(i => i.height).sum
