@@ -1,0 +1,13 @@
+# logging
+
+How to use logging inside library jar.
+
+Source code in main code uses a logging - SLF4J (via scala logging).
+
+The _main_ resources doesn't contain definition of the log properties.
+
+The _test_ resources contains definition of the log properties.
+
+_build.sbt_ specifies logback-classic for _test_ execution only.
+
+A project that will use the JAR have to define implementation of the log framework - include dependency for log implementation..
