@@ -61,10 +61,12 @@ object TweetsEx extends App {
       .runWith(Sink.foreach(println)) // Attach the Flow to a Sink that will finally print the hashtags
   }
 
-  test1(tweets)
-    .onComplete(_ => test2(tweets)
-      .onComplete(_ => test3(tweets)
-        .onComplete(_ => system.terminate())))
+  val done = for {
+    _ <- test1(tweets)
+    _ <- test2(tweets)
+    done3 <- test3(tweets)
+  } yield done3
+  done.onComplete(_ => system.terminate())
 }
 
 final case class Author(handle: String)
