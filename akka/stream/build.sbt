@@ -1,14 +1,15 @@
 import sbt.Keys.libraryDependencies
 
-lazy val akkaVersion = "2.4.17"
-lazy val scalatestVersion = "3.0.4"
-lazy val scalaLoggingVersion = "3.7.2"
+lazy val akkaVersion = "2.5.17"
+lazy val scalatestVersion = "3.0.5"
+lazy val scalaLoggingVersion = "3.9.0"
 lazy val logbackClassicVersion = "1.2.3"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
   version := "0.0.1",
-  scalaVersion := "2.12.4",
+  javacOptions ++= Seq("-source", "11"),
+  scalaVersion := "2.12.7",
   scalacOptions ++= Seq(
     "-feature",
     "-language:implicitConversions",
