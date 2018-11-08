@@ -1,0 +1,18 @@
+= queues
+
+POC project. Playing with queue.
+
+== Queue1
+Queue1 class is example of queue with standard Scala collection. No synchronization was used.
+
+== Queue2
+Queue2 class is example of queue with standard Scala collection. __syncrhonized__ is used for queue synchronization.
+
+== ConcurrentLinkedQueue1
+ConcurrentLinkedQueue1 class is example of queue with Java concurrent collection. Synchronization out of the box.
+
+== SynchronousQueue1
+SynchronousQueue1 class is example of queue with Java concurrent collection. Synchronization out of the box.
+
+Among all Java concurrent collections, SynchronousQueue is different.
+**Capacity of a synchrounous queue is always _zero_**. It is because in SynchronousQueue an insert will wait for a remove operation by another thread and vice versa.
