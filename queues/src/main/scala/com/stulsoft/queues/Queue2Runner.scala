@@ -11,7 +11,6 @@ import com.typesafe.scalalogging.LazyLogging
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.util.Random
-import scala.concurrent._
 
 /**
   * @author Yuriy Stul
@@ -74,9 +73,7 @@ object Queue2Runner extends App with LazyLogging {
       (1 to totalNumber).foreach(i => {
         logger.info(s"add $i")
         Queue2.add(SomeObject(i, s"text $i"))
-        blocking {
-          Thread.sleep(1000)
-        }
+        Thread.sleep(1000)
       })
     }
 
@@ -88,9 +85,7 @@ object Queue2Runner extends App with LazyLogging {
           logger.info(s"f2: ${so.get}")
           atomicInteger.incrementAndGet()
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(500))
-          }
+          Thread.sleep(random.nextInt(500))
         }
       }
     }
@@ -103,9 +98,7 @@ object Queue2Runner extends App with LazyLogging {
           logger.info(s"f3: ${so.get}")
           atomicInteger.incrementAndGet()
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(500))
-          }
+          Thread.sleep(random.nextInt(500))
         }
       }
     }

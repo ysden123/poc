@@ -6,11 +6,10 @@ package com.stulsoft.queues
 
 import java.util.concurrent.atomic.AtomicInteger
 
-import com.stulsoft.queues.SynchronousQueue1Runner.logger
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContext, Future, _}
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.util.Random
 
 /**
@@ -31,9 +30,7 @@ object ConcurrentLinkedQueue1Runner extends App with LazyLogging {
         logger.info(s"add $i")
         ConcurrentLinkedQueue1.add(SomeObject(i, s"text $i"))
         logger.info(s"Queue size is ${ConcurrentLinkedQueue1.size()}")
-        blocking {
-          Thread.sleep(100)
-        }
+        Thread.sleep(100)
       })
     }
 
@@ -45,9 +42,7 @@ object ConcurrentLinkedQueue1Runner extends App with LazyLogging {
           logger.info(s"f2: ${so.get}")
           atomicInteger.incrementAndGet()
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(500) + 1)
-          }
+          Thread.sleep(random.nextInt(500) + 1)
         }
       }
     }
@@ -60,9 +55,7 @@ object ConcurrentLinkedQueue1Runner extends App with LazyLogging {
           logger.info(s"f3: ${so.get}")
           atomicInteger.incrementAndGet()
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(500) + 1)
-          }
+          Thread.sleep(random.nextInt(500) + 1)
         }
       }
     }
@@ -72,21 +65,19 @@ object ConcurrentLinkedQueue1Runner extends App with LazyLogging {
     logger.info("<==test1")
   }
 
-  def test2(): Unit ={
+  def test2(): Unit = {
     logger.info("==>test2")
     implicit val ec = ExecutionContext.global
     val totalNumber = 1000
     val atomicInteger2 = new AtomicInteger()
     val atomicInteger3 = new AtomicInteger()
-    val maxDelay=10
+    val maxDelay = 10
 
     Future {
       val random = Random
       (1 to totalNumber).foreach(i => {
         ConcurrentLinkedQueue1.add(SomeObject(i, s"text $i"))
-        blocking {
-          Thread.sleep(random.nextInt(maxDelay) + 1)
-        }
+        Thread.sleep(random.nextInt(maxDelay) + 1)
       })
     }
 
@@ -97,9 +88,7 @@ object ConcurrentLinkedQueue1Runner extends App with LazyLogging {
         if (so.isDefined) {
           atomicInteger2.incrementAndGet()
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(maxDelay) + 1)
-          }
+          Thread.sleep(random.nextInt(maxDelay) + 1)
         }
       }
     }
@@ -111,9 +100,7 @@ object ConcurrentLinkedQueue1Runner extends App with LazyLogging {
         if (so.isDefined) {
           atomicInteger3.incrementAndGet()
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(maxDelay) + 1)
-          }
+          Thread.sleep(random.nextInt(maxDelay) + 1)
         }
       }
     }
