@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContext, Future, _}
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.util.Random
 
 /**
@@ -30,9 +30,7 @@ object SynchronousQueue1Runner extends App with LazyLogging {
         logger.info(s"add $i")
         SynchronousQueue1.add(SomeObject(i, s"text $i"))
         logger.info(s"Queue size is ${SynchronousQueue1.size()}")
-        blocking {
-          Thread.sleep(100)
-        }
+        Thread.sleep(100)
       })
     }
 
@@ -44,9 +42,7 @@ object SynchronousQueue1Runner extends App with LazyLogging {
           logger.info(s"f2: ${so.get}")
           atomicInteger.incrementAndGet()
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(500) + 1)
-          }
+          Thread.sleep(random.nextInt(500) + 1)
         }
       }
     }
@@ -59,9 +55,7 @@ object SynchronousQueue1Runner extends App with LazyLogging {
           logger.info(s"f3: ${so.get}")
           atomicInteger.incrementAndGet()
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(500) + 1)
-          }
+          Thread.sleep(random.nextInt(500) + 1)
         }
       }
     }
@@ -83,9 +77,7 @@ object SynchronousQueue1Runner extends App with LazyLogging {
     Future {
       val random = Random
       (1 to totalNumber).foreach(i => {
-        blocking {
-          Thread.sleep(random.nextInt(maxDelay) + 1)
-        }
+        Thread.sleep(random.nextInt(maxDelay) + 1)
         SynchronousQueue1.add(SomeObject(i, s"text $i"))
       })
       logger.info("Completed adding")
@@ -97,13 +89,9 @@ object SynchronousQueue1Runner extends App with LazyLogging {
         val so = SynchronousQueue1.get()
         if (so.isDefined) {
           atomicInteger2.incrementAndGet()
-          blocking {
-            Thread.sleep(random.nextInt(maxDelay / 2) + 1)
-          }
+          Thread.sleep(random.nextInt(maxDelay / 2) + 1)
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(maxDelay) + 1)
-          }
+          Thread.sleep(random.nextInt(maxDelay) + 1)
         }
       }
       logger.info("f2 completed")
@@ -115,13 +103,9 @@ object SynchronousQueue1Runner extends App with LazyLogging {
         val so = SynchronousQueue1.get()
         if (so.isDefined) {
           atomicInteger3.incrementAndGet()
-          blocking {
-            Thread.sleep(random.nextInt(maxDelay / 2) + 1)
-          }
+          Thread.sleep(random.nextInt(maxDelay / 2) + 1)
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(maxDelay) + 1)
-          }
+          Thread.sleep(random.nextInt(maxDelay) + 1)
         }
       }
       logger.info("f3 completed")
@@ -133,13 +117,9 @@ object SynchronousQueue1Runner extends App with LazyLogging {
         val so = SynchronousQueue1.get()
         if (so.isDefined) {
           atomicInteger4.incrementAndGet()
-          blocking {
-            Thread.sleep(random.nextInt(maxDelay / 2) + 1)
-          }
+          Thread.sleep(random.nextInt(maxDelay / 2) + 1)
         } else {
-          blocking {
-            Thread.sleep(random.nextInt(maxDelay) + 1)
-          }
+          Thread.sleep(random.nextInt(maxDelay) + 1)
         }
       }
       logger.info("f4 completed")
