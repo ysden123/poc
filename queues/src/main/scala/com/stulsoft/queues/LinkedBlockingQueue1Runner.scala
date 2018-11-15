@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{Await, ExecutionContext, Future, TimeoutException}
 import scala.util.Random
 
 /** test2 - may never complete!
@@ -96,7 +96,25 @@ object LinkedBlockingQueue1Runner extends App with LazyLogging {
       }
     }
 
-    Await.result(Future.sequence(List(f2, f3)), Duration.Inf)
+
+    /*
+    Gracefully unblocking.
+    It is possible that f2 or f3 is started to get message after totalNumber that never will come.
+     */
+    import scala.concurrent.duration._
+    try {
+      Await.result(Future.sequence(List(f2, f3)), 10.seconds)
+    } catch {
+      case e: TimeoutException =>
+        logger.warn("Blocked!")
+        (1 to 2).foreach(i => {
+          logger.info(s"add $i")
+          LinkedBlockingQueue1.add(SomeObject(i, s"text $i"))
+          logger.info(s"Queue size is ${LinkedBlockingQueue1.size()}")
+        })
+        Thread.sleep(100)
+    }
+
 
     logger.info(s"atomicInteger2 = ${
       atomicInteger2.get()
