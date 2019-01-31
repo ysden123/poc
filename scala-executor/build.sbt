@@ -8,10 +8,13 @@ lazy val root = (project in file(".")).
     javacOptions ++= Seq("-source", "11"),
 
     libraryDependencies ++= {
-      val akkaVersion = "2.4.14"
+      val scalaLoggingVersion = "3.5.0"
+      val logbackClassicVersion = "1.1.2"
+      val springContextVersion = "5.1.4.RELEASE"
       Seq(
-        "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
-        "ch.qos.logback" % "logback-classic" % "1.1.2",
+        "com.typesafe.scala-logging" %% "scala-logging" % scalaLoggingVersion,
+        "ch.qos.logback" % "logback-classic" % logbackClassicVersion,
+        "org.springframework" % "spring-context" % springContextVersion
       )
     },
     scalacOptions in(Compile, doc) ++= Seq("-author"),
