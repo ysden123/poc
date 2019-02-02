@@ -1,0 +1,37 @@
+= scala-executor
+
+== Objectives
+Let say we have a job, that we need to execute periodically. What will happen, if a job fails with uncatched exception?
+
+== Jobs
+We have three implementations of jobs (see file Jobs.scala):
+
+ * Good job - GoodJob class, doesn't throw exception
+ * Bad job - BadJob class, throws an exception and doesn't catch an exception
+ * Bad job with try/catch - BadJobWithTryCatch class, throws an exception and catches an exception
+
+We have three implementations of job functions (see file JobFunctions.scala):
+
+ * Good job - GoodJobFunction object, doesn't throw exception
+ * Bad job - BadJobFunction object, throws an exception and doesn't catch an exception
+ * Bad job with try/catch - BadJobFunctionWithTryCatch object, throws an exception and catches an exception
+
+== Experiments
+=== App1
+Runs GoodJob, BadJob, and BadJobWithTryCatch as scheduled jobs. Uses Spring Scheduling.
+
+=== App2
+Runs GoodJob, BadJob, and BadJobWithTryCatch as scheduled jobs. Uses standard Java concurrent Scheduling.
+
+=== App3
+Runs GoodJob, BadJob, and BadJobWithTryCatch as scheduled runnable jobs. Uses Akka Actor Scheduling. Calls jobs as Runnable classes.
+
+=== App4
+Runs GoodJob, BadJob, and BadJobWithTryCatch as scheduled runnable jobs. Uses Akka Actor Scheduling. Calls jobs as functions.
+
+== Conclusion
+All four models of running scheduled jobs have almost same behaviour with small difference in reporting about uncatched exception.
+
+If a job fails with uncatched exception, then a thread (or Actor in Akka variants) will be dead and never will restart.
+
+Use try/catch for all code block inside run method to prevent dead threads (Actor)!
