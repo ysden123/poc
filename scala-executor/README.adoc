@@ -29,9 +29,16 @@ Runs GoodJob, BadJob, and BadJobWithTryCatch as scheduled runnable jobs. Uses Ak
 === App4
 Runs GoodJob, BadJob, and BadJobWithTryCatch as scheduled runnable jobs. Uses Akka Actor Scheduling. Calls jobs as functions.
 
+=== App5
+Runs GoodJob, BadJob, and BadJobWithTryCatch as Quartz scheduler jobs. Uses Quartz scheduler. Calls jobs as functions.
+
 == Conclusion
-All four models of running scheduled jobs have almost same behaviour with small difference in reporting about uncatched exception.
+All four models of running scheduled jobs, except Quartz scheduler, have almost same behaviour with small difference in reporting about uncatched exception.
 
 If a job fails with uncatched exception, then a thread (or Actor in Akka variants) will be dead and never will restart.
 
+Quartz scheduler handles uncatched exception without any additional code
+
 Use try/catch for all code block inside run method to prevent dead threads (Actor)!
+
+Or better - use Quartz scheduler!
