@@ -1,0 +1,9 @@
+= scala-jmx
+
+Playing with JMX on Scala.
+
+== 1. SimpleAgent
+See https://alvinalexander.com/blog/post/java/source-code-java-jmx-hello-world-application[Java JMX tutorial - A "Hello world" JMX application] by Alvin Alexander.
+
+=== 1.1. Running
+VM options: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=1617 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
