@@ -22,6 +22,8 @@ class TestSupervisorStrategy1Test extends TestKit(ActorSystem("testsystem"))
       println("starting supervisor")
       val supervisor = TestActorRef[Supervisor]
 
+      println(s"""*** akka.actor.guardian-supervisor-strategy: ${System.getenv("akka.actor.guardian-supervisor-strategy")}""")
+
       println("starting parent and it's children")
       supervisor ! "start"
       println("just waiting for everything to start\n\n")
