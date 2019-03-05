@@ -67,3 +67,4 @@ Qvx/EventLogSimple/obj/
 *.user
 .gradle/
 build/
+/kafkaj-7/out
