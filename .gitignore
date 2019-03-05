@@ -69,3 +69,5 @@ Qvx/EventLogSimple/obj/
 build/
 /kafkaj-7/out
 /java-7/concurrency/out
+/java-7/rxjava/out
+/java-7/kafka/out

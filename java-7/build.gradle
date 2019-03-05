@@ -17,10 +17,16 @@ subprojects {
         mavenCentral()
     }
 
+    def rxJavaVersion = '2.2.7'
     def logVersion = '2.7'
     def commonsLangVersion = '3.5'
     def junitVersion = '4.12'
+    def kafkaVersion = '1.1.1'
     dependencies {
+//        compile group: 'ch.qos.logback', name: 'logback-classic', version: "$logbackVersion"
+        compile group: 'org.apache.kafka', name: 'kafka-clients', version: kafkaVersion
+        compile group: 'org.apache.kafka', name: 'kafka-streams', version: kafkaVersion
+        compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: rxJavaVersion
         compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: logVersion
         compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: logVersion
         compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: logVersion

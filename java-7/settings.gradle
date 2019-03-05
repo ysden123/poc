@@ -1,2 +1,4 @@
 rootProject.name = 'java-7'
 include 'concurrency'
+include 'kafka'
+include 'rxjava'
