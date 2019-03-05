@@ -16,11 +16,9 @@ import java.util.concurrent.ExecutorService;
 public class Handler1 implements RecordHandler {
     private static Logger logger = LoggerFactory.getLogger(Handler1.class);
 
-    class HandleTask implements Runnable {
-        private ConsumerRecord<String, String> record;
-
+    class HandleTask extends AHandleTask {
         HandleTask(ConsumerRecord<String, String> record) {
-            this.record = record;
+            super(record);
         }
 
         @Override
