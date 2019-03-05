@@ -68,3 +68,4 @@ Qvx/EventLogSimple/obj/
 .gradle/
 build/
 /kafkaj-7/out
+/java-7/concurrency/out

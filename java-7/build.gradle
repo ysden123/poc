@@ -1,0 +1,30 @@
+/*
+ * Copyright (c) 2019. Yuriy Stul
+ */
+
+group 'com.stulsoft.java7'
+version '1.0.0'
+
+subprojects {
+    apply plugin: 'java'
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = '1.7'
+        targetCompatibility = '1.7'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    def logVersion = '2.7'
+    def commonsLangVersion = '3.5'
+    def junitVersion = '4.12'
+    dependencies {
+        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: logVersion
+        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: logVersion
+        compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: logVersion
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion
+        testCompile group: 'junit', name: 'junit', version: junitVersion
+    }
+}
