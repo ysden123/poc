@@ -20,7 +20,7 @@ object Main1 extends App with LazyLogging {
   val startedProducer = producer.start()
 
   val consumer = new Consumer1(topic)
-//  val startedConsumer = consumer.start()
+  val startedConsumer = consumer.start()
 
   Thread.sleep(1500)
   logger.info("Stopping producer...")

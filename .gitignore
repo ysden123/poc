@@ -67,3 +67,8 @@ Qvx/EventLogSimple/obj/
 *.user
 .gradle/
 build/
+/kafkaj-7/out
+/java-7/concurrency/out
+/java-7/rxjava/out
+/java-7/kafka/out
+/java-7/kafka-agent/out
