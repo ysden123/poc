@@ -23,7 +23,7 @@ public class KafkaClient implements Runnable {
 
     private ExecutorService executorService;
     private KafkaConsumer<String, String> consumer;
-    private HashMap<String, String> handlers = new HashMap<>();
+    private HashMap<String, Class<? extends Runnable>> handlers = new HashMap<>();
     private boolean toRun;
     private long pollInterval;
 
@@ -45,29 +45,29 @@ public class KafkaClient implements Runnable {
 
         consumer = new KafkaConsumer<>(props);
 
-//        consumer.subscribe(Collections.singleton("test1Topic"));
         logger.info("<==KafkaClient");
     }
 
-    public void addHandler(String topic, String className) {
-        logger.debug("Adding {} handler for {}", className, topic);
-        handlers.put(topic, className);
+    public void addHandler(String topic, Class<? extends Runnable> clazz) {
+        logger.debug("Adding {} handler for {}", clazz.getName(), topic);
+        handlers.put(topic, clazz);
     }
 
     public void stop(){
+        logger.info("Stopping KafkaClient...");
         toRun = false;
     }
 
     @Override
     public void run() {
+        logger.info("==>run");
         consumer.subscribe(handlers.keySet());
         while(toRun){
             ConsumerRecords<String, String> records = consumer.poll(pollInterval);
             for (ConsumerRecord<String, String> record : records) {
-                String handlerClassName = handlers.get(record.topic());
-                if (handlerClassName != null) {
+                Class<?> clazz = handlers.get(record.topic());
+                if (clazz != null) {
                     try {
-                        Class<?> clazz = Class.forName(handlerClassName);
                         Constructor<?> ctor = clazz.getConstructor(ConsumerRecord.class);
                         Runnable instance = (Runnable)ctor.newInstance(record);
                         executorService.submit(instance);
@@ -79,5 +79,6 @@ public class KafkaClient implements Runnable {
                 }
             }
         }
+        logger.info("<==run");
     }
 }

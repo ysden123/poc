@@ -17,6 +17,7 @@ public class Application {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
 
     private ExecutorService executorService;
+    KafkaClient client;
 
     private Application() {
         logger.info("==>Application");
@@ -26,17 +27,28 @@ public class Application {
 
     private void start() {
         logger.info("==>start");
-        KafkaClient client = new KafkaClient(executorService);
-        client.addHandler("test1Topic", "com.stulsoft.java7.kafka.agent.Handler1");
+        client = new KafkaClient(executorService);
+        client.addHandler("test1Topic", Handler1.class);
         executorService.submit(client);
         logger.info("<==start");
     }
 
+    private void stop(){
+        client.stop();
+    }
+
     public static void main(String[] args) {
         logger.info("==>main");
-        Application application = new Application();
+        final Application application = new Application();
 
         application.start();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(){
+            @Override
+            public void run() {
+                application.stop();
+            }
+        });
 
         logger.info("<==main");
     }

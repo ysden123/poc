@@ -7,5 +7,8 @@ Multithreading on Java 7
 == kafka
 Kafka on Java 7
 
+== kafka-agent
+Prototype of Kafka agent on Java 7. Allows asynchronous handling messages.
+
 == rxjava
 RxJava 2 on Java 7
