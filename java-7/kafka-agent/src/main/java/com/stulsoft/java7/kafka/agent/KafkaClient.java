@@ -68,8 +68,10 @@ public class KafkaClient implements Runnable {
                 Class<?> clazz = handlers.get(record.topic());
                 if (clazz != null) {
                     try {
+                        long start = System.currentTimeMillis();
                         Constructor<?> ctor = clazz.getConstructor(ConsumerRecord.class);
                         Runnable instance = (Runnable)ctor.newInstance(record);
+                        logger.info("Created instance in {} ms.", System.currentTimeMillis() - start);
                         executorService.submit(instance);
                     }catch(Exception ex){
                         logger.error(ex.getMessage(), ex);
