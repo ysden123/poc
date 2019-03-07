@@ -13,9 +13,9 @@ import org.apache.kafka.clients.consumer.KafkaConsumer
 /**
   * @author Yuriy Stul
   */
-class AdminConsumer extends LazyLogging {
+class AdminConsumer(val servers: String) extends LazyLogging {
   val props = new Properties
-  props.put("bootstrap.servers", "localhost:9092")
+  props.put("bootstrap.servers", servers)
   props.put("group.id", "admin_consumer")
   props.put("enable.auto.commit", "false")
   props.put("auto.offset.reset", "earliest")
