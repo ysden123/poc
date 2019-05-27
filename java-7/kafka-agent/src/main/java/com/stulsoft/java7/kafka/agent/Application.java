@@ -25,6 +25,10 @@ public class Application {
         logger.info("<==Application");
     }
 
+    private ExecutorService getExecutorService() {
+        return executorService;
+    }
+
     private void start() {
         logger.info("==>start");
         client = new KafkaClient(executorService);
@@ -33,7 +37,7 @@ public class Application {
         logger.info("<==start");
     }
 
-    private void stop(){
+    private void stop() {
         client.stop();
     }
 
@@ -43,10 +47,15 @@ public class Application {
 
         application.start();
 
-        Runtime.getRuntime().addShutdownHook(new Thread(){
+        Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
                 application.stop();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception ignore) {
+                }
+                application.getExecutorService().shutdown();
             }
         });
 

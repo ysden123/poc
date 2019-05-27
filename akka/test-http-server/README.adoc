@@ -1,0 +1,12 @@
+= test-http-server
+
+Simple HTTP server to analyze a request.
+
+Server receives a request and outputs details of request:
+
+* URI
+* Headers
+* Body
+
+== Running
+Run class ServerApp.
