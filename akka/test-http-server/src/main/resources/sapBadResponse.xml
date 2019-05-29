@@ -1,0 +1,8 @@
+<!--
+  ~ Copyright (c) 2019. Yuriy Stul
+  -->
+
+<testXml>
+    <tag1>Value of tag 1</tag1>
+    <tag2>Value of tag 2</tag2>
+</testXml>
