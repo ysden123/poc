@@ -23,9 +23,9 @@ case class Server(config: Configuration) extends LazyLogging {
   val headers: scala.collection.immutable.List[RawHeader] = config
     .headers
     .map(header => RawHeader(header.name, header.value)).toList
-  private val source = Source.fromResource(config.xmlFile)
-  private val xml =  source.mkString
-  source.close()
+  private val xmlSource = Source.fromResource(config.xmlFile)
+  private val xml =  xmlSource.mkString
+  xmlSource.close()
 
   private val route = extractRequest {
     request => {
