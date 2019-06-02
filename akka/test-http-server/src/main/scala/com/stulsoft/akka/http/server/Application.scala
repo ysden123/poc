@@ -4,22 +4,19 @@
 
 package com.stulsoft.akka.http.server
 
-import java.io.File
-
+import com.stulsoft.scala.tools.resources.ResourceUtils
 import com.typesafe.scalalogging.LazyLogging
 
-/**
+/** Runs HTTP server.
+  *
+  * <p>A configuration will be choose dynamically
+  *
   * @author Yuriy Stul
   */
 object Application extends App with LazyLogging {
   logger.info("==>Application")
 
-  val fileNames = new File("src/main/resources/")
-    .listFiles()
-    .toStream
-    .toList
-    .filter(file => file.isFile && file.getName.endsWith(".conf"))
-    .map(file => file.getName)
+  val fileNames = ResourceUtils.fileNames(".conf")
     .zipWithIndex
     .map { case (name: String, index: Int) => (index, name) }
     .toMap
