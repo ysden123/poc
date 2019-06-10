@@ -9,4 +9,4 @@ Server receives a request and outputs details of request:
 * Body
 
 == Running
-Run class ServerApp.
+Run class Application.

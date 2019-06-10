@@ -1,6 +1,6 @@
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
-  version := "1.0.0",
+  version := "1.0.2",
   scalaVersion := "2.12.8",
   libraryDependencies ++= {
     val akkaVersion = "2.5.21"
@@ -8,6 +8,7 @@ lazy val commonSettings = Seq(
     val scalaLoggingVersion = "3.9.2"
     val logbackClassicVersion = "1.2.3"
     lazy val typeSafeConfVersion = "1.3.3"
+    lazy val scalaToolsVersion = "1.0.0"
     Seq(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,
@@ -15,7 +16,8 @@ lazy val commonSettings = Seq(
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
       "com.typesafe.scala-logging" %% "scala-logging" % scalaLoggingVersion,
       "ch.qos.logback" % "logback-classic" % logbackClassicVersion,
-      "com.typesafe" % "config" % typeSafeConfVersion
+      "com.typesafe" % "config" % typeSafeConfVersion,
+      "com.stulsoft" %% "ys-scala-tools" % scalaToolsVersion
     )
   }
 )

@@ -23,14 +23,15 @@ case class Server(config: Configuration) extends LazyLogging {
   val headers: scala.collection.immutable.List[RawHeader] = config
     .headers
     .map(header => RawHeader(header.name, header.value)).toList
-  private val source = Source.fromResource(config.xmlFile)
-  private val xml =  source.mkString
-  source.close()
+  private val xmlSource = Source.fromResource(config.xmlFile)
+  private val xml =  xmlSource.mkString
+  xmlSource.close()
 
   private val route = extractRequest {
     request => {
       logger.info(s"uri: ${request.uri}")
       logger.info(s"method: ${request.method.name()}")
+      logger.info(s"request.headers.length = ${request.headers.length}")
       logger.info("headers:")
       request.headers.foreach(header => logger.info(s"${header.name()}: ${header.value()}"))
 
