@@ -31,6 +31,7 @@ case class Server(config: Configuration) extends LazyLogging {
     request => {
       logger.info(s"uri: ${request.uri}")
       logger.info(s"method: ${request.method.name()}")
+      logger.info(s"request.headers.length = ${request.headers.length}")
       logger.info("headers:")
       request.headers.foreach(header => logger.info(s"${header.name()}: ${header.value()}"))
 
