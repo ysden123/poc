@@ -10,9 +10,11 @@ import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
+import com.stulsoft.scala.tools.xml.XMLValidator
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.io.Source
+import scala.util.{Failure, Success}
 
 /**
   * @author Yuriy Stul
@@ -24,7 +26,7 @@ case class Server(config: Configuration) extends LazyLogging {
     .headers
     .map(header => RawHeader(header.name, header.value)).toList
   private val xmlSource = Source.fromResource(config.xmlFile)
-  private val xml =  xmlSource.mkString
+  private val xml = xmlSource.mkString
   xmlSource.close()
 
   private val route = extractRequest {
@@ -38,6 +40,12 @@ case class Server(config: Configuration) extends LazyLogging {
       entity(as[String]) {
         body => {
           logger.info("body: {}", body)
+          if (config.validateXmlRequest) {
+            XMLValidator.validate(body) match {
+              case Success(_) => logger.info("XML request is valid")
+              case Failure(ex) => logger.error("XML request is NOT valid: {}", ex.getMessage)
+            }
+          }
           config.headers.map(header => RawHeader(header.name, header.value))
           respondWithHeaders(headers) {
             val response = HttpEntity(ContentTypes.`text/xml(UTF-8)`, xml)

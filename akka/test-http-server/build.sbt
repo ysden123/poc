@@ -8,7 +8,7 @@ lazy val commonSettings = Seq(
     val scalaLoggingVersion = "3.9.2"
     val logbackClassicVersion = "1.2.3"
     lazy val typeSafeConfVersion = "1.3.3"
-    lazy val scalaToolsVersion = "1.0.0"
+    lazy val scalaToolsVersion = "1.1.0"
     Seq(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,

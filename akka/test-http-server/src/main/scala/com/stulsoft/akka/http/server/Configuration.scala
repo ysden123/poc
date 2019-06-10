@@ -13,6 +13,7 @@ import scala.collection.JavaConverters._
   */
 case class Configuration(fileName: String) {
   private val config = ConfigFactory.load(fileName)
+  val validateXmlRequest:Boolean = config.getBoolean("validateXmlRequest")
   val xmlFile: String = config.getString("xmlFile")
   val statusCode: Int = config.getInt("statusCode")
   val headers: Seq[Header] = config
