@@ -1,0 +1,7 @@
+= kafka-commit
+
+Playing with different modes of commit
+
+== Running
+1. Run _ConsumerRunner_ class and choose consumer parameters
+2. Run _Producer_ class
