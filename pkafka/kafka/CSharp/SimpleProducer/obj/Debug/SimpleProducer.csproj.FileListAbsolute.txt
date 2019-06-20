@@ -1,0 +1,17 @@
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\librdkafka\x86\librdkafka.dll
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\librdkafka\x86\librdkafkacpp.dll
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\librdkafka\x86\msvcr120.dll
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\librdkafka\x86\zlib.dll
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\librdkafka\x64\librdkafka.dll
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\librdkafka\x64\librdkafkacpp.dll
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\librdkafka\x64\msvcr120.dll
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\librdkafka\x64\zlib.dll
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\SimpleProducer.exe.config
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\SimpleProducer.exe
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\SimpleProducer.pdb
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\Confluent.Kafka.dll
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\bin\Debug\Confluent.Kafka.xml
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\obj\Debug\SimpleProducer.csprojResolveAssemblyReference.cache
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\obj\Debug\SimpleProducer.csproj.CoreCompileInputs.cache
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\obj\Debug\SimpleProducer.exe
+C:\StulSoft\poc\kafka\CSharp\SimpleProducer\obj\Debug\SimpleProducer.pdb
