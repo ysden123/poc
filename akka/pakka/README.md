@@ -1,2 +1,0 @@
-# pakka
-Playing with Akka
