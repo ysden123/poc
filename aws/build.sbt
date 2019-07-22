@@ -1,16 +1,15 @@
 import sbt.Keys.libraryDependencies
 
-lazy val slf4jVersion = "1.7.25"
-lazy val scalaLoggingVersion = "3.5.0"
-lazy val loggingVersion = "2.7"
-lazy val awsLambdaJavaVersion = "1.1.0"
-lazy val jacksonModuleScalaVersion = "2.9.1"
-lazy val scalatestVersion = "3.0.4"
+lazy val scalaLoggingVersion = "3.9.2"
+lazy val loggingVersion = "2.12.0"
+lazy val awsLambdaJavaVersion = "1.2.0"
+lazy val jacksonModuleScalaVersion = "2.9.9"
+lazy val scalatestVersion = "3.0.8"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
   version := "0.0.2",
-  scalaVersion := "2.12.3",
+  scalaVersion := "2.13.0",
   scalacOptions ++= Seq(
     "-feature",
     "-language:implicitConversions",
@@ -39,7 +38,7 @@ lazy val test2 = (project in file("test2"))
   .settings(
     libraryDependencies ++= Seq(
       "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonModuleScalaVersion,
-      "org.scalatest" % "scalatest_2.12" % scalatestVersion % "test"
+      "org.scalatest" %% "scalatest" % scalatestVersion % "test"
     )
   )
   .settings(
