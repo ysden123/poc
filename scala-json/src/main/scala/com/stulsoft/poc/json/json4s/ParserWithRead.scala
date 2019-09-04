@@ -19,11 +19,11 @@ object ParserWithRead extends App {
 
   val theObjectCollection = read[List[TheObject]]("""[{"name":"some name", "age":123, "height":123.45},{"name":"some name 2", "age":456, "height":321.2}]""")
   println(theObjectCollection)
-
-  val theObjectCollection2 = forList[TheObject]("""[{"name":"some name", "age":123, "height":123.45},{"name":"some name 2", "age":456, "height":321.2}]""")
-  println(theObjectCollection2)
-
-  def forList[A <: AnyRef](json: String): List[A] = {
-    read[List[A]](json)(formats, Manifest[List[A]])
-  }
+//
+//  val theObjectCollection2 = forList[TheObject]("""[{"name":"some name", "age":123, "height":123.45},{"name":"some name 2", "age":456, "height":321.2}]""")
+//  println(theObjectCollection2)
+//
+//  def forList[A <: AnyRef](json: String): List[A] = {
+//    read[List[A]](json)(formats, Manifest[List[A]])
+//  }
 }

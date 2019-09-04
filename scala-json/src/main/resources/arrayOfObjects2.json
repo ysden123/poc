@@ -1,0 +1,47 @@
+[
+  {
+    "name": "first",
+    "age": 19,
+    "height": 123.4
+  },
+  {
+    "name": "first",
+    "age": 19,
+    "height": 123.4
+  },
+  {
+    "name": "first",
+    "age": 19,
+    "height": 123.4
+  },
+  {
+    "name": "first",
+    "age": 19,
+    "height": 123.4
+  },
+  {
+    "name": "second",
+    "age": 26,
+    "height": 12.4
+  },
+  {
+    "name": "third",
+    "age": 25,
+    "height": 5.36
+  },
+  {
+    "name": "third",
+    "age": 25,
+    "height": 5.36
+  },
+  {
+    "name": "fourth",
+    "age": 44,
+    "height": 0.4
+  },
+  {
+    "name": "fifth",
+    "age": 55,
+    "height": 654.43
+  }
+]
