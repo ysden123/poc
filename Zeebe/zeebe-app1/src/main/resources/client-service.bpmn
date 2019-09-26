@@ -23,7 +23,6 @@
         <zeebe:ioMapping>
           <zeebe:input source="paymentId" target="paymentId" />
           <zeebe:input source="sum" target="sum" />
-          <zeebe:output source="result" target="result" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1bcste1</bpmn:incoming>
