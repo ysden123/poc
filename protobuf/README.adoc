@@ -1,0 +1,8 @@
+= protobuf
+
+Playing with Protobufs.
+
+== protobuf-ex1
+Create, parse.
+
+See link:protobuf-ex1/README.adoc[protobuf-ex1]

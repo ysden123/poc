@@ -1,0 +1,5 @@
+= protobuf-ex1
+
+Playing with Protobufs.
+
+Create, parse.
