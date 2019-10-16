@@ -7,6 +7,7 @@ package com.stulsoft.protobuf.ex1
 import java.io.ByteArrayOutputStream
 
 import com.stulsoft.protobuf.ex1.model.{Address, Person}
+import com.stulsoft.protobuf.ex1.model2.Developer
 import com.typesafe.scalalogging.LazyLogging
 
 /**
@@ -18,6 +19,7 @@ object Main extends App with LazyLogging {
   test1()
   test2()
   test3()
+  test4()
 
   def test1(): Unit = {
     logger.info("==>test1")
@@ -39,6 +41,7 @@ object Main extends App with LazyLogging {
 
     logger.info("<==test2")
   }
+
   def test3(): Unit ={
     logger.info("==>test3")
     val address1 = Address("Some street")
@@ -51,5 +54,12 @@ object Main extends App with LazyLogging {
     logger.info(s"person2: $person2")
 
     logger.info("<==test3")
+  }
+
+  def test4(): Unit ={
+    logger.info("==>test4")
+    val developer = Developer("Yuriy")
+    logger.info(s"developer: $developer")
+    logger.info("<==test4")
   }
 }

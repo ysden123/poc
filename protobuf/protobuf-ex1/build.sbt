@@ -2,7 +2,7 @@ import sbt.Keys.libraryDependencies
 lazy val scalaLoggingVersion = "3.9.2"
 lazy val loggingVersion="2.12.1"
 //lazy val scalaPbRuntimeVersion="0.6.7"
-lazy val projectVersion = "0.0.1"
+lazy val projectVersion = "0.0.2"
 lazy val projectName = "protobuf-ex1"
 
 lazy val commonSettings = Seq(
