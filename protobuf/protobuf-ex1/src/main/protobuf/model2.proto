@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+option java_package = "com.stulsoft.protobuf.ex1";
+
+message Developer {
+    string name = 1;
+}

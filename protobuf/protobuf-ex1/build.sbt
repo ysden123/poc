@@ -2,14 +2,14 @@ import sbt.Keys.libraryDependencies
 lazy val scalaLoggingVersion = "3.9.2"
 lazy val loggingVersion="2.12.1"
 //lazy val scalaPbRuntimeVersion="0.6.7"
-lazy val projectVersion = "0.0.1"
+lazy val projectVersion = "0.0.2"
 lazy val projectName = "protobuf-ex1"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft.protobuf.ex1",
   version := projectVersion,
   javacOptions ++= Seq("-source", "11"),
-  scalaVersion := "2.12.8",
+  scalaVersion := "2.13.1",
   scalacOptions ++= Seq(
     "-feature",
     "-deprecation",
