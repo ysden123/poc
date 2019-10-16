@@ -9,7 +9,7 @@ lazy val commonSettings = Seq(
   organization := "com.stulsoft.protobuf.ex1",
   version := projectVersion,
   javacOptions ++= Seq("-source", "11"),
-  scalaVersion := "2.12.8",
+  scalaVersion := "2.13.1",
   scalacOptions ++= Seq(
     "-feature",
     "-deprecation",
