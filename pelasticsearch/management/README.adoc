@@ -1,0 +1,113 @@
+= workflow-loader
+
+Deploys Zeebe workflows.
+
+== Repository structure
+
+Workflow loader supposes following file structure of a workflow repository:
+----
+<repository path>
+  <service name path 1>
+    workflow1.bpmn
+    workflow2.bpmn
+  <service name path 2>
+    workflow1.bpmn
+    workflow2.bpmn
+----
+
+== Build
+
+[source,shell script]
+----
+mvn clean package
+----
+
+== Running
+
+The application requires configuration of Zeebe contact point.
+
+Default values are:
+
+ - host = 127.0.01
+ - port = 26500
+
+If it is necessary to change default values then system variables may be used.
+
+=== Without docker
+==== Windows
+Set Zeebe contact point, if necessary.
+
+[source,shell script]
+----
+set ZEEBE_HOST=<host address>
+set ZEEBE_PORT=<port>
+----
+
+Run application:
+[source,shell script]
+----
+java -jar <path to workflow-loader-VERSION-exec.jar> <path to repository> <service name> [<workflow file name]
+----
+
+Examples.
+
+All workflows:
+[source,shell script]
+----
+java -jar target\workflow-loader-1.0.0-exec.jar src\test\resources\repository service1
+----
+
+One workflow:
+[source,shell script]
+----
+java -jar target\workflow-loader-1.0.0-exec.jar src\test\resources\repository service1 client-service.bpmn
+----
+
+==== Linux
+Set Zeebe contact point, if necessary.
+
+[source,shell script]
+----
+export ZEEBE_HOST=<host address>
+export ZEEBE_PORT=<port>
+----
+
+Run application:
+[source,shell script]
+----
+java -jar <path to workflow-loader-VERSION-exec.jar> <path to repository> <service name> [<workflow file name]
+----
+
+Examples.
+
+All workflows:
+[source,shell script]
+----
+java -jar target\workflow-loader-1.0.0-exec.jar src/test/resources/repository service1
+----
+
+One workflow:
+[source,shell script]
+----
+java -jar target\workflow-loader-1.0.0-exec.jar src/test/resources/repository service1 client-service.bpmn
+----
+
+=== With docker
+==== Build docker
+Run command:
+[source,shell script]
+----
+docker build -rm -t webpals/workflow-loader .
+----
+==== Run
+
+Prepare docker-compose.yml:
+
+- change volumes
+- change environment
+
+Run command:
+[source,shell script]
+----
+docker-compose up
+----
