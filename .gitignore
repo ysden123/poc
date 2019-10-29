@@ -22,6 +22,7 @@ pquartz/.idea/
 **/.project
 **/.classpath
 **/.settings/*
+**/logs
 /pquartz/.idea
 pjunit5/.gradle/
 pjunit5/build/test-results/junit-platform/TEST-junit-jupiter.xml
