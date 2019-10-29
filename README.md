@@ -21,6 +21,7 @@ POC project includes following independent projects:
   - [phazelcast](phazelcast/README.md)
   - [pjunit5](pjunit5/README.md)
   - [pmongodb](pmongodb/README.md)
+  - [plogging](plogging/README.adoc)
   - [pquartz](pquartz/README.md)
   - [protobuf](protobuf/README.adoc)
   - [pscalacheck](pscalacheck/README.md)
