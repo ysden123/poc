@@ -1,0 +1,18 @@
+= structured1
+
+Structured logging.
+
+== Build
+
+Run command:
+[source,shell script]
+----
+mvn clean package
+----
+
+== Running
+Run application:
+[source,shell script]
+----
+java -jar target\structured1-1.0.0-exec.jar
+----

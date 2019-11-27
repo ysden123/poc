@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  workflow-loader:
+    build: .
+    image: webpals/workflow-loader
+    container_name: workflow-loader
+    network_mode: host
+    volumes:
+#      Format:
+#      - <path to repository on real machine>:/usr/apps/workflow-loader/repository
+#      Example:
+      - ./src/test/resources/repository:/usr/apps/workflow-loader/repository
+    environment:
+      - ZEEBE_HOST=127.0.0.1
+      - ZEEBE_PORT=26500
+      - REPOSITORY=repository
+      - SERVICE=service1
+      - WF_NAME=client-service.bpmn

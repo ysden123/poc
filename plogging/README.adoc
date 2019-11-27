@@ -1,0 +1,8 @@
+= plogging
+
+Playing with logging
+
+Projects:
+
+- link:logging/README.adoc[logging]
+- link:structured1/README.adoc[structured1]
