@@ -43,7 +43,9 @@ public class Main {
             logger.info("Client is created in {} ms.", System.currentTimeMillis() - start);
 
 //            getAllDocs(client);
-            getAllWorkflows(client);
+//            getAllWorkflows(client);
+//            getAllWorkflows2(client);
+            getAllWorkflows3(client);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         } finally {
@@ -107,5 +109,48 @@ public class Main {
             }
         });
 //        logger.info("response: {}", response.toString());
+    }
+
+    private static void getAllWorkflows2(Client client) {
+        logger.info("==>getAllWorkflows2");
+        SearchResponse response = client.prepareSearch("conductor")
+                .setTypes("workflow")
+                .get();
+        List<SearchHit> searchHits = Arrays.asList(response.getHits().getHits());
+        searchHits.forEach(sh -> {
+            logger.info("id: {}", sh.getId());
+
+                ObjectMapper mapper = new ObjectMapper();
+
+                try {
+                    Workflow wf = mapper.readValue(sh.getSourceAsString(), Workflow.class);
+                    logger.info("workflowType: {}", wf.getWorkflowType());
+//                    logger.info("workflow: {}", wf);
+                } catch (Exception ex) {
+                    logger.error("Failed parsing " + sh.getSourceAsString() + " : " + ex.getMessage(), ex);
+                }
+        });
+//        logger.info("response: {}", response.toString());
+    }
+
+    private static void getAllWorkflows3(Client client) {
+        logger.info("==>getAllWorkflows3");
+
+        SearchResponse response = client.prepareSearch("conductor")
+                .setTypes("workflow")
+                .get();
+        for(SearchHit sh: response.getHits().getHits()){
+            logger.info("id: {}", sh.getId());
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            try {
+                Workflow wf = mapper.readValue(sh.getSourceAsString(), Workflow.class);
+                logger.info("workflowType: {}", wf.getWorkflowType());
+                    logger.info("workflow: {}", wf);
+            } catch (Exception ex) {
+                logger.error("Failed parsing " + sh.getSourceAsString() + " : " + ex.getMessage(), ex);
+            }
+        }
     }
 }
