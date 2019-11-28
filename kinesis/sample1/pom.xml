@@ -34,9 +34,16 @@
         <spring.boot.maven.plugin.version>2.2.1.RELEASE</spring.boot.maven.plugin.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <kinesis.version>1.13.0</kinesis.version>
+        <org.json.version>20190722</org.json.version>
     </properties>
 
     <dependencies>
+        <!-- JSON -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${org.json.version}</version>
+        </dependency>
         <!-- TypeSafe Config -->
         <dependency>
             <groupId>com.typesafe</groupId>

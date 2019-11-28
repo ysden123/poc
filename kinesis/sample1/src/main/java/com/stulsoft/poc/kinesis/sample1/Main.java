@@ -4,28 +4,14 @@
 
 package com.stulsoft.poc.kinesis.sample1;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
-import com.amazonaws.auth.PropertiesFileCredentialsProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.net.InetAddress;
-import java.util.Arrays;
-import java.util.UUID;
-
 import com.amazonaws.AmazonClientException;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.kinesis.AmazonKinesis;
-import com.amazonaws.services.kinesis.AmazonKinesisClientBuilder;
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessorFactory;
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.InitialPositionInStream;
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.KinesisClientLibConfiguration;
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.Worker;
-import com.amazonaws.services.kinesis.model.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Yuriy Stul
@@ -82,7 +68,8 @@ public class Main {
             return;
         }
 
-        String workerId = InetAddress.getLocalHost().getCanonicalHostName() + ":" + UUID.randomUUID();
+//        String workerId = InetAddress.getLocalHost().getCanonicalHostName() + ":" + UUID.randomUUID();
+        String workerId = AppConfig.workerId();
         KinesisClientLibConfiguration kinesisClientLibConfiguration =
                 new KinesisClientLibConfiguration(AppConfig.appName(),
                         AppConfig.streamName(),
@@ -90,7 +77,8 @@ public class Main {
                         workerId)
                         .withInitialPositionInStream(SAMPLE_APPLICATION_INITIAL_POSITION_IN_STREAM)
                         .withRegionName(AppConfig.awsRegion())
-                        .withShardSyncIntervalMillis(15000);
+                        .withMaxRecords(AppConfig.maxRecords())
+                        .withShardSyncIntervalMillis(AppConfig.syncInterval());
 /**/
 
         logger.debug("getIdleTimeBetweenReadsInMillis() = {}, getListShardsBackoffTimeInMillis() = {}, getMaxRecords()= {}, getShardSyncIntervalMillis()={}",

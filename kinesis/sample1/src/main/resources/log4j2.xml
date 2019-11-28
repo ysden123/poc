@@ -17,7 +17,6 @@
             <AppenderRef ref="Console" />
             <AppenderRef ref="File" />
         </Root>
-        <Logger name="org.quartz" level="error"/>
-        <Logger name="io.netty" level="error"/>
+        <Logger name="com.amazonaws" level="error"/>
     </Loggers>
 </Configuration>
