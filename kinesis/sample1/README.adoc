@@ -1,0 +1,5 @@
+= sample1
+
+Sample of Kinesis consumer.
+
+Kinesis Client Library (KCL) v.1.x is used.
