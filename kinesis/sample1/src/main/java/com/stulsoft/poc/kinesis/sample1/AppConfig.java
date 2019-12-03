@@ -57,4 +57,15 @@ public class AppConfig {
     public static Integer streamSize() {
         return config.getConfig("app").getInt("streamSize");
     }
+
+    public static Integer maxRecords() {
+        return config.getConfig("app").getInt("maxRecords");
+    }
+    public static Integer syncInterval() {
+        return config.getConfig("app").getInt("syncInterval");
+    }
+
+    public static String workerId() {
+        return config.getConfig("app").getString("workerId");
+    }
 }

@@ -11,6 +11,8 @@ import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessor;
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessorCheckpointer;
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.ShutdownReason;
 import com.amazonaws.services.kinesis.model.Record;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,7 +115,13 @@ public class AmazonKinesisApplicationSampleRecordProcessor implements IRecordPro
         try {
             // For this app, we interpret the payload as UTF-8 chars.
             data = decoder.decode(record.getData()).toString();
+            logger.info("partition: {}, getSequenceNumber = {}", record.getPartitionKey(), record.getSequenceNumber());
             logger.info("data: {}", data);
+            try {
+                var dataObject = new JSONObject(data);
+            }catch(JSONException ex){
+                logger.error("Bad JSON: " + ex.getMessage());
+            }
 /*
             // Assume this record came from AmazonKinesisSample and log its age.
             long recordCreateTime = Long.parseLong(data.substring("testData-".length()));
