@@ -25,10 +25,6 @@ public class AppConfig {
     private AppConfig() {
     }
 
-    public static AppConfig getInstance() {
-        return instance;
-    }
-
     public static String awsAccessKeyId() {
         return config.getConfig("aws").getString("aws_access_key_id");
     }
@@ -45,16 +41,8 @@ public class AppConfig {
         return config.getConfig("app").getString("name");
     }
 
-    public static String appDescription() {
-        return config.getConfig("app").getString("description");
-    }
-
     public static String streamName() {
         return config.getConfig("app").getString("streamName");
-    }
-
-    public static Integer streamSize() {
-        return config.getConfig("app").getInt("streamSize");
     }
 
     public static Integer maxRecords() {
@@ -67,5 +55,9 @@ public class AppConfig {
 
     public static String workerId() {
         return config.getConfig("app").getString("workerId");
+    }
+
+    public static Long checkPointInterval() {
+        return config.getConfig("app").getLong("checkPointInterval");
     }
 }

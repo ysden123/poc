@@ -19,6 +19,8 @@ import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Sends messages to Kinesis data stream for testing a consumer.
+ *
  * @author Yuriy Stul
  */
 public class TestProducer {
@@ -26,6 +28,7 @@ public class TestProducer {
 
     public static void main(String[] args) {
         logger.info("==>main");
+        int iterations = 5;
         int n = 10;
         logger.info("Puts {} messages into {} on {} region",
                 n,
@@ -39,38 +42,51 @@ public class TestProducer {
                 .region(Region.of(AppConfig.awsRegion()))
         );
 
-
-        var records = new LinkedList<PutRecordsRequestEntry>();
-        for (int i = 1; i <= n; ++i) {
-            var theMinute = minute();
-            var entry = PutRecordsRequestEntry.builder()
-                    .partitionKey(theMinute)
-                    .data(generateRecord(theMinute, i))
-                    .build();
-            records.add(entry);
-        }
-
-        var putRecordsRequest = PutRecordsRequest
-                .builder()
-                .streamName(AppConfig.streamName())
-                .records(records)
-                .build();
-
-        try {
-            var result = kinesisAsyncClient.putRecords(putRecordsRequest);
-            var response = result.get(10, TimeUnit.SECONDS);
-            if (result != null) {
-                logger.info("Succeeded {} from {}",
-                        (putRecordsRequest.records().size() - response.failedRecordCount()),
-                        putRecordsRequest.records().size());
-            } else {
-                logger.error("No result from Kinesis");
+        for (int iteration = 1; iteration <= iterations; ++iteration) {
+            logger.info("Iteration {}", iteration);
+            var records = new LinkedList<PutRecordsRequestEntry>();
+            for (int i = 1; i <= n; ++i) {
+//                var theMinute = minute();
+                var theSecond = second();
+                var entry = PutRecordsRequestEntry.builder()
+//                        .partitionKey(theMinute)
+                        .partitionKey(theSecond)
+//                        .data(generateRecord(theMinute, i))
+                        .data(generateRecord(theSecond, i))
+                        .build();
+                records.add(entry);
             }
-        } catch (Exception ex) {
-            logger.error("Failed put records: " + ex.getMessage());
+
+            var putRecordsRequest = PutRecordsRequest
+                    .builder()
+                    .streamName(AppConfig.streamName())
+                    .records(records)
+                    .build();
+
+            try {
+                var result = kinesisAsyncClient.putRecords(putRecordsRequest);
+                var response = result.get(10, TimeUnit.SECONDS);
+                if (result != null) {
+                    logger.info("Succeeded {} from {}",
+                            (putRecordsRequest.records().size() - response.failedRecordCount()),
+                            putRecordsRequest.records().size());
+                } else {
+                    logger.error("No result from Kinesis");
+                }
+            } catch (Exception ex) {
+                logger.error("Failed put records: " + ex.getMessage());
+            }
+
+            if (iteration < iterations) {
+                try {
+                    Thread.sleep(AppConfig.checkPointInterval() / 3);
+                } catch (Exception ignore) {
+                }
+            }
         }
         logger.info("<==main");
     }
+
 
     private static String minute() {
         var calendar = Calendar.getInstance();
@@ -81,7 +97,26 @@ public class TestProducer {
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE));
         logger.debug("minute = {}", minute);
+
+//        var minute = "0";
         return minute;
+    }
+
+
+    private static String second() {
+        /*
+        var calendar = Calendar.getInstance();
+        var second = String.format("%04d%02d%02d%02d%02d%02d",
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.DAY_OF_MONTH),
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                calendar.get(Calendar.SECOND));
+        logger.debug("second = {}", second);
+        */
+        var second = "0";
+        return second;
     }
 
     private static SdkBytes generateRecord(String minute, int i) {

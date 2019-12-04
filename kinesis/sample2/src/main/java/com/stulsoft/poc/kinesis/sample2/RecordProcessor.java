@@ -17,11 +17,15 @@ import java.nio.charset.StandardCharsets;
 public class RecordProcessor implements ShardRecordProcessor {
     private final static Logger logger = LoggerFactory.getLogger(RecordProcessor.class);
     private String shardId;
+    private long checkPointInterval;
+    private long nextCheckPoint;
 
     @Override
     public void initialize(InitializationInput initializationInput) {
         shardId = initializationInput.shardId();
-        logger.info("Initializing Sequence: {}", initializationInput.extendedSequenceNumber());
+        checkPointInterval = AppConfig.checkPointInterval();
+        nextCheckPoint = System.currentTimeMillis() + checkPointInterval;
+        logger.info("Initializing {} shard, sequence: {}", shardId, initializationInput.extendedSequenceNumber());
     }
 
     @Override
@@ -32,18 +36,23 @@ public class RecordProcessor implements ShardRecordProcessor {
         processRecordsInput.records().forEach(record -> {
             try {
                 var data = decoder.decode(record.data()).toString();
-                logger.info("Partition: {}, sequence number = {}, data: {}",
-                        record.partitionKey(), record.sequenceNumber(), data);
+                logger.info("Shard: {}, Partition: {}, sequence number = {}, data: {}",
+                        shardId, record.partitionKey(), record.sequenceNumber(), data);
             } catch (Exception ex) {
                 logger.error("Failed getting data from message: " + ex.getMessage());
             }
         });
 
-        try {
-            logger.debug("Checkpoint...");
-            processRecordsInput.checkpointer().checkpoint();
-        }catch(Exception ex){
-            logger.error("Failed checkpoint: " + ex.getMessage());
+        var now = System.currentTimeMillis();
+        if (now >= nextCheckPoint) {
+            try {
+                logger.debug("Checkpoint started...");
+                processRecordsInput.checkpointer().checkpoint();
+                nextCheckPoint = now + checkPointInterval;
+                logger.debug("Checkpoint completed.");
+            } catch (Exception ex) {
+                logger.error("(processRecords) Failed checkpoint: " + ex.getMessage());
+            }
         }
     }
 
@@ -58,17 +67,17 @@ public class RecordProcessor implements ShardRecordProcessor {
         try {
             shardEndedInput.checkpointer().checkpoint();
         } catch (Exception ex) {
-            logger.error("Failed checkpointing: " + ex.getMessage());
+            logger.error("(shardEnded) Failed checkpointing: " + ex.getMessage());
         }
     }
 
     @Override
     public void shutdownRequested(ShutdownRequestedInput shutdownRequestedInput) {
-        logger.info("Scheduler is shutting down, checkpointing");
+        System.out.println("Scheduler is shutting down, checkpointing");
         try {
             shutdownRequestedInput.checkpointer().checkpoint();
         } catch (Exception ex) {
-            logger.error("Failed checkpointing: " + ex.getMessage());
+            System.err.println("(shutdownRequested) Failed checkpointing: " + ex.getMessage());
         }
     }
 }

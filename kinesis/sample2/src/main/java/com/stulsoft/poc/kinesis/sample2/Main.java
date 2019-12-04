@@ -17,7 +17,11 @@ import software.amazon.kinesis.common.KinesisClientUtil;
 import software.amazon.kinesis.coordinator.Scheduler;
 import software.amazon.kinesis.retrieval.polling.PollingConfig;
 
+import java.util.concurrent.TimeUnit;
+
 /**
+ * Runs Kinesis consumer
+ *
  * @author Yuriy Stul
  */
 public class Main {
@@ -36,8 +40,8 @@ public class Main {
         );
 
         PollingConfig pollingConfig = new PollingConfig(AppConfig.streamName(), kinesisAsyncClient)
-                .maxRecords(1000)
-                .idleTimeBetweenReadsInMillis(5000);
+                .maxRecords(AppConfig.maxRecords())
+                .idleTimeBetweenReadsInMillis(AppConfig.syncInterval());
 
         var dynamoClient = DynamoDbAsyncClient
                 .builder()
@@ -59,17 +63,17 @@ public class Main {
                 AppConfig.workerId(),
                 new RecordProcessorFactory());
 
-        logger.debug("configsBuilder.tableName(): {}", configsBuilder.tableName());
+//        logger.debug("configsBuilder.tableName(): {}", configsBuilder.tableName());
         var retrievalConfig = configsBuilder
                 .retrievalConfig()
                 .retrievalSpecificConfig(pollingConfig)
                 .initialPositionInStreamExtended(InitialPositionInStreamExtended.newInitialPosition(InitialPositionInStream.TRIM_HORIZON));
 
-        logger.debug("configsBuilder.checkpointConfig(): {}", configsBuilder.checkpointConfig());
-        logger.debug("configsBuilder.coordinatorConfig(): {}", configsBuilder.coordinatorConfig());
-        logger.debug("configsBuilder.lifecycleConfig(): {}", configsBuilder.lifecycleConfig());
-        logger.debug("configsBuilder.processorConfig(): {}", configsBuilder.processorConfig());
-        logger.debug("retrievalConfig: {}", retrievalConfig);
+//        logger.debug("configsBuilder.checkpointConfig(): {}", configsBuilder.checkpointConfig());
+//        logger.debug("configsBuilder.coordinatorConfig(): {}", configsBuilder.coordinatorConfig());
+//        logger.debug("configsBuilder.lifecycleConfig(): {}", configsBuilder.lifecycleConfig());
+//        logger.debug("configsBuilder.processorConfig(): {}", configsBuilder.processorConfig());
+//        logger.debug("retrievalConfig: {}", retrievalConfig);
         var scheduler = new Scheduler(
                 configsBuilder.checkpointConfig(),
                 configsBuilder.coordinatorConfig(),
@@ -78,6 +82,23 @@ public class Main {
                 configsBuilder.metricsConfig(),
                 configsBuilder.processorConfig(),
                 retrievalConfig);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                System.out.println("Start Graceful Shutdown...");
+                var f = scheduler.startGracefulShutdown();
+                try {
+                    f.get(5, TimeUnit.MINUTES);
+                } catch (Exception ex) {
+                    System.err.println("Failed graceful shutdown. " + ex.getMessage());
+                } finally {
+                    System.out.println("Close Kinesis client");
+                    kinesisAsyncClient.close();
+                }
+            } catch (Exception ex) {
+                System.err.println("Failed shutdown. " + ex.getMessage());
+            }
+        }));
 
         var schedulerThread = new Thread(scheduler);
         schedulerThread.setDaemon(true);
