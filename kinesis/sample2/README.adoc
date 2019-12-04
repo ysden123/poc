@@ -1,0 +1,14 @@
+= sample2
+
+Sample of Kinesis consumer.
+
+Kinesis Client Library (KCL) v.2.x is used.
+
+== Environment variables
+AWS_ACCESS_ID=???;AWS_SECRET_KEY=???;AWS_REGION=us-west-2;AWS_STREAM_NAME=???
+
+== Running tests
+. Create Kinesis data stream
+. Set environment varibales
+. Run Main
+. Run TestProducer (may be few instances in parallel )

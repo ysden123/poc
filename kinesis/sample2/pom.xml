@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2019. Webpals
+  ~ Copyright (c) 2019. Stulsoft
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -10,13 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.stulsoft.poc.kinesis</groupId>
-    <artifactId>sample1</artifactId>
+    <artifactId>sample2</artifactId>
     <version>1.0.0</version>
-    <name>sample1</name>
-    <description>Kinesis sample 1</description>
+    <name>sample2</name>
+    <description>Kinesis sample 2</description>
 
     <properties>
-        <app.main.class>com.stulsoft.poc.kinesis.sample1.Main</app.main.class>
+        <app.main.class>com.stulsoft.poc.kinesis.Main</app.main.class>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 
@@ -33,7 +33,7 @@
         <maven.jar.plugin.version>3.2.0</maven.jar.plugin.version>
         <spring.boot.maven.plugin.version>2.2.1.RELEASE</spring.boot.maven.plugin.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <kinesis.version>1.13.0</kinesis.version>
+        <kinesis.version>2.2.7</kinesis.version>
         <org.json.version>20190722</org.json.version>
     </properties>
 
@@ -52,11 +52,12 @@
         </dependency>
 
         <!-- Kinesis-->
-        <dependency>
-            <groupId>com.amazonaws</groupId>
+		<dependency>
+            <groupId>software.amazon.kinesis</groupId>
             <artifactId>amazon-kinesis-client</artifactId>
             <version>${kinesis.version}</version>
         </dependency>
+
 
         <!-- Logging -->
         <dependency>

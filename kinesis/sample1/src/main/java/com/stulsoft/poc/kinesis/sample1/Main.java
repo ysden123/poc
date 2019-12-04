@@ -36,8 +36,8 @@ public class Main {
     // Initial position in the stream when the application starts up for the first time.
     // Position can be one of LATEST (most recent data) or TRIM_HORIZON (oldest available data)
     private static final InitialPositionInStream SAMPLE_APPLICATION_INITIAL_POSITION_IN_STREAM =
-//            InitialPositionInStream.TRIM_HORIZON;
-            InitialPositionInStream.LATEST;
+            InitialPositionInStream.TRIM_HORIZON;
+//            InitialPositionInStream.LATEST;
 
     private static AWSCredentialsProvider credentialsProvider;
 
@@ -95,6 +95,14 @@ public class Main {
                 .config(kinesisClientLibConfiguration)
                 .build();
 
+        Runtime.getRuntime().addShutdownHook(new Thread(){
+            @Override
+            public void run() {
+                logger.info("(2) Call worker shutdown ...");
+                worker.shutdown();
+            }
+        });
+
         logger.info("Running {} to process stream {} as worker {}",
                 AppConfig.appName(),
                 AppConfig.streamName(),
@@ -105,7 +113,10 @@ public class Main {
             worker.run();
         } catch (Throwable t) {
             logger.error("Caught throwable while processing data. " + t.getMessage(), t);
-            exitCode = 1;
+            exitCode = 22;
+        }finally {
+            logger.info("(1) Call worker shutdown ...");
+            worker.shutdown();
         }
         System.exit(exitCode);
     }
