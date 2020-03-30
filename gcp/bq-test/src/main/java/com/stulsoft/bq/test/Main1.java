@@ -6,6 +6,8 @@ package com.stulsoft.bq.test;
 import com.google.cloud.bigquery.*;
 import com.google.cloud.bigquery.testing.RemoteBigQueryHelper;
 
+import java.io.FileInputStream;
+
 import static com.stulsoft.bq.test.BQUtils.*;
 
 /**
@@ -16,14 +18,14 @@ public class Main1 {
         Stopwatch stopwatch = new Stopwatch();
         System.out.println("==>main");
         try {
+/*
             RemoteBigQueryHelper bigQueryHelper = RemoteBigQueryHelper.create();
             BigQuery bigQuery = bigQueryHelper.getOptions().getService();
-
-/*
-            FileInputStream is = new FileInputStream(System.getenv("GOOGLE_APPLICATION_CREDENTIALS"));
-            BigQuery bigQuery = RemoteBigQueryHelper.create("api-project-829216641821", is).getOptions().getService();
 */
 
+            FileInputStream is = new FileInputStream(System.getenv("GOOGLE_APPLICATION_CREDENTIALS_YS"));
+//            BigQuery bigQuery = RemoteBigQueryHelper.create("api-project-829216641821", is).getOptions().getService();
+            BigQuery bigQuery = RemoteBigQueryHelper.create("hybrid-life-93921", is).getOptions().getService();
 
             String dataSetName = RemoteBigQueryHelper.generateDatasetName();
             System.out.format("dataSetName: %s%n", dataSetName);
@@ -43,6 +45,7 @@ public class Main1 {
             stopwatch.stop();
             System.out.println("Created table " + tableName + " during " + stopwatch.duration() + " ms");
 
+/*
             // Add rows
             InsertAllRequest.Builder builder = InsertAllRequest.newBuilder(table);
             int n = 500;
@@ -58,6 +61,7 @@ public class Main1 {
             } else {
                 System.out.println("Inserted " + n + " records");
             }
+*/
 
             System.out.println("Tables:");
             dataset.list().iterateAll().forEach(t -> System.out.format("getFriendlyName()=%s%n", t));
