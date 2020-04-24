@@ -16,7 +16,7 @@
     <description>Kinesis sample 2</description>
 
     <properties>
-        <app.main.class>com.stulsoft.poc.kinesis.Main</app.main.class>
+        <app.main.class>com.stulsoft.poc.kinesis.sample2.Main</app.main.class>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 
