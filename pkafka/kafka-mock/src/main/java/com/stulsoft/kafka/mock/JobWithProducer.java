@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, William Hill Online. All rights reserved
+ * Copyright (c) 2020. Yuriy Stul
  */
 package com.stulsoft.kafka.mock;
 
@@ -13,14 +13,16 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * For testing producer
+ *
  * @author Yuriy Stul.
  */
-public class Job1 {
-    private static Logger logger = LoggerFactory.getLogger(Job1.class);
-    private static String topic = "test-topic-job1";
+public class JobWithProducer {
+    private static final Logger logger = LoggerFactory.getLogger(JobWithProducer.class);
+    private static final String topic = "test-topic-job1";
     private final Producer<String, String> producer;
 
-    Job1(final Producer<String, String> producer) {
+    JobWithProducer(final Producer<String, String> producer) {
         this.producer = producer;
     }
 

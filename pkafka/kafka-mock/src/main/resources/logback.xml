@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2017. Yuriy Stul
+  ~ Copyright (c) 2020. Yuriy Stul
   -->
 
 <configuration>
@@ -25,4 +25,5 @@
     </root>
     <!--<logger name="org.springframework" level="error"/>-->
     <logger name="org.apache" level="error"/>
+    <logger name="ch.qos" level="error"/>
 </configuration>
