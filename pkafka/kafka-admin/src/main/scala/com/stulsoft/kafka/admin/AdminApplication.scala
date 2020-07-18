@@ -4,39 +4,57 @@
 
 package com.stulsoft.kafka.admin
 
-import java.util
 import java.util.Properties
 
-import com.typesafe.scalalogging.LazyLogging
+import com.typesafe.scalalogging.StrictLogging
 import org.apache.kafka.clients.admin.AdminClient
 
-import collection.JavaConverters._
+import scala.collection.JavaConverters._
 import scala.io.StdIn
 
 
 /**
-  * @author Yuriy Stul
-  */
-object AdminApplication extends App with LazyLogging {
+ * @author Yuriy Stul
+ */
+object AdminApplication extends App with StrictLogging {
   logger.info("==>AdminApplication")
 
 
   println("Enter servers (host:port[,host1:port1]")
-  val servers =  StdIn.readLine()
+  val servers = StdIn.readLine()
   val adminConsumer = new AdminConsumer(servers)
 
   val admin = AdminClient.create(buildConfig())
-  admin
-    .listTopics()
-    .listings()
-    .get()
-    .asScala
-    .foreach(topicListing => {
-      logger.info(s"${topicListing.name()} topic has ${adminConsumer.calculateNumberOfMessages(topicListing.name())} messages.")
-    })
+
+  listMessageCountPerTopic()
+  listGroups()
 
   admin.close()
   logger.info("<==AdminApplication")
+
+  def listMessageCountPerTopic(): Unit = {
+    logger.info("==>listMessageCountPerTopic")
+    admin
+      .listTopics()
+      .listings()
+      .get()
+      .asScala
+      .foreach(topicListing => {
+        logger.info(s"${topicListing.name()} topic has ${adminConsumer.calculateNumberOfMessages(topicListing.name())} messages.")
+      })
+  }
+
+  def listGroups():Unit={
+    logger.info("==>listGroups")
+    admin
+      .listConsumerGroups()
+      .all()
+      .get()
+      .asScala
+      .foreach(consumerGroupListing =>{
+        logger.info(s"${consumerGroupListing}")
+      })
+  }
 
   def buildConfig(): Properties = {
     val props = new Properties()
