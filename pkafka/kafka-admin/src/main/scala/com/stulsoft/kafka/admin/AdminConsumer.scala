@@ -27,7 +27,7 @@ class AdminConsumer(val servers: String) extends LazyLogging {
     try {
       val consumer = new KafkaConsumer[String, String](props)
       consumer.subscribe(java.util.Collections.singleton(topic))
-      val records = consumer.poll(Duration.ofMillis(100))
+      val records = consumer.poll(Duration.ofMillis(10000))
       records.count()
     } catch {
       case e: Exception =>
