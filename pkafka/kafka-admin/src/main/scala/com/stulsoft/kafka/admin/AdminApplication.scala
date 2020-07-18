@@ -39,21 +39,19 @@ object AdminApplication extends App with StrictLogging {
       .listings()
       .get()
       .asScala
-      .foreach(topicListing => {
+      .foreach(topicListing =>
         logger.info(s"${topicListing.name()} topic has ${adminConsumer.calculateNumberOfMessages(topicListing.name())} messages.")
-      })
+      )
   }
 
-  def listGroups():Unit={
+  def listGroups(): Unit = {
     logger.info("==>listGroups")
     admin
       .listConsumerGroups()
       .all()
       .get()
       .asScala
-      .foreach(consumerGroupListing =>{
-        logger.info(s"${consumerGroupListing}")
-      })
+      .foreach(consumerGroupListing => logger.info(s"$consumerGroupListing"))
   }
 
   def buildConfig(): Properties = {
