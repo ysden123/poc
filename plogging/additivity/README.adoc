@@ -1,0 +1,6 @@
+= additivity
+
+Playing with additivity attribute in logger definition.
+
+If _additivity_ attribute has value _true_ or is missing (default value is _true_),
+then all log records will be duplicated in all parent loggers.
