@@ -21,7 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ComponentScan(basePackages = "com.stulsoft.poc.pjunit5.spring.boot")
 class SomeComponentTest {
     @Autowired
-    private SomeComponent someComponent = null;
+    private SomeComponent someComponent;
 
     @Test
     void work() {
