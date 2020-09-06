@@ -11,7 +11,7 @@ lazy val commonSettings = Seq(
   organization := "com.stulsoft",
   version := projectVersion,
   javacOptions ++= Seq("-source", "11"),
-  scalaVersion := "2.13.1",
+  scalaVersion := "2.13.3",
   scalacOptions ++= Seq(
     "-feature",
     "-deprecation",
