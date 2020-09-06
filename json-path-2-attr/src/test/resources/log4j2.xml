@@ -8,7 +8,7 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger(%line) - %msg%n"/>
         </Console>
-        <File name="File" fileName="log/json-path-2-attr.log" append="false">
+        <File name="File" fileName="log/json-path-2-attr-test.log" append="false">
             <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger(%line) - %msg%n"/>
         </File>
     </Appenders>

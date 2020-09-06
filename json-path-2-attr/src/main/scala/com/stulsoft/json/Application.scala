@@ -7,36 +7,24 @@ package com.stulsoft.json
 import com.typesafe.scalalogging.StrictLogging
 
 import scala.collection.mutable.ArrayBuffer
+import scala.io.StdIn
 
 /**
  * @author Yuriy Stul
  */
 object Application extends App with StrictLogging {
-  logger.info("==>Application")
-
-  test2()
-  test3()
-
-  def test2(): Unit = {
-    logger.info("==>test2")
+  try {
+    println("Enter path to file with JSON:")
+    val filePath = StdIn.readLine()
+//    val filePath = """c:\Users\yuriy.s\Documents\Webpals\Diggy\ETL bulk edit account config\jsons\research2\testBody.json"""
+    println("Enter attribute name:")
+    val attrName = StdIn.readLine()
+//    val attrName = "status"
+//    val attrName = "action"
     val paths = ArrayBuffer.empty[(String, Any)]
-    PathBuilder.buildPath(Utils.jsonMapFromResourse("test2.json"), "", paths)
-    logger.debug("paths: {}", paths)
-    logger.debug(" ")
-    logger.debug("for d: {}",PathBuilder.findPathToAttr(paths, "d"))
-    logger.debug(" ")
-    logger.debug("for a: {}",PathBuilder.findPathToAttr(paths, "a"))
+    PathBuilder.buildPath(Utils.jsonMapFromFile(filePath), "", paths)
+    logger.info("for {}: {}", attrName, PathBuilder.findPathToAttr(paths, attrName))
+  } catch {
+    case x: Exception => x.printStackTrace()
   }
-
-  def test3(): Unit = {
-    logger.info("==>test3")
-    val paths = ArrayBuffer.empty[(String, Any)]
-    PathBuilder.buildPath(Utils.jsonMapFromResourse("test3.json"), "", paths)
-    logger.debug("paths: {}", paths)
-    logger.debug(" ")
-    logger.debug("for d: {}",PathBuilder.findPathToAttr(paths, "d"))
-    logger.debug(" ")
-    logger.debug("for a: {}",PathBuilder.findPathToAttr(paths, "a"))
-  }
-
 }
