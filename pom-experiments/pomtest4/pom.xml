@@ -21,7 +21,7 @@
         <java.version>10</java.version>
         <scala.version>2.12.6</scala.version>
         <scala.compat.version>2.12</scala.compat.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <scala.test.version>3.2.0-SNAP10</scala.test.version>
         <scala.check.version>1.14.0</scala.check.version>
         <scala.mock.version>4.1.0</scala.mock.version>
