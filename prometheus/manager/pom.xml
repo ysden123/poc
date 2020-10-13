@@ -12,7 +12,7 @@
 		<vertx.version>3.5.1</vertx.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<prometheus.version>0.4.0</prometheus.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<log4jSlf4jImpl.version>2.11.0</log4jSlf4jImpl.version>
 	</properties>
 
