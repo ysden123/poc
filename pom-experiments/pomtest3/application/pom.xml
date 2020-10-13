@@ -21,7 +21,7 @@
 
     <properties>
         <app.main.class>com.stulsoft.poc.pomtest3.app.Application</app.main.class>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <dependencies>
