@@ -1,0 +1,39 @@
+{
+  "title": "Hebcal Tel Aviv November 2020",
+  "date": "2020-11-07T08:26:20.865Z",
+  "location": {
+    "title": "Tel Aviv, Israel",
+    "city": "Tel Aviv",
+    "tzid": "Asia/Jerusalem",
+    "latitude": 32.08088,
+    "longitude": 34.78057,
+    "cc": "IL",
+    "country": "Israel",
+    "admin1": "Tel Aviv",
+    "geo": "geoname",
+    "geonameid": 293397
+  },
+  "items": [
+    {
+      "title": "Candle lighting: 16:28",
+      "date": "2020-11-06T16:28:00+02:00",
+      "category": "candles",
+      "title_orig": "Candle lighting",
+      "hebrew": "הדלקת נרות"
+    },
+    {
+      "title": "Parashat Vayera",
+      "date": "2020-11-07",
+      "category": "parashat",
+      "hebrew": "פרשת וירא",
+      "link": "https://www.hebcal.com/sedrot/vayera-20201107?i=on&utm_source=js&utm_medium=api"
+    },
+    {
+      "title": "Havdalah (50 min): 17:36",
+      "date": "2020-11-07T17:36:00+02:00",
+      "category": "havdalah",
+      "title_orig": "Havdalah",
+      "hebrew": "הבדלה"
+    }
+  ]
+}

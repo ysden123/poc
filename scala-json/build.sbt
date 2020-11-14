@@ -9,11 +9,13 @@ lazy val akkaHttpVersion = "10.2.1"
 lazy val akkaVersion = "2.6.10"
 lazy val json4sVersion = "3.6.10"
 lazy val scalatestVersion = "3.2.2"
+lazy val jacksonVersion = "2.11.3"
 
 lazy val app = (project in file("."))
   .settings(
     name := "scala-json",
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.11.3",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
+    libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion,
     libraryDependencies += "io.argonaut" %% "argonaut" % "6.3.1",
     libraryDependencies += "io.spray" %% "spray-json" % "1.3.5",
     libraryDependencies += "org.json4s" %% "json4s-native" % json4sVersion,
