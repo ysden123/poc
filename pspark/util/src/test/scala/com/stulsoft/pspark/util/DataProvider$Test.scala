@@ -7,7 +7,9 @@ package com.stulsoft.pspark.util
 import java.io.File
 
 import org.apache.commons.io.FileUtils
-import org.scalatest.{BeforeAndAfter, FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.BeforeAndAfter
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -15,7 +17,7 @@ import scala.concurrent.duration._
 /**
   * Created by Yuriy Stul on 12/5/2016.
   */
-class DataProvider$Test extends FunSpec with Matchers with BeforeAndAfter {
+class DataProvider$Test extends AnyFunSpec with Matchers with BeforeAndAfter {
   describe("DataProvider$Test") {
     val dstDir = "tmpTest"
     describe("#copyData") {

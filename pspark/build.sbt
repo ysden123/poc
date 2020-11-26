@@ -1,14 +1,14 @@
 import sbt.Keys.libraryDependencies
 
-lazy val sparkVersion = "2.2.1"
-lazy val scalaLoggingVersion = "3.5.0"
+lazy val sparkVersion = "3.0.1"
+lazy val scalaLoggingVersion = "3.9.2"
 lazy val commonIoVersion = "1.3.2"
-lazy val scalaTestVersion = "3.0.1"
+lazy val scalaTestVersion = "3.2.3"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft.pspark",
-  version := "1.1.2",
-  scalaVersion := "2.11.8",
+  version := "1.1.3",
+  scalaVersion := "2.12.12",
   scalacOptions ++= Seq(
     "-feature",
     "-language:implicitConversions",
@@ -19,7 +19,7 @@ lazy val commonSettings = Seq(
   )
 )
 
-resolvers += "Spark Packages Repo" at "http://dl.bintray.com/spark-packages/maven"
+resolvers += "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 resolvers += "Repo at github.com/ankurdave/maven-repo" at "https://github.com/ankurdave/maven-repo/raw/master"
 

@@ -28,11 +28,11 @@ object SimpleSparkApp extends App {
   // let's count the number of purchases
   val numPurchases = data.count()
   // let's count how many unique users made purchases
-  val uniqueUsers = data.map { case (user, product, price) => user
+  val uniqueUsers = data.map { case (user, _, _) => user
   }.distinct().count()
   // let's sum up our total revenue
   val totalRevenue = data.map {
-    case (user, product, price) => price.toDouble
+    case (_, _, price) => price.toDouble
   }.sum()
   // let's find our most popular product
   // first we map the data to records of (product, 1)
@@ -40,7 +40,7 @@ object SimpleSparkApp extends App {
   // then we call a reduceByKey operation with a Function2,
   // which is essentially the sum function
   val productsByPopularity = data
-    .map { case (user, product, price) => (product, 1) }
+    .map { case (_, product, _) => (product, 1) }
     .reduceByKey(_ + _)
     .collect()
     .sortBy(-_._2)
