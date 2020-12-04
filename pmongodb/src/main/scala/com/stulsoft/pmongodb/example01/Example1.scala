@@ -16,7 +16,7 @@ object Example1 extends App with LazyLogging {
   logger.info("start")
   try {
     // To directly connect to the default server localhost on port 27017
-    val dbClient: MongoClient = MongoClient()
+    val dbClient: MongoClient = MongoClient(connectionString)
     val database = dbClient.getDatabase("testDb")
     val collection = database.getCollection("testCollection")
     val testDoc = Document("name" -> "row1")
@@ -25,7 +25,7 @@ object Example1 extends App with LazyLogging {
 
     logger.debug(s"results: $results")
 
-    val count = collection.count().results().head
+    val count = collection.countDocuments().results().head
     logger.debug(s"count is $count")
     collection.drop().headResult()
   }

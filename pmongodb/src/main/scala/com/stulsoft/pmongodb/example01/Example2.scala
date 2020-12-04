@@ -22,7 +22,7 @@ object Example2 extends App with LazyLogging {
 
   logger.info("start")
   try {
-    val dbClient: MongoClient = MongoClient()
+    val dbClient: MongoClient = MongoClient(connectionString)
     val database = dbClient.getDatabase("testDb")
     val collection = database.getCollection("testCollection2")
     val testDoc = MyDocument("the name", 21).toDocument
@@ -31,7 +31,7 @@ object Example2 extends App with LazyLogging {
 
     logger.debug(s"results: $results")
 
-    val count = collection.count().results().head
+    val count = collection.countDocuments().results().head
     logger.debug(s"count is $count")
 
     collection.find().printResults()

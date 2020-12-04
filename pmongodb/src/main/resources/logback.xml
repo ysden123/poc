@@ -22,5 +22,5 @@
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
-    <!-- <logger name="slick" level="error"/> -->
+     <logger name="org.mongodb" level="error"/>
 </configuration>

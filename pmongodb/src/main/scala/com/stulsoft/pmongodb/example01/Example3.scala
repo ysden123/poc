@@ -7,8 +7,8 @@ package com.stulsoft.pmongodb.example01
 import com.stulsoft.pmongodb.example01.Helpers._
 import com.typesafe.scalalogging.LazyLogging
 import org.bson.codecs.configuration.CodecRegistries.{fromProviders, fromRegistries}
+import org.mongodb.scala.MongoClient.DEFAULT_CODEC_REGISTRY
 import org.mongodb.scala.bson.ObjectId
-import org.mongodb.scala.bson.codecs.DEFAULT_CODEC_REGISTRY
 import org.mongodb.scala.bson.codecs.Macros._
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.{MongoClient, MongoCollection, MongoDatabase}
@@ -24,7 +24,7 @@ object Example3 extends App with LazyLogging {
   private lazy val codecRegistry = fromRegistries(fromProviders(classOf[Person]), DEFAULT_CODEC_REGISTRY)
 
   // To directly connect to the default server localhost on port 27017
-  val client: MongoClient = MongoClient()
+  val client: MongoClient = MongoClient("mongodb://root:admin@localhost:27017")
   val database: MongoDatabase = client.getDatabase("testDb").withCodecRegistry(codecRegistry)
   val collection: MongoCollection[Person] = database.getCollection("testCollection3")
   collection.drop().results()
