@@ -36,7 +36,7 @@ object PlainQueries {
   }
 
   def printAllCoffees3(db: Database): Unit = {
-    implicit val getCoffeeResult = GetResult(r => Coffee(r.<<, r.<<, r.<<, r.<<, r.<<))
+    implicit val getCoffeeResult: AnyRef with GetResult[Coffee] = GetResult(r => Coffee(r.<<, r.<<, r.<<, r.<<, r.<<))
     println("==>printAllCoffee3")
     Await.result(
       db.run(sql"""select * from coffees""".as[Coffee]).map(_.foreach(c => println(c))),

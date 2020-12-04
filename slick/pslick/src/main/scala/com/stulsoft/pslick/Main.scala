@@ -27,7 +27,7 @@ val logger = LoggerFactory.getLogger(getClass)
     PlainQueries.printAllCoffees2(db)
     PlainQueries.printAllCoffees3(db)
 
-    playingWithSuppliers.printAllSuppliers
+    playingWithSuppliers.printAllSuppliers()
   }
   finally {
     db.close
