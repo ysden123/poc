@@ -3,7 +3,17 @@
 Experiments with POM based projects
 
 == Build
-??? TBD
+=== Build all
+Run command:
+```
+mvn clean package
+```
+
+=== Build specific module
+Run command (for app1):
+```
+mvn -fae -am -pl application\app1\pom.xml package
+```
 
 == Running
 Set VM to -Dspring.config.location=${STATISTICS_BUILDER_CONF_DEVELOPMENT} -Dspring.config.name=application
