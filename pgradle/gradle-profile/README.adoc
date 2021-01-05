@@ -1,0 +1,26 @@
+= gradle-profile
+
+Demonstrates usage the different profile values.
+
+Set _profile_ environment variable to one of the following values:
+
+* dev (default value) for SNAPSHOT
+* qa for SNAPSHOT
+* stg for RC
+* prod for RELEASE
+
+For example:
+[source]
+```
+set profile="stg"
+```
+
+Run next command to build distribution:
+[source]
+```
+gradlew clean assemble
+```
+
+Check files under _build/distributions_
+
+
