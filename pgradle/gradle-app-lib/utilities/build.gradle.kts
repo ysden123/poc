@@ -9,5 +9,3 @@ plugins {
 dependencies {
     api(project(":list"))
 }
-
-project.version = project(":app").version

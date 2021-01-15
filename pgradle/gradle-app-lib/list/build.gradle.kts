@@ -5,5 +5,3 @@
 plugins {
     id("com.stulsoft.poc.pgradle.java-library-conventions")
 }
-
-project.version = project(":app").version

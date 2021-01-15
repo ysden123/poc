@@ -31,3 +31,10 @@ tasks.test {
     // Use junit platform for unit tests.
     useJUnitPlatform()
 }
+
+val versionSuffix = when (System.getenv("profile")) {
+    "stg" -> "RC"
+    "prod" -> "RELEASE"
+    else -> "SNAPSHOT"
+}
+project.version = "1.0.3-${versionSuffix}"
