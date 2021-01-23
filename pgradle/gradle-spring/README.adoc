@@ -1,0 +1,14 @@
+= gradle-spring
+
+Gradle project for Spring Boot
+
+== Build
+Run command:
+[source, shell script]
+```
+gradle clean assembleBootDist
+```
+Result is in folder app/build/distributions
+
+== Running
+Specify active profile, e.g. _-Dspring.profiles.active=staging_
