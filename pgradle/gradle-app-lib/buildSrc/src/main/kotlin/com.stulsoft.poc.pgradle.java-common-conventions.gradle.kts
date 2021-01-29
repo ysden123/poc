@@ -38,3 +38,5 @@ val versionSuffix = when (System.getenv("profile")) {
     else -> "SNAPSHOT"
 }
 project.version = "1.0.3-${versionSuffix}"
+
+project.ext["commonsLang3Version"] = "3.11"
