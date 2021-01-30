@@ -1,0 +1,31 @@
+= gradle-vertx
+
+Starter project for Vertx with Gradle
+
+== Build distribution
+
+Run command (for Windows)
+[source, shell script]
+```
+gradlew clean distZip
+```
+or (for Linux)
+[source, shell script]
+```
+gradlew clean distTar
+```
+
+== Run
+Run command:
+[source, shell script]
+```
+cd app\bin
+app
+```
+
+== Run from IDEA
+
+Module: gradle-vertx.app.main
+Main class: io.vertx.core.Launcher
+Program params: run com.stulsoft.poc.pgradle.vertx.app.MainVerticle
+Working directory: C:\Git\poc\pgradle\gradle-vertx
