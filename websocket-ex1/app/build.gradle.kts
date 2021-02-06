@@ -28,6 +28,10 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
+tasks.compileJava{
+    options.release.set(11)
+}
+
 application {
     // Define the main class for the application.
     mainClass.set("com.stulsoft.poc.websocket.ex1.App")
