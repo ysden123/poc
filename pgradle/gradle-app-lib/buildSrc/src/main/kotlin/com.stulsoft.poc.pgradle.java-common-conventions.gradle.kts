@@ -37,6 +37,6 @@ val versionSuffix = when (System.getenv("profile")) {
     "prod" -> "RELEASE"
     else -> "SNAPSHOT"
 }
-project.version = "1.0.3-${versionSuffix}"
+project.version = "1.1.0-${versionSuffix}"
 
 project.ext["commonsLang3Version"] = "3.11"
