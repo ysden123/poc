@@ -1,15 +1,13 @@
 import sbt.Keys.{javacOptions, scalacOptions}
 
-ThisBuild / scalaVersion := "2.13.3"
+ThisBuild / scalaVersion := "2.13.5"
 ThisBuild / organization := "com.stulsoft"
-ThisBuild / version := "1.0.1"
+ThisBuild / version := "1.0.2"
 
-lazy val loggingVersion = "2.13.3"
-lazy val akkaHttpVersion = "10.2.1"
-lazy val akkaVersion = "2.6.10"
-lazy val json4sVersion = "3.6.10"
-lazy val scalatestVersion = "3.2.2"
-lazy val jacksonVersion = "2.11.3"
+lazy val loggingVersion = "2.14.1"
+lazy val json4sVersion = "3.6.11"
+lazy val scalatestVersion = "3.2.6"
+lazy val jacksonVersion = "2.12.2"
 
 lazy val app = (project in file("."))
   .settings(
