@@ -1,0 +1,5 @@
+= cache-manager
+
+POC of simple cache manager.
+
+Implemented cache in memory.
