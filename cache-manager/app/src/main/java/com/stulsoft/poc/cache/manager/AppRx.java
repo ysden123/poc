@@ -31,12 +31,24 @@ public class AppRx {
                             .put("col22", "text 2")));
         });
 
+        cacheManager.addCollectionSupplier("collection3", 10, 20,
+                () -> Single.create(source -> {
+                    logger.info("collection supplier for collection3");
+                    var collection = new JsonArray()
+                            .add(new JsonObject()
+                                    .put("col31", "text 1")
+                                    .put("col32", "text 2"));
+                    source.onSuccess(collection);
+                }));
+
         cacheManager.start();
 
-        try{
+        try {
             Thread.sleep(25500);
             logger.info("collection1 {}", cacheManager.getCollection("collection1").encode());
             logger.info("collection2 {}", cacheManager.getCollection("collection2").encode());
-        }catch(Exception ignore){}
+            logger.info("collection3 {}", cacheManager.getCollection("collection3").encode());
+        } catch (Exception ignore) {
+        }
     }
 }
