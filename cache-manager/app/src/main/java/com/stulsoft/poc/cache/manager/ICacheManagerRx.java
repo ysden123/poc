@@ -4,15 +4,15 @@
 
 package com.stulsoft.poc.cache.manager;
 
+import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.json.JsonArray;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
  * @author Yuriy Stul
  */
-public interface ICacheManager {
+public interface ICacheManagerRx {
     void updateCollection(final String collectionName, final JsonArray collection);
 
     JsonArray getCollection(final String collectionName);
@@ -29,7 +29,7 @@ public interface ICacheManager {
             final String collectionName,
             final long initialDelay,
             final long period,
-            Supplier<JsonArray> supplier);
+            final Supplier<Single<JsonArray>> supplier);
 
     void start();
 }

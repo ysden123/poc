@@ -12,11 +12,12 @@ repositories {
     mavenCentral()
 }
 
-project.version = "1.0.0"
+project.version = "1.1.0"
 
 val slf4jVersion = "1.7.30"
 val log4jSlf4jVersion = "2.14.1"
 val vertxVersion = "4.0.3"
+val rxJavaVersion = "3.0.12"
 
 dependencies {
     // Use JUnit Jupiter API for testing.
@@ -27,6 +28,9 @@ dependencies {
 
     // Vertx
     implementation("io.vertx:vertx-core:$vertxVersion")
+
+    // RxJava
+    implementation("io.reactivex.rxjava3:rxjava:$rxJavaVersion")
 
     // Logging
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
