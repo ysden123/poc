@@ -37,5 +37,7 @@ public class App {
             logger.info("collection1 {}", cacheManager.getCollection("collection1").encode());
             logger.info("collection2 {}", cacheManager.getCollection("collection2").encode());
         }catch(Exception ignore){}
+
+        cacheManager.stop();
     }
 }

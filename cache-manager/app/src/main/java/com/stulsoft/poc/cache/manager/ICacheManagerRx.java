@@ -13,7 +13,6 @@ import java.util.function.Supplier;
  * @author Yuriy Stul
  */
 public interface ICacheManagerRx {
-    void updateCollection(final String collectionName, final JsonArray collection);
 
     JsonArray getCollection(final String collectionName);
 
@@ -32,4 +31,6 @@ public interface ICacheManagerRx {
             final Supplier<Single<JsonArray>> supplier);
 
     void start();
+
+    void stop();
 }

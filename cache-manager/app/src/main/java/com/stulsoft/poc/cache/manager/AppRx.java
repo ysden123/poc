@@ -50,5 +50,7 @@ public class AppRx {
             logger.info("collection3 {}", cacheManager.getCollection("collection3").encode());
         } catch (Exception ignore) {
         }
+
+        cacheManager.stop();
     }
 }

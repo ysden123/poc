@@ -9,10 +9,13 @@ import io.vertx.core.json.JsonArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
@@ -23,13 +26,11 @@ public class CacheManagerRxInMemory implements ICacheManagerRx {
     private static final Logger logger = LoggerFactory.getLogger(CacheManagerRxInMemory.class);
 
     static class SupplierData {
-        final String collectionName;
         final long initialDelay;
         final long period;
         final Supplier<Single<JsonArray>> supplier;
 
-        public SupplierData(String collectionName, long initialDelay, long period, Supplier<Single<JsonArray>> supplier) {
-            this.collectionName = collectionName;
+        public SupplierData(long initialDelay, long period, Supplier<Single<JsonArray>> supplier) {
             this.initialDelay = initialDelay;
             this.period = period;
             this.supplier = supplier;
@@ -39,14 +40,14 @@ public class CacheManagerRxInMemory implements ICacheManagerRx {
     private final Map<String, JsonArray> cache;
     private final Map<String, SupplierData> suppliers;
     private final ScheduledExecutorService executors;
+    private final List<ScheduledFuture<?>> scheduledSuppliers;
 
     public CacheManagerRxInMemory() {
         cache = new HashMap<>();
         suppliers = new HashMap<>();
         executors = Executors.newScheduledThreadPool(4);
-    }
+        scheduledSuppliers = new ArrayList<>();    }
 
-    @Override
     public void updateCollection(String collectionName, JsonArray collection) {
         synchronized (cache) {
             cache.put(collectionName, collection);
@@ -62,22 +63,31 @@ public class CacheManagerRxInMemory implements ICacheManagerRx {
 
     @Override
     public void addCollectionSupplier(String collectionName, long initialDelay, long period, Supplier<Single<JsonArray>> supplier) {
-        var providerData = new SupplierData(collectionName, initialDelay, period, supplier);
+        var providerData = new SupplierData(initialDelay, period, supplier);
         suppliers.put(collectionName, providerData);
     }
 
     @Override
     public void start() {
-        suppliers.forEach((collectionName, supplier) -> executors.scheduleAtFixedRate(
-                () -> {
-                    supplier.supplier.get().subscribe(
+        suppliers.forEach((collectionName, supplier) -> {
+            var scheduledSupplier = executors.scheduleAtFixedRate(
+                    () -> supplier.supplier.get().subscribe(
                             collection -> updateCollection(collectionName, collection),
                             error -> logger.error("Failed getting " + collectionName + " collection: " + error.getMessage())
-                    );
-                },
-                supplier.initialDelay,
-                supplier.period,
-                TimeUnit.SECONDS
-        ));
+                    ),
+                    supplier.initialDelay,
+                    supplier.period,
+                    TimeUnit.SECONDS
+            );
+            scheduledSuppliers.add(scheduledSupplier);
+        });
+    }
+
+    @Override
+    public void stop() {
+        scheduledSuppliers.forEach(scheduledSupplier ->
+                logger.info("Stopping a scheduled supplier: {}", scheduledSupplier.cancel(true)));
+
+        executors.shutdown();
     }
 }

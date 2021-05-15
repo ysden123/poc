@@ -6,14 +6,12 @@ package com.stulsoft.poc.cache.manager;
 
 import io.vertx.core.json.JsonArray;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
  * @author Yuriy Stul
  */
 public interface ICacheManager {
-    void updateCollection(final String collectionName, final JsonArray collection);
 
     JsonArray getCollection(final String collectionName);
 
@@ -32,4 +30,6 @@ public interface ICacheManager {
             Supplier<JsonArray> supplier);
 
     void start();
+
+    void stop();
 }
