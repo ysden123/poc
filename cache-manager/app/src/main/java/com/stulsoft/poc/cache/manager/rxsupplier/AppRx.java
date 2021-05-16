@@ -2,7 +2,7 @@
  * Copyright (c) 2021. StulSoft
  */
 
-package com.stulsoft.poc.cache.manager;
+package com.stulsoft.poc.cache.manager.rxsupplier;
 
 import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.json.JsonArray;
@@ -15,7 +15,7 @@ public class AppRx {
 
     public static void main(String[] args) {
         logger.info("==>main");
-        ICacheManagerRx cacheManager = new CacheManagerRxInMemory();
+        ICacheManager cacheManager = new CacheManagerInMemory();
         cacheManager.addCollectionSupplier("collection1", 10, 30, () -> {
             logger.info("collection supplier for {}", "collection1");
             return Single.just(new JsonArray()

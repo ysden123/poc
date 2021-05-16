@@ -2,8 +2,9 @@
  * Copyright (c) 2021. StulSoft
  */
 
-package com.stulsoft.poc.cache.manager;
+package com.stulsoft.poc.cache.manager.rxsupplier;
 
+import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.json.JsonArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,9 @@ public class CacheManagerInMemory implements ICacheManager {
     static class SupplierData {
         final long initialDelay;
         final long period;
-        final Supplier<JsonArray> supplier;
+        final Supplier<Single<JsonArray>> supplier;
 
-        public SupplierData(long initialDelay, long period, Supplier<JsonArray> supplier) {
+        public SupplierData(long initialDelay, long period, Supplier<Single<JsonArray>> supplier) {
             this.initialDelay = initialDelay;
             this.period = period;
             this.supplier = supplier;
@@ -62,7 +63,7 @@ public class CacheManagerInMemory implements ICacheManager {
     }
 
     @Override
-    public void addCollectionSupplier(String collectionName, long initialDelay, long period, Supplier<JsonArray> supplier) {
+    public void addCollectionSupplier(String collectionName, long initialDelay, long period, Supplier<Single<JsonArray>> supplier) {
         var providerData = new SupplierData(initialDelay, period, supplier);
         suppliers.put(collectionName, providerData);
     }
@@ -71,10 +72,14 @@ public class CacheManagerInMemory implements ICacheManager {
     public void start() {
         suppliers.forEach((collectionName, supplier) -> {
             var scheduledSupplier = executors.scheduleAtFixedRate(
-                    () -> updateCollection(collectionName, supplier.supplier.get()),
+                    () -> supplier.supplier.get().subscribe(
+                            collection -> updateCollection(collectionName, collection),
+                            error -> logger.error("Failed getting " + collectionName + " collection: " + error.getMessage())
+                    ),
                     supplier.initialDelay,
                     supplier.period,
-                    TimeUnit.SECONDS);
+                    TimeUnit.SECONDS
+            );
             scheduledSuppliers.add(scheduledSupplier);
         });
     }

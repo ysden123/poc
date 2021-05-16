@@ -2,7 +2,7 @@
  * Copyright (c) 2021. StulSoft
  */
 
-package com.stulsoft.poc.cache.manager;
+package com.stulsoft.poc.cache.manager.rxsupplier;
 
 import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.json.JsonArray;
@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 /**
  * @author Yuriy Stul
  */
-public interface ICacheManagerRx {
+public interface ICacheManager {
 
     JsonArray getCollection(final String collectionName);
 

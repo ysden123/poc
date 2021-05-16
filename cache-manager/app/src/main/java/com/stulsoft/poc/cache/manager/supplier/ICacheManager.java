@@ -2,7 +2,7 @@
  * Copyright (c) 2021. StulSoft
  */
 
-package com.stulsoft.poc.cache.manager;
+package com.stulsoft.poc.cache.manager.supplier;
 
 import io.vertx.core.json.JsonArray;
 

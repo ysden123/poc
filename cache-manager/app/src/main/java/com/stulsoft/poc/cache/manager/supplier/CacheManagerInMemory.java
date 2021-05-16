@@ -2,9 +2,8 @@
  * Copyright (c) 2021. StulSoft
  */
 
-package com.stulsoft.poc.cache.manager;
+package com.stulsoft.poc.cache.manager.supplier;
 
-import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.json.JsonArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,15 +21,15 @@ import java.util.function.Supplier;
 /**
  * @author Yuriy Stul
  */
-public class CacheManagerRxInMemory implements ICacheManagerRx {
-    private static final Logger logger = LoggerFactory.getLogger(CacheManagerRxInMemory.class);
+public class CacheManagerInMemory implements ICacheManager {
+    private static final Logger logger = LoggerFactory.getLogger(CacheManagerInMemory.class);
 
     static class SupplierData {
         final long initialDelay;
         final long period;
-        final Supplier<Single<JsonArray>> supplier;
+        final Supplier<JsonArray> supplier;
 
-        public SupplierData(long initialDelay, long period, Supplier<Single<JsonArray>> supplier) {
+        public SupplierData(long initialDelay, long period, Supplier<JsonArray> supplier) {
             this.initialDelay = initialDelay;
             this.period = period;
             this.supplier = supplier;
@@ -42,11 +41,12 @@ public class CacheManagerRxInMemory implements ICacheManagerRx {
     private final ScheduledExecutorService executors;
     private final List<ScheduledFuture<?>> scheduledSuppliers;
 
-    public CacheManagerRxInMemory() {
+    public CacheManagerInMemory() {
         cache = new HashMap<>();
         suppliers = new HashMap<>();
         executors = Executors.newScheduledThreadPool(4);
-        scheduledSuppliers = new ArrayList<>();    }
+        scheduledSuppliers = new ArrayList<>();
+    }
 
     public void updateCollection(String collectionName, JsonArray collection) {
         synchronized (cache) {
@@ -62,7 +62,7 @@ public class CacheManagerRxInMemory implements ICacheManagerRx {
     }
 
     @Override
-    public void addCollectionSupplier(String collectionName, long initialDelay, long period, Supplier<Single<JsonArray>> supplier) {
+    public void addCollectionSupplier(String collectionName, long initialDelay, long period, Supplier<JsonArray> supplier) {
         var providerData = new SupplierData(initialDelay, period, supplier);
         suppliers.put(collectionName, providerData);
     }
@@ -71,14 +71,10 @@ public class CacheManagerRxInMemory implements ICacheManagerRx {
     public void start() {
         suppliers.forEach((collectionName, supplier) -> {
             var scheduledSupplier = executors.scheduleAtFixedRate(
-                    () -> supplier.supplier.get().subscribe(
-                            collection -> updateCollection(collectionName, collection),
-                            error -> logger.error("Failed getting " + collectionName + " collection: " + error.getMessage())
-                    ),
+                    () -> updateCollection(collectionName, supplier.supplier.get()),
                     supplier.initialDelay,
                     supplier.period,
-                    TimeUnit.SECONDS
-            );
+                    TimeUnit.SECONDS);
             scheduledSuppliers.add(scheduledSupplier);
         });
     }
