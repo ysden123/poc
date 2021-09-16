@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2019. Webpals
+  ~ Copyright (c) 2019 - 2021. StulSoft
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -10,20 +10,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.stulsoft.poc.json</groupId>
-    <artifactId>json</artifactId>
+    <artifactId>ys-json</artifactId>
     <version>1.0.0</version>
-    <name>json</name>
+    <name>ys-json</name>
     <description>Json usage</description>
 
     <properties>
-        <app.main.class>com.stulsoft.poc.json.simple.Main</app.main.class>
-        <timestamp>${maven.build.timestamp}</timestamp>
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-
-        <java.version>16</java.version>
-        <maven.jar.plugin.version>3.2.0</maven.jar.plugin.version>
-        <spring.boot.maven.plugin.version>2.2.1.RELEASE</spring.boot.maven.plugin.version>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -37,75 +33,5 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.12.5</version>
         </dependency>
-
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.maven.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>exec</classifier>
-                            <mainClass>${app.main.class}</mainClass>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven.jar.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>default-jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!--
-					<excludes>
-                        <exclude>**/*.properties</exclude>
-                        <exclude>**/*.conf</exclude>
-                        <exclude>**/logback.xml</exclude>
-                    </excludes>
-					-->
-                    <archive>
-                        <index>true</index>
-                        <manifest>
-                            <mainClass>${app.main.class}</mainClass>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                        </manifest>
-                        <manifestSection>
-                            <name>${project.name}</name>
-                            <manifestEntries>
-                                <date>${timestamp}</date>
-                                <version>${project.version}</version>
-                            </manifestEntries>
-                        </manifestSection>
-                    </archive>
-                </configuration>
-            </plugin>
-
-            <!-- Configure maven-compiler-plugin to use the desired Java version -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
