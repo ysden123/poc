@@ -18,7 +18,7 @@ public class Request {
 
     public Request(){}
 
-    public void setFilters(List<Filter> filters) {
+    private void setFilters(List<Filter> filters) {
         this.filters = filters;
     }
 
