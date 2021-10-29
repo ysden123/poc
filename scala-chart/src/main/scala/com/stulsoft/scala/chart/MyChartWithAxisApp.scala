@@ -1,8 +1,6 @@
 package com.stulsoft.scala.chart
 
-import com.stulsoft.scala.chart.MyChartMultiSerApp.names
-
-import scalax.chart.module.Charting
+import de.sciss.chart.module.Charting
 
 /**
   * @author Yuriy Stul.

@@ -1,7 +1,6 @@
 package com.stulsoft.scala.chart
 
-import scalax.chart.api._
-import scalax.chart.module.Charting
+import de.sciss.chart.module.Charting
 
 /**
   * @author Yuriy Stul.
