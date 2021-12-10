@@ -21,7 +21,7 @@
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 
         <java.version>1.8</java.version>
-        <logging.version>2.12.0</logging.version>
+        <logging.version>2.15.0</logging.version>
         <jackson.databind.version>2.10.0</jackson.databind.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
     </properties>
