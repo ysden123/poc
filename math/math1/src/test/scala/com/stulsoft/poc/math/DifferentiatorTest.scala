@@ -6,7 +6,6 @@ package com.stulsoft.poc.math
 
 import org.scalatest.funsuite.AnyFunSuite
 
-import scala.Double.NaN
 import scala.util.{Failure, Success}
 
 /**
@@ -33,14 +32,12 @@ class DifferentiatorTest extends AnyFunSuite {
 
   test("differentiate delta = 0") {
     val dif = Differentiator.differentiate(x => x * 3, 0.0, 0.0)
-    println(s"dif.isSuccess=${dif.isSuccess}")
-    println(s"dif.isFailure=${dif.isFailure}")
     dif match {
-      case Success(value) if value.isNaN =>
-        succeed
-      case xyz =>
-        println(xyz)
+      case Success(_)=>
         fail("Uncaught exception")
+      case Failure(exception) =>
+        exception.printStackTrace()
+        succeed
     }
   }
 }
