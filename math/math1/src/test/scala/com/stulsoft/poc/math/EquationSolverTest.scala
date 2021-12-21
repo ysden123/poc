@@ -16,29 +16,31 @@ class EquationSolverTest extends AnyFunSuite {
   }
 
   test("has solution, start minus") {
-    val x = EquationSolver.newtonRaphson(f1, -5.0, 0.5,0.1)
+    val x = EquationSolver.newtonRaphson(f1, -5.0, 0.5, 0.1)
     assert(x == 0.0)
   }
 
   test("has solution with const") {
-    val x = EquationSolver.newtonRaphson(f2, 5.0, 0.5,0.1)
-    assert(f2(x).abs <= 0.1)
+    val precision = 0.1
+    val x = EquationSolver.newtonRaphson(f2, 5.0, 0.5, precision)
+    assert(f2(x).abs <= precision)
   }
 
-  test("has solution with power"){
-    val x = EquationSolver.newtonRaphson(f3, 5.0, 0.5, 1E-10)
-    assert(f3(x).abs <= 1E-10)
+  test("has solution with power") {
+    val precision = 1E-10
+    val x = EquationSolver.newtonRaphson(f3, 5.0, 0.5, precision)
+    assert(f3(x).abs <= precision)
   }
 
-  def f1(x:Double):Double={
+  def f1(x: Double): Double = {
     x * 3.0
   }
 
-  def f2(x:Double):Double={
+  def f2(x: Double): Double = {
     7.0 + x * 3.0
   }
 
-  def f3(x:Double):Double={
+  def f3(x: Double): Double = {
     Math.pow(x, 2)
   }
 }
