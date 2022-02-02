@@ -1,0 +1,3 @@
+= Playing with Lombok
+
+See https://auth0.com/blog/a-complete-guide-to-lombok/[A Complete Guide to Lombok]
