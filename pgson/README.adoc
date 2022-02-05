@@ -1,0 +1,6 @@
+= pgson
+
+Playing with _gson_ framework.
+
+* dto - working with objects and nested objects
+* objects - converting to java objects

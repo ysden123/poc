@@ -1,4 +1,8 @@
-package com.stulsoft.poc.pgson;
+/*
+ * Copyright (c) 2022 StulSoft
+ */
+
+package com.stulsoft.poc.pgson.dto;
 
 import java.util.Collection;
 import java.util.Objects;

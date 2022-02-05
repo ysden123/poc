@@ -1,5 +1,11 @@
+/*
+ * Copyright (c) 2022 StulSoft
+ */
+
 package com.stulsoft.poc.pgson;
 import com.google.gson.Gson;
+import com.stulsoft.poc.pgson.dto.Dto;
+import com.stulsoft.poc.pgson.dto.DtoContainer;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
