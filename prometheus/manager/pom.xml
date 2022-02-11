@@ -9,7 +9,7 @@
 	<description>Prometheus metrics manager</description>
 
 	<properties>
-		<vertx.version>3.5.1</vertx.version>
+		<vertx.version>3.9.4</vertx.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<prometheus.version>0.4.0</prometheus.version>
 		<junit.version>4.13.1</junit.version>
