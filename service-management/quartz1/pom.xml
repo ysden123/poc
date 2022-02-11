@@ -12,7 +12,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<slf4j.version>1.7.5</slf4j.version>
-		<vertx.version>3.5.1</vertx.version>
+		<vertx.version>3.5.4</vertx.version>
 		<quartz.version>2.3.2</quartz.version>
 		<log4j-slf4j-impl.version>2.9.0</log4j-slf4j-impl.version>
 		<main.verticle>com.stulsoft.poc.service.management.quartz1.Quartz1MainVerticle</main.verticle>
