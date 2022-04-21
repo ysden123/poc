@@ -33,5 +33,5 @@ testing {
 
 application {
     // Define the main class for the application.
-    mainClass = 'com.stulsoft.poc.pgson.App'
+    mainClass = 'com.stulsoft.poc.pgson.json.PrettyWriter'
 }
