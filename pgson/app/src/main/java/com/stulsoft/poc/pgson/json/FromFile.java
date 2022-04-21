@@ -2,7 +2,7 @@
  * Copyright (c) 2022 StulSoft
  */
 
-package json;
+package com.stulsoft.poc.pgson.json;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
