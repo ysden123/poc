@@ -1,20 +1,19 @@
+val springVersion = "2.6.7"
+
 plugins {
     java
-    id("org.springframework.boot") version "2.4.2"
+    id("org.springframework.boot") version "2.6.7"
     // Apply the application plugin to add support for building a CLI application in Java.
     application
 }
 
-val springVersion = "2.4.2"
-
 repositories {
-    // Use JCenter for resolving dependencies.
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
     // Use JUnit Jupiter API for testing.
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
 
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
@@ -32,7 +31,7 @@ application {
 }
 
 tasks.compileJava {
-    options.release.set(11)
+    options.release.set(17)
 }
 
 tasks.test {

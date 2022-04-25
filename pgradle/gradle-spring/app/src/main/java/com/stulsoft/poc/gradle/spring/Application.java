@@ -19,7 +19,7 @@ import org.springframework.core.env.AbstractEnvironment;
 public class Application implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
-    private String abc;
+    private final String abc;
 
     public Application(@Autowired final String abc) {
         this.abc = abc;
