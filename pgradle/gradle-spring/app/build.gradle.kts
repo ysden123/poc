@@ -1,9 +1,9 @@
-val springVersion = "2.6.7"
+object Versions{
+    const val springVersion = "2.6.7"
+}
 
 plugins {
     java
-    id("org.springframework.boot") version "2.6.7"
-    // Apply the application plugin to add support for building a CLI application in Java.
     application
 }
 
@@ -19,10 +19,10 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
     // This dependency is used by the application.
-    implementation("org.springframework.boot:spring-boot-starter:$springVersion") {
+    implementation("org.springframework.boot:spring-boot-starter:${Versions.springVersion}") {
         exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
     }
-    implementation("org.springframework.boot:spring-boot-starter-log4j2:$springVersion")
+    implementation("org.springframework.boot:spring-boot-starter-log4j2:${Versions.springVersion}")
 }
 
 application {
