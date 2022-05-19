@@ -7,14 +7,17 @@
  */
 package com.stulsoft.poc;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class App {
     public static void main(String[] args){
      test1();
     }
     private static void test1(){
-        System.out.println("==>test1");
+        log.info("==>test1");
         TestDTO testDTO = new TestDTO("name 1", 123);
-        System.out.println(testDTO);
+        log.info(testDTO.toString());
         var age = testDTO.getAge();
         var name=testDTO.getName();
     }
