@@ -17,8 +17,6 @@ public class App {
     private static void test1(){
         log.info("==>test1");
         TestDTO testDTO = new TestDTO("name 1", 123);
-        log.info(testDTO.toString());
-        var age = testDTO.getAge();
-        var name=testDTO.getName();
+        log.info("testDTO: {}", testDTO);
     }
 }

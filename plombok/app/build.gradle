@@ -1,21 +1,23 @@
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
-    id 'application'
+    id 'java'
 }
 
 repositories {
-    // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
+def logVersion = "2.17.2"
+
 dependencies {
-//    implementation('org.projectlombok:lombok:1.18.22')
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    implementation('ch.qos.logback:logback-classic:1.2.11')
+    compileOnly "org.projectlombok:lombok:1.18.24"
+    implementation "org.apache.logging.log4j:log4j-api:$logVersion"
+    implementation "org.apache.logging.log4j:log4j-core:$logVersion"
+    implementation "org.apache.logging.log4j:log4j-slf4j-impl:$logVersion"
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
-application {
-    // Define the main class for the application.
-    mainClass = 'com.stulsoft.poc.App'
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
