@@ -1,5 +1,0 @@
-rootProject.name = 'java-7'
-include 'concurrency'
-include 'kafka'
-include 'kafka-agent'
-include 'rxjava'
