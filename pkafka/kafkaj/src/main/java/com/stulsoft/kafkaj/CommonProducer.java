@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @author Yuriy Stul.
  */
 public class CommonProducer implements Producer {
-    private static Logger logger = LoggerFactory.getLogger(CommonProducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommonProducer.class);
     private boolean continueExecuting = false;
     private final ExecutorService executor;
     private final String topic;

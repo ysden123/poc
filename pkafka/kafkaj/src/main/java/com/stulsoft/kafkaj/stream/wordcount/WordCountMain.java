@@ -3,7 +3,6 @@
  */
 package com.stulsoft.kafkaj.stream.wordcount;
 
-import java.util.Collections;
 import java.util.Scanner;
 
 /**

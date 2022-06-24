@@ -10,6 +10,7 @@ import org.apache.kafka.common.TopicPartition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
@@ -19,7 +20,7 @@ import java.util.concurrent.Future;
  * @author Yuriy Stul.
  */
 public class CommonConsumer implements Consumer {
-    private static Logger logger = LoggerFactory.getLogger(CommonConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommonConsumer.class);
     private boolean continueExecuting = false;
     private final String groupId;
     private final AutoCommit enabledAutoCommit;
@@ -60,7 +61,7 @@ public class CommonConsumer implements Consumer {
 
                 consumer.subscribe(Collections.singletonList(topic));
                 while (continueExecuting) {
-                    ConsumerRecords<String, String> records = consumer.poll(1000);
+                    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
                     records.forEach(record -> {
                         String resultText = String.format("Received message.\n\tPartition=%d, offset=%d, topic=\"%s\"",
                                 record.partition(),
@@ -92,12 +93,8 @@ public class CommonConsumer implements Consumer {
                     });
 
                     if (!records.isEmpty()) {
-                        switch (commit) {
-                            case Commit:
-                                consumer.commitSync();
-                                break;
-                            default:
-                                break;
+                        if (commit == Commit.Commit) {
+                            consumer.commitSync();
                         }
                     }
                 }

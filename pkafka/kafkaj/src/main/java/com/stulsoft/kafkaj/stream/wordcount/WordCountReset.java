@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * @author Yuriy Stul
  */
 public class WordCountReset {
-    private static Logger logger = LoggerFactory.getLogger(WordCountReset.class);
+    private static final Logger logger = LoggerFactory.getLogger(WordCountReset.class);
 
     public static void main(String[] args) {
         logger.info("Started WordCountReset");
@@ -37,7 +37,7 @@ public class WordCountReset {
         KStream<String, String> source = builder.stream(Common.WORD_COUNT_INPUT_TOPIC);
 
         final Pattern pattern = Pattern.compile("\\W+");
-        KStream counts = source.flatMapValues(value -> Arrays.asList(pattern.split(value.toLowerCase())))
+        KStream<Object, String> counts = source.flatMapValues(value -> Arrays.asList(pattern.split(value.toLowerCase())))
                 .map((key, value) -> {
                     logger.debug("key=" + key + ". value=" + value);
                     return new KeyValue<Object, Object>(value, value);

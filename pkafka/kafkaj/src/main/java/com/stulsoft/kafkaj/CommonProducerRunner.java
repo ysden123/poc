@@ -15,7 +15,7 @@ import java.util.concurrent.Future;
  * @author Yuriy Stul.
  */
 public class CommonProducerRunner {
-    private static Logger logger = LoggerFactory.getLogger(CommonProducerRunner.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommonProducerRunner.class);
 
     public static void main(String[] args) {
         logger.info("==>CommonProducerRunner");

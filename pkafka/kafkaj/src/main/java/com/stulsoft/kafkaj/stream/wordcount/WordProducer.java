@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @author Yuriy Stul.
  */
 public class WordProducer {
-    private static Logger logger = LoggerFactory.getLogger(WordProducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(WordProducer.class);
 
     public static void main(String[] args) {
         logger.info("Started WordProducer");

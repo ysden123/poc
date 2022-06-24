@@ -15,7 +15,7 @@ import java.util.concurrent.Future;
  * @author Yuriy Stul.
  */
 public class ConsumerEarliestCommitNRunner {
-    private static Logger logger = LoggerFactory.getLogger(ConsumerEarliestCommitNRunner.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConsumerEarliestCommitNRunner.class);
 
     public static void main(String[] args) {
         logger.info("==>ConsumerEarliestCommitNRunner");

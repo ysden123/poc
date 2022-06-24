@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * @author Yuriy Stul.
  */
 public class WordCountProcessor {
-    private static Logger logger = LoggerFactory.getLogger(WordCountProcessor.class);
+    private static final Logger logger = LoggerFactory.getLogger(WordCountProcessor.class);
 
     public static void main(String[] args) {
         logger.info("Started WordCountProcessor");
@@ -56,7 +56,7 @@ public class WordCountProcessor {
         KStream<String, String> source = builder.stream(Common.WORD_COUNT_INPUT_TOPIC);
 
         final Pattern pattern = Pattern.compile("\\W+");
-        KStream counts = source.flatMapValues(value -> Arrays.asList(pattern.split(value.toLowerCase())))
+        KStream<Object, String> counts = source.flatMapValues(value -> Arrays.asList(pattern.split(value.toLowerCase())))
                 .map((key, value) -> {
                     logger.debug("value {}", value);
                     return new KeyValue<Object, Object>(value, value);

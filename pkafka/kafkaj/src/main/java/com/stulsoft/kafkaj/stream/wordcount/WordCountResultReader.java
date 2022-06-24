@@ -10,6 +10,7 @@ import org.apache.kafka.common.TopicPartition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,7 +20,7 @@ import java.util.concurrent.Future;
  * @author Yuriy Stul.
  */
 public class WordCountResultReader {
-    private static Logger logger = LoggerFactory.getLogger(WordCountResultReader.class);
+    private static final Logger logger = LoggerFactory.getLogger(WordCountResultReader.class);
     private boolean continueExecuting = false;
 
     private Future<Void> start(final ExecutorService executor) {
@@ -41,11 +42,11 @@ public class WordCountResultReader {
 
                 consumer.subscribe(Collections.singletonList(Common.WORD_COUNT_OUTPUT_TOPIC));
 
-                consumer.poll(500);
+                consumer.poll(Duration.ofMillis(500));
                 consumer.seekToBeginning(Collections.singletonList(new TopicPartition(Common.WORD_COUNT_OUTPUT_TOPIC, 0)));
 
                 while (continueExecuting) {
-                    ConsumerRecords<String, String> records = consumer.poll(500);
+                    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(500));
                     records.forEach(record -> words.put(record.key(), record.value()));
                     if (!records.isEmpty())
                         showResults(words);
