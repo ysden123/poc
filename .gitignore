@@ -24,6 +24,7 @@ pquartz/.idea/
 **/.settings/*
 **/logs
 **/.bsp/
+**/out/
 **/null/
 /pquartz/.idea
 pjunit5/.gradle/
