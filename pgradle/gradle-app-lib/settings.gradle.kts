@@ -1,2 +1,2 @@
 rootProject.name = "gradle-app-lib"
-include("app", "app2", "list", "utilities")
+include("app", "app2", "list", "utilities", "testlib")
