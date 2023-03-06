@@ -14,7 +14,7 @@ import org.json4s.jackson.Serialization.*
 object JsonWriter {
   implicit val formats: DefaultFormats = DefaultFormats
 
-  val theObjects = List(
+  private val theObjects = List(
     TheObject("my name 1", 123, 432.09),
     TheObject("my name 2", 56, 4985),
     TheObject("my name 3", 78, 543),
@@ -31,6 +31,12 @@ object JsonWriter {
     println(s"(2) json: $json2")
     val json3 = writePretty(theObjects)
     println(s"(3) json: $json3")
+
+    val theObjectWithOption = TheObjectWithOption("name 2", 456, 1.0, Option.empty)
+    println(s"(4) json with option: ${write(theObjectWithOption)}")
+
+    val theObjectWithOption2 = TheObjectWithOption("name 2", 456, 1.0, Option("the option value"))
+    println(s"(5) json with option: ${write(theObjectWithOption2)}")
 
   }
 }
