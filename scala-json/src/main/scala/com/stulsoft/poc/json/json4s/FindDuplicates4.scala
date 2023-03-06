@@ -4,7 +4,7 @@
 
 package com.stulsoft.poc.json.json4s
 
-import org.json4s.DefaultFormats
+import org.json4s.*
 import org.json4s.JsonAST.{JArray, JField, JInt, JObject, JString, JValue}
 import org.json4s.jackson.JsonMethods.parse
 
@@ -14,10 +14,8 @@ import scala.io.Source
  *
  * @author Yuriy Stul
  */
-object FindDuplicates4 extends App {
-  implicit val formats: DefaultFormats = DefaultFormats
-  println("==>FindDuplicates2")
-  findDuplicates("arrayOfObjects3.json")
+object FindDuplicates4 {
+  given formats: DefaultFormats = DefaultFormats
 
   def findDuplicates(path: String): Unit = {
     println(s"Looking in $path")
@@ -31,10 +29,15 @@ object FindDuplicates4 extends App {
         JField("age", JInt(age)) <- item
       } yield (name, age)
 
-      result.foreach{case (name:String, age:BigInt) => println(s"name: $name, age = $age") }
+      result.foreach { case (name: String, age: BigInt) => println(s"name: $name, age = $age") }
     }
     catch {
       case e: Exception => println(s"sError: ${e.getMessage}")
     }
+  }
+
+  def main(args: Array[String]): Unit = {
+    println("==>FindDuplicates2")
+    findDuplicates("arrayOfObjects3.json")
   }
 }
