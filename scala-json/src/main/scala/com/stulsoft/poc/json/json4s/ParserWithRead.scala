@@ -26,6 +26,9 @@ object ParserWithRead {
 
     val theObjectWithOption2 = read[TheObjectWithOption](StreamInput(getClass.getClassLoader.getResourceAsStream("withOption2.json")))
     println(theObjectWithOption2)
+
+    val choice = read[Choice]("""{"text":"some text"}""")
+    println(choice)
   }
 
   //
