@@ -4,13 +4,13 @@ Playing with JSon in Scala
 
 See common review https://manuel.bernhardt.io/2015/11/06/a-quick-tour-of-json-libraries-in-scala/[A quick tour of JSON libraries in Scala]
 
-== JSon from Play
-See https://www.playframework.com/documentation/2.6.x/ScalaJson[JSON basics]
-
-== Argonaut
-See http://argonaut.io/[Argonaut]
+== circe
+See https://circe.github.io/circe[circe]
 
 == Jackson
+See https://github.com/FasterXML/jackson[Jackson]
+
+== Jacksonscala
 See https://github.com/FasterXML/jackson[Jackson]
 
 == json4s
