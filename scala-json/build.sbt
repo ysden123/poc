@@ -38,7 +38,7 @@ lazy val app = (project in file("."))
       "io.circe" %% "circe-parser"
     ).map(_ % circeVersion),
 
-    javacOptions ++= Seq("-source", "11"),
+    javacOptions ++= Seq("-source", "17"),
     scalacOptions ++= Seq(
       "-feature",
       "-deprecation",
