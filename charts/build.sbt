@@ -1,11 +1,11 @@
 import sbt.Keys.libraryDependencies
 
-lazy val jFreeChartVersion = "1.0.19"
+lazy val jFreeChartVersion = "1.5.4"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft",
-  version := "0.0.1-SNAPSHOT",
-  scalaVersion := "2.12.3",
+  version := "0.0.2",
+  scalaVersion := "3.3.0",
   scalacOptions ++= Seq(
     "-feature",
     "-language:implicitConversions",
@@ -15,7 +15,6 @@ lazy val commonSettings = Seq(
   )
 )
 
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
 lazy val chart = (project in file("."))
   .settings(commonSettings: _*)

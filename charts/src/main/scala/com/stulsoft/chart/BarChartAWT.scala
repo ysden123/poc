@@ -4,7 +4,7 @@ import com.stulsoft.chart.util.Utils
 import org.jfree.chart.plot.PlotOrientation
 import org.jfree.chart.{ChartFactory, ChartPanel, JFreeChart}
 import org.jfree.data.category.{CategoryDataset, DefaultCategoryDataset}
-import org.jfree.ui.{ApplicationFrame, RefineryUtilities}
+import org.jfree.chart.ui.{ApplicationFrame, UIUtils}
 
 import scala.io.Source
 
@@ -45,6 +45,6 @@ object BarChartAWT extends App {
   }
 
   chart.pack()
-  RefineryUtilities.centerFrameOnScreen(chart)
+  UIUtils.centerFrameOnScreen(chart)
   chart.setVisible(true)
 }

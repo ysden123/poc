@@ -11,7 +11,7 @@ import org.jfree.chart.plot.{PlotOrientation, XYPlot}
 import org.jfree.chart.renderer.xy.XYShapeRenderer
 import org.jfree.chart.{ChartFactory, ChartPanel, JFreeChart}
 import org.jfree.data.xy.{XYDataset, XYSeries, XYSeriesCollection}
-import org.jfree.ui.{ApplicationFrame, RefineryUtilities}
+import org.jfree.chart.ui.{ApplicationFrame, UIUtils}
 
 import scala.io.Source
 
@@ -23,11 +23,11 @@ object XYLineChart_AWT extends App {
 
   lazy val chart = new XYLineChartAWT("Browser Usage Statistics", "Which Browser are you using?")
   chart.pack()
-  RefineryUtilities.centerFrameOnScreen(chart)
+  UIUtils.centerFrameOnScreen(chart)
   chart.setVisible(true)
 
   class XYLineChartAWT(applicationTitle: String, chartTitle: String) extends ApplicationFrame(applicationTitle) {
-    val xyLineChart: JFreeChart = ChartFactory.createXYLineChart(
+    private val xyLineChart: JFreeChart = ChartFactory.createXYLineChart(
       chartTitle,
       "Category",
       "Score",

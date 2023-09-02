@@ -4,25 +4,25 @@ import javax.swing.JPanel
 
 import org.jfree.chart.{ChartFactory, ChartPanel, JFreeChart}
 import org.jfree.data.general.{DefaultPieDataset, PieDataset}
-import org.jfree.ui.{ApplicationFrame, RefineryUtilities}
+import org.jfree.chart.ui.{ApplicationFrame, UIUtils}
 
 /**
-  * @see [[https://www.tutorialspoint.com/jfreechart/jfreechart_quick_guide.htm AWT Based Application]]
-  * @author Yuriy Stul.
-  */
+ * @see [[https://www.tutorialspoint.com/jfreechart/jfreechart_quick_guide.htm AWT Based Application]]
+ * @author Yuriy Stul.
+ */
 object PieChartAWT extends App {
 
-  val demo = new PieChart_AWT("Mobile sales")
+  private val demo = new PieChart_AWT("Mobile sales")
 
-  class PieChart_AWT(title: String) extends ApplicationFrame(title) {
+  private class PieChart_AWT(title: String) extends ApplicationFrame(title) {
     setContentPane(createDemoPanel())
 
-    def createDemoPanel(): JPanel = {
+    private def createDemoPanel(): JPanel = {
       new ChartPanel(createChart(createDataSet()))
     }
 
-    def createDataSet(): PieDataset = {
-      val dataSet = new DefaultPieDataset()
+    private def createDataSet(): PieDataset[String] = {
+      val dataSet = new DefaultPieDataset[String]()
       dataSet.setValue("IPhone 5s", 20.0)
       dataSet.setValue("Samsung Grand", 20.0)
       dataSet.setValue("MotoG", 40.0)
@@ -30,7 +30,7 @@ object PieChartAWT extends App {
       dataSet
     }
 
-    def createChart(dataSet: PieDataset): JFreeChart = {
+    private def createChart(dataSet: PieDataset[String]): JFreeChart = {
       ChartFactory.createPieChart(
         "Mobile Sales", // Chart title
         dataSet, // data
@@ -42,7 +42,7 @@ object PieChartAWT extends App {
   }
 
   demo.setSize(560, 367)
-  RefineryUtilities.centerFrameOnScreen(demo)
+  UIUtils.centerFrameOnScreen(demo)
   demo.setVisible(true)
 
 }

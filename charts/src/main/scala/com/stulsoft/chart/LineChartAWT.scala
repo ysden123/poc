@@ -8,7 +8,7 @@ import com.stulsoft.chart.util.Utils
 import org.jfree.chart.plot.PlotOrientation
 import org.jfree.chart.{ChartFactory, ChartPanel, JFreeChart}
 import org.jfree.data.category.DefaultCategoryDataset
-import org.jfree.ui.{ApplicationFrame, RefineryUtilities}
+import org.jfree.chart.ui.{ApplicationFrame, UIUtils}
 
 import scala.io.Source
 
@@ -22,7 +22,7 @@ object LineChartAWT extends App {
     "School Vs Years",
     "Numer of Schools vs years")
   chart.pack()
-  RefineryUtilities.centerFrameOnScreen(chart)
+  UIUtils.centerFrameOnScreen(chart)
   chart.setVisible(true)
 
 

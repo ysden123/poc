@@ -9,7 +9,7 @@ import java.awt.{Color, Dimension}
 import com.stulsoft.chart.util.DataGenerator
 import org.jfree.chart.{ChartFactory, ChartPanel}
 import org.jfree.data.xy.{XYDataset, XYSeries, XYSeriesCollection}
-import org.jfree.ui.{ApplicationFrame, RefineryUtilities}
+import org.jfree.chart.ui.{ApplicationFrame, UIUtils}
 
 /** Scatter Plot
   *
@@ -28,7 +28,7 @@ case class ScatterPlot(applicationTitle: String, chartTitle: String, xAxisName: 
   def show(): Unit = {
     val chart = new ScatterPlotAWT(applicationTitle, chartTitle)
     chart.pack()
-    RefineryUtilities.centerFrameOnScreen(chart)
+    UIUtils.centerFrameOnScreen(chart)
     chart.setVisible(true)
   }
 

@@ -9,7 +9,7 @@ import java.awt.{Color, Dimension}
 import com.stulsoft.chart.util.DataGenerator
 import org.jfree.chart.{ChartFactory, ChartPanel}
 import org.jfree.data.xy.{XYDataset, XYSeriesCollection}
-import org.jfree.ui.{ApplicationFrame, RefineryUtilities}
+import org.jfree.chart.ui.{ApplicationFrame, UIUtils}
 
 /**
   * @author Yuriy Stul
@@ -17,7 +17,7 @@ import org.jfree.ui.{ApplicationFrame, RefineryUtilities}
 object ScatterPlotExample2 extends App {
   lazy val chart = new ScatterPlotExample2AWT("Scatter Chart Example 2", "Boys VS Girls weight comparison chart")
   chart.pack()
-  RefineryUtilities.centerFrameOnScreen(chart)
+  UIUtils.centerFrameOnScreen(chart)
   chart.setVisible(true)
 
   class ScatterPlotExample2AWT(applicationTitle: String, chartTitle: String) extends ApplicationFrame(applicationTitle) {
