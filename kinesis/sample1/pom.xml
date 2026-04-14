@@ -25,7 +25,7 @@
         <typesafeConfig.version>1.4.2</typesafeConfig.version>
         <com.netflix.conductor.client.version>2.19.0</com.netflix.conductor.client.version>
 
-        <loging.version>2.25.3</loging.version>
+        <loging.version>2.25.4</loging.version>
 
         <junit.version>4.13.1</junit.version>
         <junit.jupiter.version>5.9.2</junit.jupiter.version>
